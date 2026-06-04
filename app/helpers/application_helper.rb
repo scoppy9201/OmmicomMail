@@ -101,7 +101,7 @@ module ApplicationHelper
     end.html_safe
   end
 
-  def postal_version_string
+  def ommicommail_version_string
     string = OmmicomMail.version
     string += " (#{OmmicomMail.branch})" if OmmicomMail.branch &&
                                        OmmicomMail.branch != "main"
