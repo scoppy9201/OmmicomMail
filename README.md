@@ -1,6 +1,8 @@
-![GitHub Header](https://github.com/postalserver/.github/assets/4765/7a63c35d-2f47-412f-a6b3-aebc92a55310)
+![OmmicomMail Header](https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0f172a,100:2563eb&text=OmmicomMail&fontColor=ffffff&fontSize=48&fontAlignY=38&desc=Self-hosted%20mail%20server&descAlignY=58&descSize=18)
 
-**Postal** is a complete and fully featured mail server for use by websites & web servers. Think Sendgrid, Mailgun or Postmark but open source and ready for you to run on your own servers. 
+**OmmicomMail** is developed based on the original **Postal** prototype.
+
+**Postal** is a complete and fully featured mail server for use by websites & web servers. Think Sendgrid, Mailgun or Postmark but open source and ready for you to run on your own servers.
 
 * [Documentation](https://docs.postalserver.io)
 * [Installation Instructions](https://docs.postalserver.io/getting-started)
