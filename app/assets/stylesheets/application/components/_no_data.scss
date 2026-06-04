@@ -1,0 +1,36 @@
+.noData {
+  text-align:center;
+  border-radius:4px;
+  padding:30px;
+  padding-top:50px;
+  box-shadow:0 0 10px rgba(0,0,0,0.15);
+}
+
+.noData--clean {
+  box-shadow:none;
+  background-color:transparent;
+}
+
+.noData__title {
+  font-size:22px;
+  margin-bottom:10px;
+  font-weight:700;
+}
+
+.noData__text {
+  color:#888;
+  font-size:16px;
+  line-height:1.5;
+}
+
+.noData__button {
+  margin-top:20px;
+}
+
+.noData__postButtonText {
+  margin:auto;
+  margin-top:15px;
+  line-height:1.5;
+  width:70%;
+  color:$subBlue;
+}

@@ -1,0 +1,12 @@
+- page_title << "Users"
+- page_title << "Permissions"
+.pageHeader
+  %h1.pageHeader__title
+    %span.pageHeader__titlePrevious
+      = link_to 'Users', users_path
+      &rarr;
+    Edit user permissions
+
+.pageContent.pageContent--compact
+  = render 'form'
+

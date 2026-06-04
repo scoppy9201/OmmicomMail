@@ -1,0 +1,81 @@
+#!/bin/bash
+ROOT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )
+set -e
+
+run() {
+    eval $@
+}
+
+# Enter the root directory
+cd $ROOT_DIR
+
+# Run the right command
+case "$1" in
+    web-server)
+        run "bundle exec puma -C config/puma.rb"
+        ;;
+
+    smtp-server)
+        run "bundle exec ruby script/smtp_server.rb"
+        ;;
+
+    worker)
+        run "bundle exec ruby script/worker.rb"
+        ;;
+
+    initialize)
+        echo 'Initializing database'
+        run "bundle exec rake db:create postal:update"
+        ;;
+
+    upgrade)
+        run "bundle exec rake postal:update"
+        ;;
+
+    update)
+        run "bundle exec rake postal:update"
+        ;;
+
+    console)
+        run "bundle exec rails console"
+        ;;
+
+    default-dkim-record)
+        run "bundle exec ruby script/default_dkim_record.rb"
+        ;;
+
+    make-user)
+        run "bundle exec ruby script/make_user.rb"
+        ;;
+
+    test-app-smtp)
+        run "bundle exec ruby script/test_app_smtp.rb $2"
+        ;;
+
+    version)
+        run "bundle exec ruby script/version.rb"
+        ;;
+
+    *)
+        echo "Usage: postal [command]"
+        echo
+        echo "Server components:"
+        echo
+        echo -e " * \033[35mweb-server\033[0m - run the web server"
+        echo -e " * \033[35msmtp-server\033[0m - run the SMTP server"
+        echo -e " * \033[35mworker\033[0m - run a worker"
+        echo
+        echo "Setup/upgrade tools:"
+        echo
+        echo -e " * \033[32minitialize\033[0m - create and load the DB schema"
+        echo -e " * \033[32mupdate\033[0m - upgrade the DB schema"
+        echo
+        echo "Other tools:"
+        echo
+        echo -e " * \033[34mversion\033[0m - show the current Postal version"
+        echo -e " * \033[34mmake-user\033[0m - create a new global admin user"
+        echo -e " * \033[34mdefault-dkim-record\033[0m - display the default DKIM record"
+        echo -e " * \033[34mconsole\033[0m - open an interactive console"
+        echo -e " * \033[34mtest-app-smtp\033[0m - send a test message through Postal"
+        echo
+esac
