@@ -1,4 +1,4 @@
-![OmmicomMail Header](https://capsule-render.vercel.app/api?type=waving&height=220&color=0:0f172a,100:2563eb&text=OmmicomMail&fontColor=ffffff&fontSize=48&fontAlignY=38&desc=Self-hosted%20mail%20server&descAlignY=58&descSize=18)
+![OmmicomMail Header](public/ommicommail-header.png)
 
 **OmmicomMail** is developed based on the original **Postal** prototype.
 
