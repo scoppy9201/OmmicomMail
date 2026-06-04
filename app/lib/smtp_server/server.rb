@@ -129,7 +129,7 @@ module SMTPServer
                 end
                 # We know who the client is, welcome them.
                 client.logger&.debug "Client identified as #{client_ip_address}"
-                new_io.print("220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP Postal/#{client.trace_id}")
+                new_io.print("220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP OmmicomMail/#{client.trace_id}")
               end
               # Register the client and its socket with nio4r
               monitor = @io_selector.register(new_io, :r)
@@ -301,7 +301,7 @@ module SMTPServer
 
     def register_prometheus_metrics
       register_prometheus_counter :postal_smtp_server_connections_total,
-                                  docstring: "The number of connections made to the Postal SMTP server."
+                                  docstring: "The number of connections made to the OmmicomMail SMTP server."
 
       register_prometheus_counter :postal_smtp_server_exceptions_total,
                                   docstring: "The number of server exceptions encountered by the SMTP server",

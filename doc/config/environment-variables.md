@@ -2,11 +2,13 @@
 
 This document contains all the environment variables which are available for this application.
 
+Variables using the `OMMICOMMAIL_` prefix are also supported as aliases for the matching `POSTAL_` variables, for example `OMMICOMMAIL_WEB_HOSTNAME` maps to `POSTAL_WEB_HOSTNAME`.
+
 | Name | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
-| `POSTAL_WEB_HOSTNAME` | String | The hostname that the Postal web interface runs on | postal.example.com |
-| `POSTAL_WEB_PROTOCOL` | String | The HTTP protocol to use for the Postal web interface | https |
-| `POSTAL_SMTP_HOSTNAME` | String | The hostname that the Postal SMTP server runs on | postal.example.com |
+| `POSTAL_WEB_HOSTNAME` | String | The hostname that the OmmicomMail web interface runs on | ommicommail.example.com |
+| `POSTAL_WEB_PROTOCOL` | String | The HTTP protocol to use for the OmmicomMail web interface | https |
+| `POSTAL_SMTP_HOSTNAME` | String | The hostname that the OmmicomMail SMTP server runs on | smtp.ommicommail.example.com |
 | `POSTAL_USE_IP_POOLS` | Boolean | Should IP pools be enabled for this installation? | false |
 | `POSTAL_DEFAULT_MAXIMUM_DELIVERY_ATTEMPTS` | Integer | The maximum number of delivery attempts | 18 |
 | `POSTAL_DEFAULT_MAXIMUM_HOLD_EXPIRY_DAYS` | Integer | The number of days to hold a message before they will be expired | 7 |
@@ -17,7 +19,7 @@ This document contains all the environment variables which are available for thi
 | `POSTAL_USE_RESENT_SENDER_HEADER` | Boolean | Append a Resend-Sender header to all outgoing e-mails | true |
 | `POSTAL_SIGNING_KEY_PATH` | String | Path to the private key used for signing | $config-file-root/signing.key |
 | `POSTAL_SMTP_RELAYS` | Array of strings | An array of SMTP relays in the format of smtp://host:port | [] |
-| `POSTAL_TRUSTED_PROXIES` | Array of strings | An array of IP addresses to trust for proxying requests to Postal (in addition to localhost addresses) | [] |
+| `POSTAL_TRUSTED_PROXIES` | Array of strings | An array of IP addresses to trust for proxying requests to OmmicomMail (in addition to localhost addresses) | [] |
 | `POSTAL_ALLOWED_REQUEST_DESTINATIONS` | Array of strings | Hostnames or IP/CIDR ranges that outbound webhook and HTTP endpoint requests are permitted to reach even when they resolve to a private, loopback, link-local or otherwise reserved address. All other such destinations are blocked to prevent SSRF. | [] |
 | `POSTAL_QUEUED_MESSAGE_LOCK_STALE_DAYS` | Integer | The number of days after which to consider a lock as stale. Messages with stale locks will be removed and not retried. | 1 |
 | `POSTAL_BATCH_QUEUED_MESSAGES` | Boolean | When enabled queued messages will be de-queued in batches based on their destination | true |
@@ -42,7 +44,7 @@ This document contains all the environment variables which are available for thi
 | `MESSAGE_DB_DATABASE_NAME_PREFIX` | String | The MariaDB prefix to add to database names | postal |
 | `LOGGING_RAILS_LOG_ENABLED` | Boolean | Enable the default Rails logger | false |
 | `LOGGING_SENTRY_DSN` | String | A DSN which should be used to report exceptions to Sentry |  |
-| `LOGGING_ENABLED` | Boolean | Enable the Postal logger to log to STDOUT | true |
+| `LOGGING_ENABLED` | Boolean | Enable the OmmicomMail logger to log to STDOUT | true |
 | `LOGGING_HIGHLIGHTING_ENABLED` | Boolean | Enable highlighting of log lines | false |
 | `GELF_HOST` | String | GELF-capable host to send logs to |  |
 | `GELF_PORT` | Integer | GELF port to send logs to | 12201 |
@@ -60,15 +62,15 @@ This document contains all the environment variables which are available for thi
 | `SMTP_SERVER_LOG_CONNECTIONS` | Boolean | Enable connection logging | false |
 | `SMTP_SERVER_MAX_MESSAGE_SIZE` | Integer | The maximum message size to accept from the SMTP server (in MB) | 14 |
 | `SMTP_SERVER_LOG_IP_ADDRESS_EXCLUSION_MATCHER` | String | A regular expression to use to exclude connections from logging |  |
-| `DNS_MX_RECORDS` | Array of strings | The names of the default MX records | ["mx1.postal.example.com", "mx2.postal.example.com"] |
-| `DNS_SPF_INCLUDE` | String | The location of the SPF record | spf.postal.example.com |
-| `DNS_RETURN_PATH_DOMAIN` | String | The return path hostname | rp.postal.example.com |
-| `DNS_ROUTE_DOMAIN` | String | The domain to use for hosting route-specific addresses | routes.postal.example.com |
-| `DNS_TRACK_DOMAIN` | String | The CNAME which tracking domains should be pointed to | track.postal.example.com |
+| `DNS_MX_RECORDS` | Array of strings | The names of the default MX records | ["mx1.ommicommail.example.com", "mx2.ommicommail.example.com"] |
+| `DNS_SPF_INCLUDE` | String | The location of the SPF record | spf.ommicommail.example.com |
+| `DNS_RETURN_PATH_DOMAIN` | String | The return path hostname | rp.ommicommail.example.com |
+| `DNS_ROUTE_DOMAIN` | String | The domain to use for hosting route-specific addresses | routes.ommicommail.example.com |
+| `DNS_TRACK_DOMAIN` | String | The CNAME which tracking domains should be pointed to | track.ommicommail.example.com |
 | `DNS_HELO_HOSTNAME` | String | The hostname to use in HELO/EHLO when connecting to external SMTP servers |  |
 | `DNS_DKIM_IDENTIFIER` | String | The identifier to use for DKIM keys in DNS records | postal |
 | `DNS_DOMAIN_VERIFY_PREFIX` | String | The prefix to add before TXT record verification string | postal-verification |
-| `DNS_CUSTOM_RETURN_PATH_PREFIX` | String | The domain to use on external domains which points to the Postal return path domain | psrp |
+| `DNS_CUSTOM_RETURN_PATH_PREFIX` | String | The domain to use on external domains which points to the OmmicomMail return path domain | psrp |
 | `DNS_TIMEOUT` | Integer | The timeout to wait for DNS resolution | 5 |
 | `DNS_RESOLV_CONF_PATH` | String | The path to the resolv.conf file containing addresses for local nameservers | /etc/resolv.conf |
 | `SMTP_HOST` | String | The hostname to send application-level e-mails to | 127.0.0.1 |
@@ -79,8 +81,8 @@ This document contains all the environment variables which are available for thi
 | `SMTP_ENABLE_STARTTLS` | Boolean | Use STARTTLS when connecting to the SMTP server and fail if unsupported | false |
 | `SMTP_ENABLE_STARTTLS_AUTO` | Boolean | Detects if STARTTLS is enabled in the SMTP server and starts to use it | true |
 | `SMTP_OPENSSL_VERIFY_MODE` | String | When using TLS, you can set how OpenSSL checks the certificate. Use 'none' for no certificate checking | peer |
-| `SMTP_FROM_NAME` | String | The name to use as the from name outgoing emails from Postal | Postal |
-| `SMTP_FROM_ADDRESS` | String | The e-mail to use as the from address outgoing emails from Postal | postal@example.com |
+| `SMTP_FROM_NAME` | String | The name to use as the from name outgoing emails from OmmicomMail | OmmicomMail |
+| `SMTP_FROM_ADDRESS` | String | The e-mail to use as the from address outgoing emails from OmmicomMail | ommicommail@example.com |
 | `RAILS_ENVIRONMENT` | String | The Rails environment to run the application in | production |
 | `RAILS_SECRET_KEY` | String | The secret key used to sign and encrypt cookies and session data in the application |  |
 | `RSPAMD_ENABLED` | Boolean | Enable rspamd for message inspection | false |

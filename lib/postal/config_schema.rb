@@ -7,23 +7,23 @@ module Postal
   # REMEMBER: If you change the schema, remember to regenerate the configuration docs
   # using the rake command below:
   #
-  #     rake postal:generate_config_docs
+  #     rake ommicommail:generate_config_docs
 
   ConfigSchema = Konfig::Schema.draw do
     group :postal do
       string :web_hostname do
-        description "The hostname that the Postal web interface runs on"
-        default "postal.example.com"
+        description "The hostname that the OmmicomMail web interface runs on"
+        default "ommicommail.example.com"
       end
 
       string :web_protocol do
-        description "The HTTP protocol to use for the Postal web interface"
+        description "The HTTP protocol to use for the OmmicomMail web interface"
         default "https"
       end
 
       string :smtp_hostname do
-        description "The hostname that the Postal SMTP server runs on"
-        default "postal.example.com"
+        description "The hostname that the OmmicomMail SMTP server runs on"
+        default "smtp.ommicommail.example.com"
       end
 
       boolean :use_ip_pools do
@@ -88,7 +88,7 @@ module Postal
 
       string :trusted_proxies do
         array
-        description "An array of IP addresses to trust for proxying requests to Postal (in addition to localhost addresses)"
+        description "An array of IP addresses to trust for proxying requests to OmmicomMail (in addition to localhost addresses)"
         transform { |ip| IPAddr.new(ip) }
       end
 
@@ -223,7 +223,7 @@ module Postal
       end
 
       boolean :enabled do
-        description "Enable the Postal logger to log to STDOUT"
+        description "Enable the OmmicomMail logger to log to STDOUT"
         default true
       end
 
@@ -320,27 +320,27 @@ module Postal
       string :mx_records do
         description "The names of the default MX records"
         array
-        default ["mx1.postal.example.com", "mx2.postal.example.com"]
+        default ["mx1.ommicommail.example.com", "mx2.ommicommail.example.com"]
       end
 
       string :spf_include do
         description "The location of the SPF record"
-        default "spf.postal.example.com"
+        default "spf.ommicommail.example.com"
       end
 
       string :return_path_domain do
         description "The return path hostname"
-        default "rp.postal.example.com"
+        default "rp.ommicommail.example.com"
       end
 
       string :route_domain do
         description "The domain to use for hosting route-specific addresses"
-        default "routes.postal.example.com"
+        default "routes.ommicommail.example.com"
       end
 
       string :track_domain do
         description "The CNAME which tracking domains should be pointed to"
-        default "track.postal.example.com"
+        default "track.ommicommail.example.com"
       end
 
       string :helo_hostname do
@@ -358,7 +358,7 @@ module Postal
       end
 
       string :custom_return_path_prefix do
-        description "The domain to use on external domains which points to the Postal return path domain"
+        description "The domain to use on external domains which points to the OmmicomMail return path domain"
         default "psrp"
       end
 
@@ -413,13 +413,13 @@ module Postal
       end
 
       string :from_name do
-        description "The name to use as the from name outgoing emails from Postal"
-        default "Postal"
+        description "The name to use as the from name outgoing emails from OmmicomMail"
+        default "OmmicomMail"
       end
 
       string :from_address do
-        description "The e-mail to use as the from address outgoing emails from Postal"
-        default "postal@example.com"
+        description "The e-mail to use as the from address outgoing emails from OmmicomMail"
+        default "ommicommail@example.com"
       end
     end
 

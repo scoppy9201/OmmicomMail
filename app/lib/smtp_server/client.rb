@@ -123,7 +123,7 @@ module SMTPServer
         @state = :welcome
         logger&.debug "\e[35mClient identified as #{@ip_address}\e[0m"
         increment_command_count("PROXY")
-        return "220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP Postal/#{trace_id}"
+        return "220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP OmmicomMail/#{trace_id}"
       end
 
       @finished = true

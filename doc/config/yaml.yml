@@ -1,12 +1,12 @@
 version: 2
 
 postal:
-  # The hostname that the Postal web interface runs on
-  web_hostname: postal.example.com
-  # The HTTP protocol to use for the Postal web interface
+  # The hostname that the OmmicomMail web interface runs on
+  web_hostname: ommicommail.example.com
+  # The HTTP protocol to use for the OmmicomMail web interface
   web_protocol: https
-  # The hostname that the Postal SMTP server runs on
-  smtp_hostname: postal.example.com
+  # The hostname that the OmmicomMail SMTP server runs on
+  smtp_hostname: smtp.ommicommail.example.com
   # Should IP pools be enabled for this installation?
   use_ip_pools: false
   # The maximum number of delivery attempts
@@ -27,7 +27,7 @@ postal:
   signing_key_path: $config-file-root/signing.key
   # An array of SMTP relays in the format of smtp://host:port
   smtp_relays: []
-  # An array of IP addresses to trust for proxying requests to Postal (in addition to localhost addresses)
+  # An array of IP addresses to trust for proxying requests to OmmicomMail (in addition to localhost addresses)
   trusted_proxies: []
   # Hostnames or IP/CIDR ranges that outbound webhook and HTTP endpoint requests are permitted to reach even when they resolve to a private, loopback, link-local or otherwise reserved address. All other such destinations are blocked to prevent SSRF.
   allowed_request_destinations: []
@@ -87,7 +87,7 @@ logging:
   rails_log_enabled: false
   # A DSN which should be used to report exceptions to Sentry
   sentry_dsn: 
-  # Enable the Postal logger to log to STDOUT
+  # Enable the OmmicomMail logger to log to STDOUT
   enabled: true
   # Enable highlighting of log lines
   highlighting_enabled: false
@@ -131,23 +131,23 @@ smtp_server:
 dns:
   # The names of the default MX records
   mx_records:
-    - mx1.postal.example.com
-    - mx2.postal.example.com
+    - mx1.ommicommail.example.com
+    - mx2.ommicommail.example.com
   # The location of the SPF record
-  spf_include: spf.postal.example.com
+  spf_include: spf.ommicommail.example.com
   # The return path hostname
-  return_path_domain: rp.postal.example.com
+  return_path_domain: rp.ommicommail.example.com
   # The domain to use for hosting route-specific addresses
-  route_domain: routes.postal.example.com
+  route_domain: routes.ommicommail.example.com
   # The CNAME which tracking domains should be pointed to
-  track_domain: track.postal.example.com
+  track_domain: track.ommicommail.example.com
   # The hostname to use in HELO/EHLO when connecting to external SMTP servers
   helo_hostname: 
   # The identifier to use for DKIM keys in DNS records
   dkim_identifier: postal
   # The prefix to add before TXT record verification string
   domain_verify_prefix: postal-verification
-  # The domain to use on external domains which points to the Postal return path domain
+  # The domain to use on external domains which points to the OmmicomMail return path domain
   custom_return_path_prefix: psrp
   # The timeout to wait for DNS resolution
   timeout: 5
@@ -171,10 +171,10 @@ smtp:
   enable_starttls_auto: true
   # When using TLS, you can set how OpenSSL checks the certificate. Use 'none' for no certificate checking
   openssl_verify_mode: peer
-  # The name to use as the from name outgoing emails from Postal
-  from_name: Postal
-  # The e-mail to use as the from address outgoing emails from Postal
-  from_address: postal@example.com
+  # The name to use as the from name outgoing emails from OmmicomMail
+  from_name: OmmicomMail
+  # The e-mail to use as the from address outgoing emails from OmmicomMail
+  from_address: ommicommail@example.com
 
 rails:
   # The Rails environment to run the application in

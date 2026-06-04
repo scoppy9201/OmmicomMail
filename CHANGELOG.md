@@ -1,6 +1,6 @@
 # CHANGELOG
 
-This file contains all the latest changes and updates to Postal.
+This file contains the upstream Postal changelog preserved for attribution and reference.
 
 ## [3.3.7](https://github.com/postalserver/postal/compare/3.3.6...3.3.7) (2026-06-03)
 

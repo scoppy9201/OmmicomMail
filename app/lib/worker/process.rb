@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Worker
-  # The Postal Worker process is responsible for handling all background tasks. This includes processing of all
+  # The OmmicomMail worker process is responsible for handling all background tasks. This includes processing of all
   # messages, webhooks and other administrative tasks. There are two main types of background work which is completed,
   # jobs and scheduled tasks.
   #

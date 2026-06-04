@@ -1,6 +1,6 @@
-# This is an example Postal configuration file for use in 
+# This is an example OmmicomMail configuration file for use in
 # test environments. For a production example, see
-# the https://github.com/postalserver/install repository.
+# this repository's deployment documentation.
 
 version: 2
 

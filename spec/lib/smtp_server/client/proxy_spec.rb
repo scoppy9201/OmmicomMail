@@ -11,7 +11,7 @@ module SMTPServer
     describe "PROXY" do
       context "when the proxy header is sent correctly" do
         it "sets the IP address" do
-          expect(client.handle("PROXY TCP4 1.1.1.1 2.2.2.2 1111 2222")).to eq "220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP Postal/#{client.trace_id}"
+          expect(client.handle("PROXY TCP4 1.1.1.1 2.2.2.2 1111 2222")).to eq "220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP OmmicomMail/#{client.trace_id}"
           expect(client.ip_address).to eq "1.1.1.1"
         end
       end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ENV["POSTAL_CONFIG_FILE_PATH"] ||= "config/postal/OmmicomMail.test.yml"
+ENV["OMMICOMMAIL_CONFIG_FILE_PATH"] ||= "config/postal/postal.test.yml"
 
 require "dotenv"
 Dotenv.load(".env.test")
@@ -36,7 +36,7 @@ RSpec.configure do |config|
   config.include GeneralHelpers
 
   # Before all request specs, set the hostname to the web hostname for
-  # Postal otherwise it'll be www.example.com which will fail host
+  # OmmicomMail otherwise it'll be www.example.com which will fail host
   # authorization checks.
   config.before(:each, type: :request) do
     host! OmmicomMail::Config.postal.web_hostname

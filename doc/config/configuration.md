@@ -1,14 +1,14 @@
-# Configuring Postal
+# Configuring OmmicomMail
 
-Postal can be configured in two ways: using a YAML-based configuration file or through environment variables.
+OmmicomMail can be configured in two ways: using a YAML-based configuration file or through environment variables.
 
 If you choose to use environment variables, you don't need to provide a config file. A full list of environment variables is available in the `environment-variables.md` file in this directory. 
 
-To use a configuration file, the `POSTAL_CONFIG_FILE_PATH` environment variable will dictate where Postal will look for the config file. An example YAML file containing all available configuration is provided in the `yaml.yml` file in this directory. Remember to include the `version: 2` key/value in your configuration file.
+To use a configuration file, the `OMMICOMMAIL_CONFIG_FILE_PATH` environment variable will dictate where OmmicomMail will look for the config file. `POSTAL_CONFIG_FILE_PATH` remains supported for compatibility. An example YAML file containing all available configuration is provided in the `yaml.yml` file in this directory. Remember to include the `version: 2` key/value in your configuration file.
 
 ## Development 
 
-When developing with Postal, you can configure the application by placing a configuration file in `config/postal/postal.yml`. Alternatively, you can use environment variables by placing configuration in `.env` in the root of the application.
+When developing with OmmicomMail, you can configure the application by placing a configuration file in `config/postal/postal.yml`. Alternatively, you can use environment variables by placing configuration in `.env` in the root of the application.
 
 ### Running tests
 
@@ -16,7 +16,7 @@ By default, tests will use the `config/postal/postal.test.yml` configuration fil
 
 ## Containers
 
-Within a container, Postal will for a config file in `/config/postal.yml` unless overriden by the `POSTAL_CONFIG_FILE_PATH` environment variable.
+Within a container, OmmicomMail will look for a config file in `/config/postal.yml` unless overridden by the `OMMICOMMAIL_CONFIG_FILE_PATH` environment variable.
 
 ## Ports & Bind Addresses
 
@@ -28,4 +28,4 @@ Additionally, `HEALTH_SERVER_PORT` and `HEALTH_SERVER_BIND_ADDRESS`  can be used
 
 ## Legacy configuration
 
-Legacy configuration files from Postal v1 and v2 are still supported. If you wish to use a new configuration option that is not available in the legacy format, you will need to upgrade the file to version 2.
+Legacy configuration files from Postal v1 and v2 are still supported for compatibility. If you wish to use a new configuration option that is not available in the legacy format, you will need to upgrade the file to version 2.

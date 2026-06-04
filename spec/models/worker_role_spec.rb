@@ -19,7 +19,7 @@ RSpec.describe WorkerRole do
   let(:locker_name) { "test" }
 
   before do
-    allow(Postal).to receive(:locker_name).and_return(locker_name)
+    allow(OmmicomMail).to receive(:locker_name).and_return(locker_name)
   end
 
   describe ".acquire" do

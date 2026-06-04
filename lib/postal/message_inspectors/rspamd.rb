@@ -38,7 +38,7 @@ module Postal
         request["Content-Length"] = raw_message.bytesize.to_s
         request["Password"] = @config.password if @config.password
         request["Flags"] = @config.flags if @config.flags
-        request["User-Agent"] = "Postal"
+        request["User-Agent"] = "OmmicomMail"
         request["Deliver-To"] = message.rcpt_to
         request["From"] = message.mail_from
         request["Rcpt"] = message.rcpt_to

@@ -46,7 +46,7 @@ module Postal
         request.add_field "X-Postal-Signature-256", OmmicomMail.signer.sign64(request.body.to_s)
       end
 
-      request["User-Agent"] = options[:user_agent] || "Postal/#{OmmicomMail.version}"
+      request["User-Agent"] = options[:user_agent] || "OmmicomMail/#{OmmicomMail.version}"
 
       timeout = options[:timeout] || 60
       ssl = uri.scheme == "https"
