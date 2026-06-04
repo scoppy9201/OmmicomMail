@@ -1,12 +1,13 @@
 services:
   postal:
-    image: ${POSTAL_IMAGE}
+    image: ${OMMICOMMAIL_IMAGE:-${POSTAL_IMAGE}}
     depends_on:
       - mariadb
     entrypoint: ["/docker-entrypoint.sh"]
     volumes:
       - "./docker/ci-config:/config"
     environment:
+      OMMICOMMAIL_SIGNING_KEY_PATH: /config/signing.key
       POSTAL_SIGNING_KEY_PATH: /config/signing.key
       MAIN_DB_HOST: mariadb
       MAIN_DB_USERNAME: root

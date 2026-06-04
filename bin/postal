@@ -1,5 +1,6 @@
 #!/bin/bash
 ROOT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )
+CLI_NAME=$(basename "$0")
 set -e
 
 run() {
@@ -57,7 +58,7 @@ case "$1" in
         ;;
 
     *)
-        echo "Usage: postal [command]"
+        echo "Usage: ${CLI_NAME} [command]"
         echo
         echo "Server components:"
         echo
@@ -72,10 +73,10 @@ case "$1" in
         echo
         echo "Other tools:"
         echo
-        echo -e " * \033[34mversion\033[0m - show the current Postal version"
+        echo -e " * \033[34mversion\033[0m - show the current OmmicomMail version"
         echo -e " * \033[34mmake-user\033[0m - create a new global admin user"
         echo -e " * \033[34mdefault-dkim-record\033[0m - display the default DKIM record"
         echo -e " * \033[34mconsole\033[0m - open an interactive console"
-        echo -e " * \033[34mtest-app-smtp\033[0m - send a test message through Postal"
+        echo -e " * \033[34mtest-app-smtp\033[0m - send a test message through OmmicomMail"
         echo
 esac

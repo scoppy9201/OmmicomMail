@@ -27,11 +27,15 @@ module Postal
     #
     # @return [String]
     def config_file_path
-      ENV.fetch("POSTAL_CONFIG_FILE_PATH", "config/postal/postal.yml")
+      ENV.fetch("OMMICOMMAIL_CONFIG_FILE_PATH") do
+        ENV.fetch("POSTAL_CONFIG_FILE_PATH", "config/postal/postal.yml")
+      end
     end
 
     def initialize_config
       sources = []
+
+      apply_environment_aliases
 
       # Load environment variables to begin with. Any config provided
       # by an environment variable will override any provided in the
@@ -39,7 +43,9 @@ module Postal
       Dotenv.load(".env")
       sources << Konfig::Sources::Environment.new(ENV)
 
-      silence_config_messages = ENV.fetch("SILENCE_POSTAL_CONFIG_MESSAGES", "false") == "true"
+      silence_config_messages = ENV.fetch("SILENCE_OMMICOMMAIL_CONFIG_MESSAGES") do
+        ENV.fetch("SILENCE_POSTAL_CONFIG_MESSAGES", "false")
+      end == "true"
 
       # If a config file exists, we need to load that. Config files can
       # either be legacy (v1) or new (v2). Any file without a 'version'
@@ -57,7 +63,7 @@ module Postal
         when 1
           unless silence_config_messages
             warn "WARNING: Using legacy config file format. Upgrade your postal.yml to use"
-            warn "version 2 of the Postal configuration or configure using environment"
+            warn "version 2 of the OmmicomMail configuration or configure using environment"
             warn "variables. See https://docs.postalserver.io/config-v2 for details."
           end
           sources << LegacyConfigSource.new(yaml)
@@ -180,8 +186,24 @@ module Postal
       value.empty? ? nil : value
     end
 
+    def apply_environment_aliases
+      ENV.each_pair do |key, value|
+        next unless key.start_with?("OMMICOMMAIL_")
+
+        postal_key = key.sub(/\AOMMICOMMAIL_/, "POSTAL_")
+        ENV[postal_key] = value unless ENV.key?(postal_key)
+      end
+
+      if ENV.key?("SILENCE_OMMICOMMAIL_CONFIG_MESSAGES") &&
+         !ENV.key?("SILENCE_POSTAL_CONFIG_MESSAGES")
+        ENV["SILENCE_POSTAL_CONFIG_MESSAGES"] = ENV["SILENCE_OMMICOMMAIL_CONFIG_MESSAGES"]
+      end
+    end
+
   end
 
   Config = initialize_config
 
 end
+
+OmmicomMail = Postal unless Object.const_defined?(:OmmicomMail)

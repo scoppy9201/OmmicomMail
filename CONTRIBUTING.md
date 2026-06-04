@@ -75,7 +75,8 @@ bin/dev
 Useful commands:
 
 * `bin/dev` runs the application components for development
-* `bin/postal` runs the OmmicomMail/Postal command line tools
+* `bin/ommicommail` runs the OmmicomMail command line tools
+* `bin/postal` remains available for compatibility with the original Postal command line
 * `bin/rails` runs Rails commands
 * `bin/rspec` runs the test suite
 
@@ -84,8 +85,8 @@ Useful commands:
 After configuration is ready, initialize the database and create your first user:
 
 ```bash
-bin/postal initialize
-bin/postal make-user
+bin/ommicommail initialize
+bin/ommicommail make-user
 ```
 
 ## Testing

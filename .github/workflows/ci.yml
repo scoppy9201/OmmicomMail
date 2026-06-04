@@ -54,10 +54,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: docker compose pull
         env:
-          POSTAL_IMAGE: ghcr.io/scoppy9201/ommicommail:ci-${{ github.sha }}
+          OMMICOMMAIL_IMAGE: ghcr.io/scoppy9201/ommicommail:ci-${{ github.sha }}
       - run: docker compose run postal sh -c 'bundle exec rspec'
         env:
-          POSTAL_IMAGE: ghcr.io/scoppy9201/ommicommail:ci-${{ github.sha }}
+          OMMICOMMAIL_IMAGE: ghcr.io/scoppy9201/ommicommail:ci-${{ github.sha }}
 
   release-branch:
     name: Release (branch)

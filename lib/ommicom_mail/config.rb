@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-module Postal
-end
+require "postal/config"
 
 OmmicomMail = Postal unless Object.const_defined?(:OmmicomMail)
