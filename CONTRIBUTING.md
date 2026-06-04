@@ -1,53 +1,127 @@
-# Contributing to Postal
+# Contributing to OmmicomMail
 
-This doc explains how to go about running Postal in development to allow you to make contributions to the project.
+Thank you for helping improve OmmicomMail.
 
-## Dependencies
+OmmicomMail is developed based on the original Postal project. Contributions should keep the project stable, practical, and easy to operate as a self-hosted mail server.
 
-You will need a MySQL database server to get started. Postal needs to be able to make databases within that server whenever new mail servers are created so the permissions that you use should be suitable for that.
+## Before You Start
 
-You'll also need Ruby. Postal currently uses Ruby 3.2.2. Install that using whichever version manager takes your fancy - rbenv, asdf, rvm etc.
+Please check existing issues or discussions before starting a large change. For small fixes, documentation updates, and focused improvements, feel free to open a pull request directly.
 
-## Clone
+Good contributions usually include:
 
-You'll need to clone the repository
+* A clear explanation of the problem being solved
+* A focused change set
+* Tests or manual verification notes when behavior changes
+* No unrelated formatting or refactoring
 
+## Development Requirements
+
+You will need:
+
+* Ruby 3.2.2
+* Bundler
+* MySQL or MariaDB
+* OpenSSL for generating signing keys
+
+The database user must be able to create databases because OmmicomMail creates message databases for mail servers.
+
+## Clone the Repository
+
+```bash
+git clone git@github.com:scoppy9201/OmmicomMail.git
+cd OmmicomMail
 ```
-git clone git@github.com:postalserver/postal
-```
 
-Once cloned, you can install the Ruby dependencies using bundler.
+Install dependencies:
 
-```
+```bash
 bundle install
 ```
 
 ## Configuration
 
-Configuration is handled using a config file. This lives in `config/postal/postal.yml`. An example configuration file is provided in `config/examples/development.yml`. This example is for development use only and not an example for production use.
+Configuration is handled through YAML files or environment variables.
 
-You'll also need a key for signing. You can generate one of these like this:
+For development, copy the example configuration:
 
+```bash
+mkdir -p config/postal
+cp config/examples/development.yml config/postal/postal.yml
 ```
+
+Generate a signing key:
+
+```bash
 openssl genrsa -out config/postal/signing.key 2048
 ```
 
-If you're running the tests (and you probably should be), you'll find an example file for test configuration in `config/examples/test.yml`. This should be placed in `config/postal/postal.test.yml` with the appropriate values.
+For tests, use the test example:
 
-If you prefer, you can configure Postal using environment variables. These should be placed in `.env` or `.env.test` as apprpriate.
-
-## Running
-
-The neatest way to run postal is to ensure that `./bin` is your `$PATH` and then use one of the following commands.
-
-* `bin/dev` - will run all components of the application using Foreman
-* `bin/postal` - will run the Postal binary providing access to running individual components or other tools.
-
-## Database initialization
-
-Use the commands below to initialize your database and make your first user.
-
+```bash
+cp config/examples/test.yml config/postal/postal.test.yml
 ```
-postal initialize
-postal make-user
+
+Environment variables can also be placed in `.env` or `.env.test`.
+
+## Running Locally
+
+Use the project binaries from the repository root:
+
+```bash
+bin/dev
 ```
+
+Useful commands:
+
+* `bin/dev` runs the application components for development
+* `bin/postal` runs the OmmicomMail/Postal command line tools
+* `bin/rails` runs Rails commands
+* `bin/rspec` runs the test suite
+
+## Database Initialization
+
+After configuration is ready, initialize the database and create your first user:
+
+```bash
+bin/postal initialize
+bin/postal make-user
+```
+
+## Testing
+
+Run the test suite before opening a pull request when possible:
+
+```bash
+bin/rspec
+```
+
+If you cannot run tests locally, mention that in the pull request and include the manual checks you performed.
+
+## Pull Request Guidelines
+
+Please keep pull requests focused. A good pull request should:
+
+* Describe what changed and why
+* Reference related issues when available
+* Include screenshots for UI changes
+* Include tests for application behavior changes
+* Avoid committing local secrets, generated logs, database dumps, or machine-specific files
+
+## Commit Style
+
+Use short, direct commit messages:
+
+```text
+Fix SMTP endpoint validation
+Update README branding
+Add webhook delivery test
+```
+
+## Security
+
+Do not open a public issue for sensitive security problems. Please report security concerns privately according to the instructions in `SECURITY.md`.
+
+## Attribution
+
+OmmicomMail is based on the original Postal project. Please preserve upstream license notices and attribution when modifying files derived from Postal.
