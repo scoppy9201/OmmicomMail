@@ -13,7 +13,7 @@ require "sprockets/railtie"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 gem_groups = Rails.groups
-gem_groups << :oidc if Postal::Config.oidc.enabled?
+gem_groups << :oidc if OmmicomMail::Config.oidc.enabled?
 Bundler.require(*gem_groups)
 
 module Postal
@@ -40,9 +40,9 @@ module Postal
     require "tracking_middleware"
     config.middleware.insert_before ActionDispatch::HostAuthorization, TrackingMiddleware
 
-    config.hosts << Postal::Config.postal.web_hostname
+    config.hosts << OmmicomMail::Config.postal.web_hostname
 
-    unless Postal::Config.logging.rails_log_enabled?
+    unless OmmicomMail::Config.logging.rails_log_enabled?
       config.logger = Logger.new("/dev/null")
     end
 

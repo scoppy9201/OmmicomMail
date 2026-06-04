@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "postal/config"
+require "ommicom_mail/config"
 
-if Postal::Config.logging.sentry_dsn
+if OmmicomMail::Config.logging.sentry_dsn
   Sentry.init do |config|
-    config.dsn = Postal::Config.logging.sentry_dsn
+    config.dsn = OmmicomMail::Config.logging.sentry_dsn
   end
 end

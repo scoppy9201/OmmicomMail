@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "postal/config"
+require "ommicom_mail/config"
 
-config = Postal::Config.smtp
+config = OmmicomMail::Config.smtp
 
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {

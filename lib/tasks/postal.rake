@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-namespace :postal do
+namespace :ommicommail do
   desc "Run all migrations on message databases"
   task migrate_message_databases: :environment do
     Server.all.each do |server|
@@ -14,16 +14,16 @@ namespace :postal do
     require "konfig/exporters/env_vars_as_markdown"
 
     FileUtils.mkdir_p("doc/config")
-    output = Konfig::Exporters::EnvVarsAsMarkdown.new(Postal::ConfigSchema).export
+    output = Konfig::Exporters::EnvVarsAsMarkdown.new(OmmicomMail::ConfigSchema).export
     File.write("doc/config/environment-variables.md", output)
 
-    output = Postal::YamlConfigExporter.new(Postal::ConfigSchema).export
+    output = OmmicomMail::YamlConfigExporter.new(OmmicomMail::ConfigSchema).export
     File.write("doc/config/yaml.yml", output)
   end
 
   desc "Generate Helm Environment Variables"
   task generate_helm_env_vars: :environment do
-    puts Postal::HelmConfigExporter.new(Postal::ConfigSchema).export
+    puts OmmicomMail::HelmConfigExporter.new(OmmicomMail::ConfigSchema).export
   end
 
   desc "Update the database"
@@ -40,6 +40,13 @@ namespace :postal do
   end
 end
 
+namespace :postal do
+  task migrate_message_databases: "ommicommail:migrate_message_databases"
+  task generate_config_docs: "ommicommail:generate_config_docs"
+  task generate_helm_env_vars: "ommicommail:generate_helm_env_vars"
+  task update: "ommicommail:update"
+end
+
 Rake::Task["db:migrate"].enhance do
-  Rake::Task["postal:migrate_message_databases"].invoke
+  Rake::Task["ommicommail:migrate_message_databases"].invoke
 end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require File.expand_path("../lib/postal/config", __dir__)
+require File.expand_path("../lib/ommicom_mail/config", __dir__)
 require "openssl"
 
-key_path = Postal::Config.smtp_server.tls_private_key_path
-cert_path = Postal::Config.smtp_server.tls_certificate_path
+key_path = OmmicomMail::Config.smtp_server.tls_private_key_path
+cert_path = OmmicomMail::Config.smtp_server.tls_certificate_path
 
 unless File.exist?(key_path)
   key = OpenSSL::PKey::RSA.new(2048).to_s

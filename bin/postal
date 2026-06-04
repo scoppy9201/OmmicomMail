@@ -1,6 +1,7 @@
 #!/bin/bash
 ROOT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )
 CLI_NAME=$(basename "$0")
+TASK_NAMESPACE="ommicommail"
 set -e
 
 run() {
@@ -26,15 +27,15 @@ case "$1" in
 
     initialize)
         echo 'Initializing database'
-        run "bundle exec rake db:create postal:update"
+        run "bundle exec rake db:create ${TASK_NAMESPACE}:update"
         ;;
 
     upgrade)
-        run "bundle exec rake postal:update"
+        run "bundle exec rake ${TASK_NAMESPACE}:update"
         ;;
 
     update)
-        run "bundle exec rake postal:update"
+        run "bundle exec rake ${TASK_NAMESPACE}:update"
         ;;
 
     console)
