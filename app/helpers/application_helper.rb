@@ -102,9 +102,9 @@ module ApplicationHelper
   end
 
   def postal_version_string
-    string = Postal.version
-    string += " (#{Postal.branch})" if Postal.branch &&
-                                       Postal.branch != "main"
+    string = OmmicomMail.version
+    string += " (#{OmmicomMail.branch})" if OmmicomMail.branch &&
+                                       OmmicomMail.branch != "main"
     string
   end
 

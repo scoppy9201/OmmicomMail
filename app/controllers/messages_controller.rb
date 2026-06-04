@@ -222,7 +222,7 @@ class MessagesController < ApplicationController
     @messages = @server.message_db.messages_with_pagination(params[:page], options)
   end
 
-  class TimeUndetermined < Postal::Error; end
+  class TimeUndetermined < OmmicomMail::Error; end
 
   def get_time_from_string(string)
     begin

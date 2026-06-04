@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class AddReplacedLinkCountToMessages < Postal::MessageDB::Migration
+      class AddReplacedLinkCountToMessages < OmmicomMail::MessageDB::Migration
 
         def up
           @database.query("ALTER TABLE `#{@database.database_name}`.`messages` ADD COLUMN `tracked_links` int(11) DEFAULT 0")

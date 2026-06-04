@@ -9,9 +9,9 @@ All messages that you send until your volume drops will now be held in the syste
 
 You can view more information about this server at:
 
-<%= Postal.host_with_protocol %>/org/<%= @server.organization.permalink %>/servers/<%= @server.permalink %>
+<%= OmmicomMail.host_with_protocol %>/org/<%= @server.organization.permalink %>/servers/<%= @server.permalink %>
 
 Thanks,
 
-<%= Postal::Config.smtp.from_name %>
-<%= Postal::Config.smtp.from_address %>
+<%= OmmicomMail::Config.smtp.from_name %>
+<%= OmmicomMail::Config.smtp.from_address %>

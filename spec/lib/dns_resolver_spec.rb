@@ -20,7 +20,7 @@ RSpec.describe DNSResolver do
     end
 
     it "returns an empty array when timeout is exceeded" do
-      allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+      allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
       expect(resolver.a("www.dnstest.postalserver.io")).to eq []
     end
 
@@ -30,7 +30,7 @@ RSpec.describe DNSResolver do
       end
 
       it "raises an error when the timeout is exceeded" do
-        allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+        allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
         expect do
           resolver.a("www.dnstest.postalserver.io", raise_timeout_errors: true)
         end.to raise_error(Resolv::ResolvError, /timeout/)
@@ -44,7 +44,7 @@ RSpec.describe DNSResolver do
     end
 
     it "returns an empty array when timeout is exceeded" do
-      allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+      allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
       expect(resolver.aaaa("www.dnstest.postalserver.io")).to eq []
     end
 
@@ -54,7 +54,7 @@ RSpec.describe DNSResolver do
       end
 
       it "raises an error when the timeout is exceeded" do
-        allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+        allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
         expect do
           resolver.aaaa("www.dnstest.postalserver.io", raise_timeout_errors: true)
         end.to raise_error(Resolv::ResolvError, /timeout/)
@@ -71,7 +71,7 @@ RSpec.describe DNSResolver do
     end
 
     it "returns an empty array when timeout is exceeded" do
-      allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+      allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
       expect(resolver.txt("dnstest.postalserver.io")).to eq []
     end
 
@@ -84,7 +84,7 @@ RSpec.describe DNSResolver do
       end
 
       it "raises an error when the timeout is exceeded" do
-        allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+        allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
         expect do
           resolver.txt("dnstest.postalserver.io", raise_timeout_errors: true)
         end.to raise_error(Resolv::ResolvError, /timeout/)
@@ -98,7 +98,7 @@ RSpec.describe DNSResolver do
     end
 
     it "returns an empty array when timeout is exceeded" do
-      allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+      allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
       expect(resolver.cname("cname.dnstest.postalserver.io")).to eq []
     end
 
@@ -108,7 +108,7 @@ RSpec.describe DNSResolver do
       end
 
       it "raises an error when the timeout is exceeded" do
-        allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+        allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
         expect do
           resolver.cname("cname.dnstest.postalserver.io", raise_timeout_errors: true)
         end.to raise_error(Resolv::ResolvError, /timeout/)
@@ -125,7 +125,7 @@ RSpec.describe DNSResolver do
     end
 
     it "returns an empty array when timeout is exceeded" do
-      allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+      allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
       expect(resolver.mx("dnstest.postalserver.io")).to eq []
     end
 
@@ -138,7 +138,7 @@ RSpec.describe DNSResolver do
       end
 
       it "raises an error when the timeout is exceeded" do
-        allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+        allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
         expect do
           resolver.mx("dnstest.postalserver.io", raise_timeout_errors: true)
         end.to raise_error(Resolv::ResolvError, /timeout/)
@@ -155,7 +155,7 @@ RSpec.describe DNSResolver do
     end
 
     it "returns an empty array when timeout is exceeded" do
-      allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+      allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
       expect(resolver.effective_ns("postalserver.io")).to eq []
     end
 
@@ -168,7 +168,7 @@ RSpec.describe DNSResolver do
       end
 
       it "raises an error when the timeout is exceeded" do
-        allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+        allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
         expect do
           resolver.effective_ns("postalserver.io", raise_timeout_errors: true)
         end.to raise_error(Resolv::ResolvError, /timeout/)
@@ -182,7 +182,7 @@ RSpec.describe DNSResolver do
     end
 
     it "returns the IP when the timeout is exceeded" do
-      allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+      allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
       expect(resolver.ip_to_hostname("151.252.1.100")).to eq "151.252.1.100"
     end
 
@@ -192,7 +192,7 @@ RSpec.describe DNSResolver do
       end
 
       it "raises an error when the timeout is exceeded" do
-        allow(Postal::Config.dns).to receive(:timeout).and_return(0.00001)
+        allow(OmmicomMail::Config.dns).to receive(:timeout).and_return(0.00001)
         expect do
           resolver.ip_to_hostname("151.252.1.100", raise_timeout_errors: true)
         end.to raise_error(Resolv::ResolvError, /timeout/)

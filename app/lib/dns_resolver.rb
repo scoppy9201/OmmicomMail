@@ -112,9 +112,9 @@ class DNSResolver
     Resolv::DNS.open(nameserver: @nameservers,
                      raise_timeout_errors: raise_timeout_errors) do |dns|
       dns.timeouts = [
-        Postal::Config.dns.timeout,
-        Postal::Config.dns.timeout / 2,
-        Postal::Config.dns.timeout / 2,
+        OmmicomMail::Config.dns.timeout,
+        OmmicomMail::Config.dns.timeout / 2,
+        OmmicomMail::Config.dns.timeout / 2,
       ]
       yield dns
     end
@@ -146,7 +146,7 @@ class DNSResolver
     # @return [DNSResolver]
     def local
       @local ||= begin
-        resolv_conf_path = Postal::Config.dns.resolv_conf_path
+        resolv_conf_path = OmmicomMail::Config.dns.resolv_conf_path
         raise LocalResolversUnavailableError, "No resolver config found at #{resolv_conf_path}" unless File.file?(resolv_conf_path)
 
         resolv_conf = Resolv::DNS::Config.parse_resolv_conf(resolv_conf_path)

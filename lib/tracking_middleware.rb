@@ -40,7 +40,7 @@ class TrackingMiddleware
     begin
       message = message_db.message(token: message_token)
       message.create_load(request)
-    rescue Postal::MessageDB::Message::NotFound
+    rescue OmmicomMail::MessageDB::Message::NotFound
       # This message has been removed, we'll just continue to serve the image
     rescue StandardError => e
       # Somethign else went wrong. We don't want to stop the image loading though because
@@ -89,7 +89,7 @@ class TrackingMiddleware
           ip_address: request.ip,
           user_agent: request.user_agent
         })
-      rescue Postal::MessageDB::Message::NotFound
+      rescue OmmicomMail::MessageDB::Message::NotFound
         # If we can't find the message that this link is associated with, we'll just ignore it
         # and not trigger any webhooks.
       end

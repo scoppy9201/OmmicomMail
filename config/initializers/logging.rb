@@ -32,16 +32,16 @@ begin
     string = "#{payload[:method]} #{payload[:path]} (#{payload[:status]})"
 
     if payload[:exception_class]
-      Postal.logger.error(string, **payload)
+      OmmicomMail.logger.error(string, **payload)
     else
-      Postal.logger.info(string, **payload)
+      OmmicomMail.logger.info(string, **payload)
     end
   end
 
   ActiveSupport::Notifications.subscribe "deliver.action_mailer" do |*args|
     event = ActiveSupport::Notifications::Event.new(*args)
 
-    Postal.logger.info({
+    OmmicomMail.logger.info({
       event: "send_email",
       transaction: event.transaction_id,
       message_id: event.payload[:message_id],

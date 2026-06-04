@@ -92,7 +92,7 @@ module LegacyAPI
       end
 
       render_success message_hash
-    rescue Postal::MessageDB::Message::NotFound
+    rescue OmmicomMail::MessageDB::Message::NotFound
       render_error "MessageNotFound",
                    message: "No message found matching provided ID",
                    id: api_params["id"]
@@ -124,7 +124,7 @@ module LegacyAPI
         }
       end
       render_success deliveries
-    rescue Postal::MessageDB::Message::NotFound
+    rescue OmmicomMail::MessageDB::Message::NotFound
       render_error "MessageNotFound",
                    message: "No message found matching provided ID",
                    id: api_params["id"]
@@ -145,7 +145,7 @@ module LegacyAPI
     # a scalar; otherwise returns the matched message (raising NotFound when no
     # message matches, which the actions rescue).
     #
-    # @return [Postal::MessageDB::Message, nil]
+    # @return [OmmicomMail::MessageDB::Message, nil]
     def find_message
       id = api_params["id"]
 

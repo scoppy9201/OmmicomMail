@@ -15,7 +15,7 @@ module Postal
     private
 
     def logger
-      Postal.logger
+      OmmicomMail.logger
     end
 
     class << self
@@ -24,14 +24,14 @@ module Postal
       # installation.
       def inspectors
         [].tap do |inspectors|
-          if Postal::Config.rspamd.enabled?
-            inspectors << MessageInspectors::Rspamd.new(Postal::Config.rspamd)
-          elsif Postal::Config.spamd.enabled?
-            inspectors << MessageInspectors::SpamAssassin.new(Postal::Config.spamd)
+          if OmmicomMail::Config.rspamd.enabled?
+            inspectors << MessageInspectors::Rspamd.new(OmmicomMail::Config.rspamd)
+          elsif OmmicomMail::Config.spamd.enabled?
+            inspectors << MessageInspectors::SpamAssassin.new(OmmicomMail::Config.spamd)
           end
 
-          if Postal::Config.clamav.enabled?
-            inspectors << MessageInspectors::Clamav.new(Postal::Config.clamav)
+          if OmmicomMail::Config.clamav.enabled?
+            inspectors << MessageInspectors::Clamav.new(OmmicomMail::Config.clamav)
           end
         end
       end

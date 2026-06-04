@@ -11,12 +11,12 @@ module SMTPServer
     class << self
 
       def tls_private_key
-        @tls_private_key ||= OpenSSL::PKey.read(File.read(Postal::Config.smtp_server.tls_private_key_path))
+        @tls_private_key ||= OpenSSL::PKey.read(File.read(OmmicomMail::Config.smtp_server.tls_private_key_path))
       end
 
       def tls_certificates
         @tls_certificates ||= begin
-          data = File.read(Postal::Config.smtp_server.tls_certificate_path)
+          data = File.read(OmmicomMail::Config.smtp_server.tls_certificate_path)
           certs = data.scan(/-----BEGIN CERTIFICATE-----.+?-----END CERTIFICATE-----/m)
           certs.map do |c|
             OpenSSL::X509::Certificate.new(c)
@@ -63,15 +63,15 @@ module SMTPServer
         ssl_context.cert = self.class.tls_certificates[0]
         ssl_context.extra_chain_cert = self.class.tls_certificates[1..]
         ssl_context.key = self.class.tls_private_key
-        ssl_context.ssl_version = Postal::Config.smtp_server.ssl_version if Postal::Config.smtp_server.ssl_version
-        ssl_context.ciphers = Postal::Config.smtp_server.tls_ciphers if Postal::Config.smtp_server.tls_ciphers
+        ssl_context.ssl_version = OmmicomMail::Config.smtp_server.ssl_version if OmmicomMail::Config.smtp_server.ssl_version
+        ssl_context.ciphers = OmmicomMail::Config.smtp_server.tls_ciphers if OmmicomMail::Config.smtp_server.tls_ciphers
         ssl_context
       end
     end
 
     def listen
-      bind_address = ENV.fetch("BIND_ADDRESS", Postal::Config.smtp_server.default_bind_address)
-      port = ENV.fetch("PORT", Postal::Config.smtp_server.default_port)
+      bind_address = ENV.fetch("BIND_ADDRESS", OmmicomMail::Config.smtp_server.default_bind_address)
+      port = ENV.fetch("PORT", OmmicomMail::Config.smtp_server.default_port)
 
       @server = TCPServer.open(bind_address, port)
       @server.autoclose = false
@@ -114,22 +114,22 @@ module SMTPServer
               increment_prometheus_counter :postal_smtp_server_connections_total
               # Get the client's IP address and strip `::ffff:` for consistency.
               client_ip_address = new_io.remote_address.ip_address.sub(/\A::ffff:/, "")
-              if Postal::Config.smtp_server.proxy_protocol?
+              if OmmicomMail::Config.smtp_server.proxy_protocol?
                 # If we are using the haproxy proxy protocol, we will be sent the
                 # client's IP later. Delay the welcome process.
                 client = Client.new(nil)
-                if Postal::Config.smtp_server.log_connections?
+                if OmmicomMail::Config.smtp_server.log_connections?
                   client.logger&.debug "Connection opened from #{client_ip_address}"
                 end
               else
                 # We're not using the proxy protocol so we already know the client's IP
                 client = Client.new(client_ip_address)
-                if Postal::Config.smtp_server.log_connections?
+                if OmmicomMail::Config.smtp_server.log_connections?
                   client.logger&.debug "Connection opened from #{client_ip_address}"
                 end
                 # We know who the client is, welcome them.
                 client.logger&.debug "Client identified as #{client_ip_address}"
-                new_io.print("220 #{Postal::Config.postal.smtp_hostname} ESMTP Postal/#{client.trace_id}")
+                new_io.print("220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP Postal/#{client.trace_id}")
               end
               # Register the client and its socket with nio4r
               monitor = @io_selector.register(new_io, :r)
@@ -296,7 +296,7 @@ module SMTPServer
     end
 
     def logger
-      Postal.logger
+      OmmicomMail.logger
     end
 
     def register_prometheus_metrics

@@ -4,7 +4,7 @@ module Postal
   module MessageDB
     class Message
 
-      class NotFound < Postal::Error
+      class NotFound < OmmicomMail::Error
       end
 
       def self.find_one(database, query)
@@ -128,7 +128,7 @@ module Postal
       #
       def create_delivery(status, options = {})
         delivery = Delivery.create(self, options.merge(status: status))
-        hold_expiry = status == "Held" ? Postal::Config.postal.default_maximum_hold_expiry_days.days.from_now.to_f : nil
+        hold_expiry = status == "Held" ? OmmicomMail::Config.postal.default_maximum_hold_expiry_days.days.from_now.to_f : nil
         update(status: status, last_delivery_attempt: delivery.timestamp.to_f, held: status == "Held", hold_expiry: hold_expiry)
         delivery
       end
@@ -511,7 +511,7 @@ module Postal
       # Was thsi message sent to a return path?
       #
       def rcpt_to_return_path?
-        !!(rcpt_to =~ /@#{Regexp.escape(Postal::Config.dns.custom_return_path_prefix)}\./)
+        !!(rcpt_to =~ /@#{Regexp.escape(OmmicomMail::Config.dns.custom_return_path_prefix)}\./)
       end
 
       #
@@ -550,7 +550,7 @@ module Postal
       # Parse the contents of this message
       #
       def parse_content
-        parse_result = Postal::MessageParser.new(self)
+        parse_result = OmmicomMail::MessageParser.new(self)
         if parse_result.actioned?
           # Somethign was changed, update the raw message
           @database.update(raw_table, { data: parse_result.new_body }, where: { id: raw_body_id })

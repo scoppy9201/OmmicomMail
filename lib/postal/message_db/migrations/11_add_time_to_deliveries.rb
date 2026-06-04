@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class AddTimeToDeliveries < Postal::MessageDB::Migration
+      class AddTimeToDeliveries < OmmicomMail::MessageDB::Migration
 
         def up
           @database.query("ALTER TABLE `#{@database.database_name}`.`deliveries` ADD COLUMN `time` decimal(8,2)")

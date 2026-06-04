@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class IncreaseLinksUrlSize < Postal::MessageDB::Migration
+      class IncreaseLinksUrlSize < OmmicomMail::MessageDB::Migration
 
         def up
           @database.query("ALTER TABLE `#{@database.database_name}`.`links` MODIFY `url` TEXT")

@@ -23,17 +23,17 @@ class WorkerRole < ApplicationRecord
     # @return [Symbol, false] True if the lock was acquired or renewed, false otherwise
     def acquire(role)
       # update our existing lock if we already have one
-      updates = where(role: role, worker: Postal.locker_name).update_all(acquired_at: Time.current)
+      updates = where(role: role, worker: OmmicomMail.locker_name).update_all(acquired_at: Time.current)
       return :renewed if updates.positive?
 
       # attempt to steal a role from another worker
       updates = where(role: role).where("acquired_at is null OR acquired_at < ?", 5.minutes.ago)
-                                 .update_all(acquired_at: Time.current, worker: Postal.locker_name)
+                                 .update_all(acquired_at: Time.current, worker: OmmicomMail.locker_name)
       return :stolen if updates.positive?
 
       # attempt to create a new role for this worker
       begin
-        create!(role: role, worker: Postal.locker_name, acquired_at: Time.current)
+        create!(role: role, worker: OmmicomMail.locker_name, acquired_at: Time.current)
         :created
       rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
         false
@@ -45,7 +45,7 @@ class WorkerRole < ApplicationRecord
     # @param role [String] The name of the role to release
     # @return [Boolean] True if the lock was released, false otherwise
     def release(role)
-      updates = where(role: role, worker: Postal.locker_name).delete_all
+      updates = where(role: role, worker: OmmicomMail.locker_name).delete_all
       updates.positive?
     end
 

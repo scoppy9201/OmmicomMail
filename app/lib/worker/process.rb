@@ -45,7 +45,7 @@ module Worker
     ].freeze
 
     # @param [Integer] thread_count The number of worker threads to run in this process
-    def initialize(thread_count: Postal::Config.worker.threads,
+    def initialize(thread_count: OmmicomMail::Config.worker.threads,
                    work_sleep_time: 5,
                    task_sleep_time: 60)
       @thread_count = thread_count
@@ -111,7 +111,7 @@ module Worker
                   "than the db connection pool size (#{current_pool_size}+3), " \
                   "increasing connection pool size to #{desired_pool_size}"
 
-      Postal.change_database_connection_pool_size(desired_pool_size)
+      OmmicomMail.change_database_connection_pool_size(desired_pool_size)
     end
 
     # Wait for all threads to complete
@@ -274,7 +274,7 @@ module Worker
     #
     # @return [Klogger::Logger]
     def logger
-      Postal.logger
+      OmmicomMail.logger
     end
 
     # Capture exceptions and handle this as appropriate.

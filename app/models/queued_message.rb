@@ -37,7 +37,7 @@ class QueuedMessage < ApplicationRecord
   before_create :allocate_ip_address
 
   scope :ready_with_delayed_retry, -> { where("retry_after IS NULL OR retry_after < ?", 30.seconds.ago) }
-  scope :with_stale_lock, -> { where("locked_at IS NOT NULL AND locked_at < ?", Postal::Config.postal.queued_message_lock_stale_days.days.ago) }
+  scope :with_stale_lock, -> { where("locked_at IS NOT NULL AND locked_at < ?", OmmicomMail::Config.postal.queued_message_lock_stale_days.days.ago) }
 
   def retry_now
     update!(retry_after: nil)
@@ -50,7 +50,7 @@ class QueuedMessage < ApplicationRecord
   end
 
   def allocate_ip_address
-    return unless Postal.ip_pools?
+    return unless OmmicomMail.ip_pools?
     return if message.nil?
 
     pool = server.ip_pool_for_message(message)
@@ -61,14 +61,14 @@ class QueuedMessage < ApplicationRecord
 
   def batchable_messages(limit = 10)
     unless locked?
-      raise Postal::Error, "Must lock current message before locking any friends"
+      raise OmmicomMail::Error, "Must lock current message before locking any friends"
     end
 
     if batch_key.nil?
       []
     else
       time = Time.now
-      locker = Postal.locker_name
+      locker = OmmicomMail.locker_name
       self.class.ready.where(batch_key: batch_key, ip_address_id: ip_address_id, locked_by: nil, locked_at: nil).limit(limit).update_all(locked_by: locker, locked_at: time)
       QueuedMessage.where(batch_key: batch_key, ip_address_id: ip_address_id, locked_by: locker, locked_at: time).where.not(id: id)
     end

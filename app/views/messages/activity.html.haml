@@ -9,7 +9,7 @@
 .pageContent.pageContent--compact
   %ul.messageActivity
     - for entry in @entries.reverse
-      - if entry.is_a?(Postal::MessageDB::Delivery)
+      - if entry.is_a?(OmmicomMail::MessageDB::Delivery)
         %li.messageActivity__event
           %p.messageActivity__timestamp= entry.timestamp.to_fs(:long)
           .messageActivity__details.messageActivity--detailsDelivery
@@ -19,14 +19,14 @@
 
             %p.messageActivity__extra= entry.details
 
-      - elsif entry.is_a?(Postal::MessageDB::Click)
+      - elsif entry.is_a?(OmmicomMail::MessageDB::Click)
         %li.messageActivity__event
           %p.messageActivity__timestamp= entry.timestamp.to_fs(:long)
           .messageActivity__details.messageActivity--detailsClick
             %p.messageActivity__subject Click for #{entry.url}
             %p.messageActivity__extra Clicked from #{entry.ip_address} (#{entry.user_agent})
 
-      - elsif entry.is_a?(Postal::MessageDB::Load)
+      - elsif entry.is_a?(OmmicomMail::MessageDB::Load)
         %li.messageActivity__event
           %p.messageActivity__timestamp= entry.timestamp.to_fs(:long)
           .messageActivity__details.messageActivity--detailsLoad

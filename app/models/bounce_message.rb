@@ -14,7 +14,7 @@ class BounceMessage
     mail.subject = "Mail Delivery Failed (#{@message.subject})"
     mail.text_part = body
     mail.attachments["Original Message.eml"] = { mime_type: "message/rfc822", encoding: "quoted-printable", content: @message.raw_message }
-    mail.message_id = "<#{SecureRandom.uuid}@#{Postal::Config.dns.return_path_domain}>"
+    mail.message_id = "<#{SecureRandom.uuid}@#{OmmicomMail::Config.dns.return_path_domain}>"
     mail.to_s
   end
 
@@ -32,7 +32,7 @@ class BounceMessage
   end
 
   def postmaster_address
-    @server.postmaster_address || "postmaster@#{@message.domain&.name || Postal::Config.postal.web_hostname}"
+    @server.postmaster_address || "postmaster@#{@message.domain&.name || OmmicomMail::Config.postal.web_hostname}"
   end
 
   private

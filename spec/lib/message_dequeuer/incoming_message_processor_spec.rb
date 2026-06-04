@@ -116,7 +116,7 @@ module MessageDequeuer
 
       it "marks the message as spam if the spam score is higher than the server threshold" do
         inspection_result = double("Result", spam_score: server.spam_threshold + 1, threat: false, threat_message: nil, spam_checks: [])
-        allow(Postal::MessageInspection).to receive(:scan).and_return(inspection_result)
+        allow(OmmicomMail::MessageInspection).to receive(:scan).and_return(inspection_result)
         processor.process
         expect(message.reload.spam).to be true
       end
@@ -125,7 +125,7 @@ module MessageDequeuer
     context "when the message has a spam score greater than the server's spam failure threshold" do
       before do
         inspection_result = double("Result", spam_score: 100, threat: false, threat_message: nil, spam_checks: [])
-        allow(Postal::MessageInspection).to receive(:scan).and_return(inspection_result)
+        allow(OmmicomMail::MessageInspection).to receive(:scan).and_return(inspection_result)
       end
 
       it "logs" do
@@ -211,7 +211,7 @@ module MessageDequeuer
 
       before do
         inspection_result = double("Result", spam_score: server.spam_threshold + 1, threat: false, threat_message: nil, spam_checks: [])
-        allow(Postal::MessageInspection).to receive(:scan).and_return(inspection_result)
+        allow(OmmicomMail::MessageInspection).to receive(:scan).and_return(inspection_result)
       end
 
       it "logs" do
@@ -241,7 +241,7 @@ module MessageDequeuer
 
       before do
         inspection_result = double("Result", spam_score: server.spam_threshold + 1, threat: false, threat_message: nil, spam_checks: [])
-        allow(Postal::MessageInspection).to receive(:scan).and_return(inspection_result)
+        allow(OmmicomMail::MessageInspection).to receive(:scan).and_return(inspection_result)
       end
 
       it "logs" do

@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     login(User.authenticate(params[:email_address], params[:password]))
     flash[:remember_login] = true
     redirect_to_with_return_to root_path
-  rescue Postal::Errors::AuthenticationError
+  rescue OmmicomMail::Errors::AuthenticationError
     flash.now[:alert] = "The credentials you've provided are incorrect. Please check and try again."
     render "new"
   end
@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
   def begin_password_reset
     return unless request.post?
 
-    user_scope = Postal::Config.oidc.enabled? ? User.with_password : User
+    user_scope = OmmicomMail::Config.oidc.enabled? ? User.with_password : User
     user = user_scope.find_by(email_address: params[:email_address])
 
     if user.nil?
@@ -68,12 +68,12 @@ class SessionsController < ApplicationController
   end
 
   def create_from_oidc
-    unless Postal::Config.oidc.enabled?
-      raise Postal::Error, "OIDC cannot be used unless enabled in the configuration"
+    unless OmmicomMail::Config.oidc.enabled?
+      raise OmmicomMail::Error, "OIDC cannot be used unless enabled in the configuration"
     end
 
     auth = request.env["omniauth.auth"]
-    user = User.find_from_oidc(auth.extra.raw_info, logger: Postal.logger)
+    user = User.find_from_oidc(auth.extra.raw_info, logger: OmmicomMail.logger)
     if user.nil?
       redirect_to login_path, alert: "No user was found matching your identity. Please contact your administrator."
       return
@@ -91,7 +91,7 @@ class SessionsController < ApplicationController
   private
 
   def require_local_authentication
-    return if Postal::Config.oidc.local_authentication_enabled?
+    return if OmmicomMail::Config.oidc.local_authentication_enabled?
 
     redirect_to login_path, alert: "Local authentication is not enabled"
   end

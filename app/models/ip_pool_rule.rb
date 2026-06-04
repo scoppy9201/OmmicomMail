@@ -71,7 +71,7 @@ class IPPoolRule < ApplicationRecord
   class << self
 
     def address_matches?(condition, address)
-      address = Postal::Helpers.strip_name_from_address(address)
+      address = OmmicomMail::Helpers.strip_name_from_address(address)
       if condition =~ /@/
         parts = address.split("@")
         domain = parts.pop

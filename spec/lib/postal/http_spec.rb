@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe Postal::HTTP do
+RSpec.describe OmmicomMail::HTTP do
   before do
-    allow(Postal::Config.postal).to receive(:allowed_request_destinations).and_return([])
+    allow(OmmicomMail::Config.postal).to receive(:allowed_request_destinations).and_return([])
   end
 
   describe ".post" do
@@ -65,7 +65,7 @@ RSpec.describe Postal::HTTP do
 
     context "when the blocked host is allowlisted" do
       before do
-        allow(Postal::Config.postal).to receive(:allowed_request_destinations).and_return(["internal.example.com"])
+        allow(OmmicomMail::Config.postal).to receive(:allowed_request_destinations).and_return(["internal.example.com"])
         allow(Resolv).to receive(:getaddresses).with("internal.example.com").and_return(["10.0.0.5"])
         stub_request(:post, "http://internal.example.com/hook").to_return(status: 200, body: "OK")
       end

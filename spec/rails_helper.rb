@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ENV["POSTAL_CONFIG_FILE_PATH"] ||= "config/postal/postal.test.yml"
+ENV["POSTAL_CONFIG_FILE_PATH"] ||= "config/postal/OmmicomMail.test.yml"
 
 require "dotenv"
 Dotenv.load(".env.test")
@@ -39,7 +39,7 @@ RSpec.configure do |config|
   # Postal otherwise it'll be www.example.com which will fail host
   # authorization checks.
   config.before(:each, type: :request) do
-    host! Postal::Config.postal.web_hostname
+    host! OmmicomMail::Config.postal.web_hostname
   end
 
   # Test that the factories are working as they should and then clean up before getting started on

@@ -136,7 +136,7 @@ module Postal
           notifier.notify!(short_message: short_message, **{
             facility: Config.gelf.facility,
             _environment: Config.rails.environment,
-            _version: Postal.version.to_s,
+            _version: OmmicomMail.version.to_s,
             _group_ids: group_ids.join(" ")
           }.merge(payload.transform_keys { |k| "_#{k}".to_sym }.transform_values(&:to_s)))
         end

@@ -104,7 +104,7 @@ class Domain < ApplicationRecord
   end
 
   def spf_record
-    "v=spf1 a mx include:#{Postal::Config.dns.spf_include} ~all"
+    "v=spf1 a mx include:#{OmmicomMail::Config.dns.spf_include} ~all"
   end
 
   def dkim_record
@@ -117,7 +117,7 @@ class Domain < ApplicationRecord
   def dkim_identifier
     return nil unless dkim_identifier_string
 
-    Postal::Config.dns.dkim_identifier + "-#{dkim_identifier_string}"
+    OmmicomMail::Config.dns.dkim_identifier + "-#{dkim_identifier_string}"
   end
 
   def dkim_record_name
@@ -128,7 +128,7 @@ class Domain < ApplicationRecord
   end
 
   def return_path_domain
-    "#{Postal::Config.dns.custom_return_path_prefix}.#{name}"
+    "#{OmmicomMail::Config.dns.custom_return_path_prefix}.#{name}"
   end
 
   # Returns a DNSResolver instance that can be used to perform DNS lookups needed for
@@ -136,13 +136,13 @@ class Domain < ApplicationRecord
   #
   # @return [DNSResolver]
   def resolver
-    return DNSResolver.local if Postal::Config.postal.use_local_ns_for_domain_verification?
+    return DNSResolver.local if OmmicomMail::Config.postal.use_local_ns_for_domain_verification?
 
     @resolver ||= DNSResolver.for_domain(name)
   end
 
   def dns_verification_string
-    "#{Postal::Config.dns.domain_verify_prefix} #{verification_token}"
+    "#{OmmicomMail::Config.dns.domain_verify_prefix} #{verification_token}"
   end
 
   def verify_with_dns

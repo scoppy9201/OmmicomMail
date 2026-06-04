@@ -167,7 +167,7 @@ module MessageDequeuer
         allow(mocked_parser).to receive(:actioned?).and_return(false)
         allow(mocked_parser).to receive(:tracked_links).and_return(0)
         allow(mocked_parser).to receive(:tracked_images).and_return(0)
-        expect(Postal::MessageParser).to receive(:new).with(kind_of(Postal::MessageDB::Message)).and_return(mocked_parser)
+        expect(OmmicomMail::MessageParser).to receive(:new).with(kind_of(OmmicomMail::MessageDB::Message)).and_return(mocked_parser)
         processor.process
         reloaded_message = message.reload
         expect(reloaded_message.parsed).to eq 1
@@ -187,14 +187,14 @@ module MessageDequeuer
 
       it "inspects the message" do
         inspection_result = double("Result", spam_score: 1.0, threat: false, threat_message: nil, spam_checks: [])
-        expect(Postal::MessageInspection).to receive(:scan).and_return(inspection_result)
+        expect(OmmicomMail::MessageInspection).to receive(:scan).and_return(inspection_result)
         processor.process
       end
 
       context "when the message spam score is higher than the threshold" do
         before do
           inspection_result = double("Result", spam_score: 6.0, threat: false, threat_message: nil, spam_checks: [])
-          allow(Postal::MessageInspection).to receive(:scan).and_return(inspection_result)
+          allow(OmmicomMail::MessageInspection).to receive(:scan).and_return(inspection_result)
         end
 
         it "logs" do
@@ -227,7 +227,7 @@ module MessageDequeuer
 
     context "when the server does not have a outbound spam threshold configured" do
       it "does not inspect the message" do
-        expect(Postal::MessageInspection).to_not receive(:scan)
+        expect(OmmicomMail::MessageInspection).to_not receive(:scan)
         processor.process
       end
     end

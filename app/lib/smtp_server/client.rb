@@ -35,8 +35,8 @@ module SMTPServer
 
     def check_ip_address
       return unless @ip_address &&
-                    Postal::Config.smtp_server.log_ip_address_exclusion_matcher &&
-                    @ip_address =~ Regexp.new(Postal::Config.smtp_server.log_ip_address_exclusion_matcher)
+                    OmmicomMail::Config.smtp_server.log_ip_address_exclusion_matcher &&
+                    @ip_address =~ Regexp.new(OmmicomMail::Config.smtp_server.log_ip_address_exclusion_matcher)
 
       @logging_enabled = false
     end
@@ -59,7 +59,7 @@ module SMTPServer
       else
         # This doesn't use `logger` because that will be nil when logging is disabled
         # and we always want to log this.
-        Postal.logger&.warn("Detected line with invalid line ending (missing <CR>)", trace_id: trace_id)
+        OmmicomMail.logger&.warn("Detected line with invalid line ending (missing <CR>)", trace_id: trace_id)
         @cr_present = false
       end
 
@@ -110,7 +110,7 @@ module SMTPServer
     def logger
       return nil unless @logging_enabled
 
-      @logger ||= Postal.logger.create_tagged_logger(trace_id: trace_id)
+      @logger ||= OmmicomMail.logger.create_tagged_logger(trace_id: trace_id)
     end
 
     private
@@ -123,7 +123,7 @@ module SMTPServer
         @state = :welcome
         logger&.debug "\e[35mClient identified as #{@ip_address}\e[0m"
         increment_command_count("PROXY")
-        return "220 #{Postal::Config.postal.smtp_hostname} ESMTP Postal/#{trace_id}"
+        return "220 #{OmmicomMail::Config.postal.smtp_hostname} ESMTP Postal/#{trace_id}"
       end
 
       @finished = true
@@ -137,7 +137,7 @@ module SMTPServer
     end
 
     def starttls
-      if Postal::Config.smtp_server.tls_enabled?
+      if OmmicomMail::Config.smtp_server.tls_enabled?
         @start_tls = true
         @tls = true
         increment_command_count("STARTLS")
@@ -155,7 +155,7 @@ module SMTPServer
       increment_command_count("EHLO")
       [
         "250-My capabilities are",
-        Postal::Config.smtp_server.tls_enabled? && !@tls ? "250-STARTTLS" : nil,
+        OmmicomMail::Config.smtp_server.tls_enabled? && !@tls ? "250-STARTTLS" : nil,
         "250 AUTH CRAM-MD5 PLAIN LOGIN",
       ].compact
     end
@@ -165,7 +165,7 @@ module SMTPServer
       transaction_reset
       @state = :welcomed
       increment_command_count("HELO")
-      "250 #{Postal::Config.postal.smtp_hostname}"
+      "250 #{OmmicomMail::Config.postal.smtp_hostname}"
     end
 
     def rset
@@ -245,7 +245,7 @@ module SMTPServer
       increment_command_count("AUTH CRAM-MD5")
 
       challenge = Digest::SHA1.hexdigest(Time.now.to_i.to_s + rand(100_000).to_s)
-      challenge = "<#{challenge[0, 20]}@#{Postal::Config.postal.smtp_hostname}>"
+      challenge = "<#{challenge[0, 20]}@#{OmmicomMail::Config.postal.smtp_hostname}>"
 
       handler = proc do |idata|
         @proc = nil
@@ -324,7 +324,7 @@ module SMTPServer
 
       uname, tag = uname.split("+", 2)
 
-      if domain == Postal::Config.dns.return_path_domain || domain =~ /\A#{Regexp.escape(Postal::Config.dns.custom_return_path_prefix)}\./
+      if domain == OmmicomMail::Config.dns.return_path_domain || domain =~ /\A#{Regexp.escape(OmmicomMail::Config.dns.custom_return_path_prefix)}\./
         # This is a return path
         @state = :rcpt_to_received
         if server = ::Server.where(token: uname).first
@@ -341,7 +341,7 @@ module SMTPServer
           "550 Invalid server token"
         end
 
-      elsif domain == Postal::Config.dns.route_domain
+      elsif domain == OmmicomMail::Config.dns.route_domain
         # This is an email direct to a route. This isn't actually supported yet.
         @state = :rcpt_to_received
         if route = Route.where(token: uname).first
@@ -462,14 +462,14 @@ module SMTPServer
     end
 
     def finished
-      if @data.bytesize > Postal::Config.smtp_server.max_message_size.megabytes.to_i
+      if @data.bytesize > OmmicomMail::Config.smtp_server.max_message_size.megabytes.to_i
         transaction_reset
         @state = :welcomed
         increment_error_count("message-too-large")
-        return format("552 Message too large (maximum size %dMB)", Postal::Config.smtp_server.max_message_size)
+        return format("552 Message too large (maximum size %dMB)", OmmicomMail::Config.smtp_server.max_message_size)
       end
 
-      if @headers["received"].grep(/by #{Postal::Config.postal.smtp_hostname}/).count > 4
+      if @headers["received"].grep(/by #{OmmicomMail::Config.postal.smtp_hostname}/).count > 4
         transaction_reset
         @state = :welcomed
         increment_error_count("loop-detected")

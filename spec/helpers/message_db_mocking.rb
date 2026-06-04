@@ -7,7 +7,7 @@ module GlobalMessageDB
     def find_or_create
       return @db if @db
 
-      @db = Postal::MessageDB::Database.new(1, 1, database_name: "postal-test-message-db")
+      @db = OmmicomMail::MessageDB::Database.new(1, 1, database_name: "postal-test-message-db")
       @db.provisioner.provision
     end
 

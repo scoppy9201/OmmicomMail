@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe Postal::HTTP::AddressGuard do
+RSpec.describe OmmicomMail::HTTP::AddressGuard do
   describe ".safe_connect_address" do
     subject(:call) { described_class.safe_connect_address(host) }
 
     before do
-      allow(Postal::Config.postal).to receive(:allowed_request_destinations).and_return(allowlist)
+      allow(OmmicomMail::Config.postal).to receive(:allowed_request_destinations).and_return(allowlist)
     end
 
     let(:allowlist) { [] }
@@ -47,7 +47,7 @@ RSpec.describe Postal::HTTP::AddressGuard do
         let(:host) { blocked }
 
         it "raises BlockedDestinationError" do
-          expect { call }.to raise_error(Postal::HTTP::BlockedDestinationError)
+          expect { call }.to raise_error(OmmicomMail::HTTP::BlockedDestinationError)
         end
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe Postal::HTTP::AddressGuard do
       end
 
       it "raises BlockedDestinationError" do
-        expect { call }.to raise_error(Postal::HTTP::BlockedDestinationError)
+        expect { call }.to raise_error(OmmicomMail::HTTP::BlockedDestinationError)
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Postal::HTTP::AddressGuard do
       end
 
       it "raises BlockedDestinationError because one address is blocked" do
-        expect { call }.to raise_error(Postal::HTTP::BlockedDestinationError)
+        expect { call }.to raise_error(OmmicomMail::HTTP::BlockedDestinationError)
       end
     end
 
@@ -146,7 +146,7 @@ RSpec.describe Postal::HTTP::AddressGuard do
       end
 
       it "raises BlockedDestinationError" do
-        expect { call }.to raise_error(Postal::HTTP::BlockedDestinationError, /resolve/)
+        expect { call }.to raise_error(OmmicomMail::HTTP::BlockedDestinationError, /resolve/)
       end
     end
 
@@ -154,7 +154,7 @@ RSpec.describe Postal::HTTP::AddressGuard do
       let(:host) { "" }
 
       it "raises BlockedDestinationError" do
-        expect { call }.to raise_error(Postal::HTTP::BlockedDestinationError)
+        expect { call }.to raise_error(OmmicomMail::HTTP::BlockedDestinationError)
       end
     end
 

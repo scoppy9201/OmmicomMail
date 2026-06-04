@@ -29,7 +29,7 @@ module Postal
         @database.delete(:webhook_requests, where: { id: { less_than_or_equal_to: last["id"] } })
       end
 
-      class RequestNotFound < Postal::Error
+      class RequestNotFound < OmmicomMail::Error
       end
 
       class Request

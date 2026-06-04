@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class AddUrlAndHookToWebhooks < Postal::MessageDB::Migration
+      class AddUrlAndHookToWebhooks < OmmicomMail::MessageDB::Migration
 
         def up
           @database.query("ALTER TABLE `#{@database.database_name}`.`webhook_requests` ADD COLUMN `url` varchar(255)")

@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class CreateLoads < Postal::MessageDB::Migration
+      class CreateLoads < OmmicomMail::MessageDB::Migration
 
         def up
           @database.provisioner.create_table(:loads,

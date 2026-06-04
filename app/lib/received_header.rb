@@ -3,8 +3,8 @@
 class ReceivedHeader
 
   OUR_HOSTNAMES = {
-    smtp: Postal::Config.postal.smtp_hostname,
-    http: Postal::Config.postal.web_hostname
+    smtp: OmmicomMail::Config.postal.smtp_hostname,
+    http: OmmicomMail::Config.postal.web_hostname
   }.freeze
 
   class << self

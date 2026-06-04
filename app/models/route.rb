@@ -77,7 +77,7 @@ class Route < ApplicationRecord
     elsif value =~ /\#/
       class_name, id = value.split("#", 2)
       unless ENDPOINT_TYPES.include?(class_name)
-        raise Postal::Error, "Invalid endpoint class name '#{class_name}'"
+        raise OmmicomMail::Error, "Invalid endpoint class name '#{class_name}'"
       end
 
       self.endpoint = class_name.constantize.find_by_uuid(id)
@@ -89,7 +89,7 @@ class Route < ApplicationRecord
   end
 
   def forward_address
-    @forward_address ||= "#{token}@#{Postal::Config.dns.route_domain}"
+    @forward_address ||= "#{token}@#{OmmicomMail::Config.dns.route_domain}"
   end
 
   def wildcard?

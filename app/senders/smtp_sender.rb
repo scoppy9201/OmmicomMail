@@ -59,7 +59,7 @@ class SMTPSender < BaseSender
 
     # Append the Resent-Sender header to the mesage to include the
     # MAIL FROM if the installation is configured to use that?
-    if Postal::Config.postal.use_resent_sender_header?
+    if OmmicomMail::Config.postal.use_resent_sender_header?
       raw_message = "Resent-Sender: #{mail_from}\r\n" + raw_message
     end
 
@@ -145,7 +145,7 @@ class SMTPSender < BaseSender
       return "#{message.server.token}@#{message.domain.return_path_domain}"
     end
 
-    "#{message.server.token}@#{Postal::Config.dns.return_path_domain}"
+    "#{message.server.token}@#{OmmicomMail::Config.dns.return_path_domain}"
   end
 
   # Return the RCPT TO to use for the given message in this sending session
@@ -230,7 +230,7 @@ class SMTPSender < BaseSender
   end
 
   def logger
-    @logger ||= Postal.logger.create_tagged_logger(log_id: @log_id)
+    @logger ||= OmmicomMail.logger.create_tagged_logger(log_id: @log_id)
   end
 
   class << self
@@ -241,7 +241,7 @@ class SMTPSender < BaseSender
     def smtp_relays
       return @smtp_relays if instance_variable_defined?("@smtp_relays")
 
-      relays = Postal::Config.postal.smtp_relays
+      relays = OmmicomMail::Config.postal.smtp_relays
       return nil if relays.nil?
 
       relays = relays.filter_map do |relay|

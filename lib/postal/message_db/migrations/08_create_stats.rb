@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class CreateStats < Postal::MessageDB::Migration
+      class CreateStats < OmmicomMail::MessageDB::Migration
 
         def up
           [:hourly, :daily, :monthly, :yearly].each do |table_name|

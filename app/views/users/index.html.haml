@@ -12,10 +12,10 @@
             = user.name
             - if user.admin?
               %span.userList__tag.label.label--blue Admin
-            - if Postal::Config.oidc.enabled?
+            - if OmmicomMail::Config.oidc.enabled?
               - if user.oidc?
                 %span.userList__tag.label.label--green OIDC
-              - elsif !Postal::Config.oidc.local_authentication_enabled?
+              - elsif !OmmicomMail::Config.oidc.local_authentication_enabled?
                 %span.userList__tag.label.label--orange Pending
               
           %p.userList__email= user.email_address

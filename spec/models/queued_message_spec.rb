@@ -54,7 +54,7 @@ RSpec.describe QueuedMessage do
 
   describe ".with_stale_lock" do
     it "returns messages where lock time is less than the configured number of stale days" do
-      allow(Postal::Config.postal).to receive(:queued_message_lock_stale_days).and_return(2)
+      allow(OmmicomMail::Config.postal).to receive(:queued_message_lock_stale_days).and_return(2)
       message1 = create(:queued_message, locked_at: 3.days.ago, locked_by: "test")
       message2 = create(:queued_message, locked_at: 2.days.ago, locked_by: "test")
       create(:queued_message, locked_at: 1.days.ago, locked_by: "test")
@@ -84,7 +84,7 @@ RSpec.describe QueuedMessage do
 
     context "when the message is eligiable for bounces" do
       it "queues a bounce message for sending" do
-        expect(BounceMessage).to receive(:new).with(server, kind_of(Postal::MessageDB::Message)).and_wrap_original do |original, *args|
+        expect(BounceMessage).to receive(:new).with(server, kind_of(OmmicomMail::MessageDB::Message)).and_wrap_original do |original, *args|
           bounce = original.call(*args)
           expect(bounce).to receive(:queue)
           bounce
@@ -122,7 +122,7 @@ RSpec.describe QueuedMessage do
 
     context "when IP pools is enabled" do
       before do
-        allow(Postal::Config.postal).to receive(:use_ip_pools?).and_return(true)
+        allow(OmmicomMail::Config.postal).to receive(:use_ip_pools?).and_return(true)
       end
 
       context "when there is no backend message" do
@@ -174,7 +174,7 @@ RSpec.describe QueuedMessage do
       subject(:queued_message) { build(:queued_message) }
 
       it "raises an error" do
-        expect { queued_message.batchable_messages }.to raise_error(Postal::Error, /must lock current message before locking any friends/i)
+        expect { queued_message.batchable_messages }.to raise_error(OmmicomMail::Error, /must lock current message before locking any friends/i)
       end
     end
 

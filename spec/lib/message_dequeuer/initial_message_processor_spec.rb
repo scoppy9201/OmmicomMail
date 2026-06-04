@@ -62,7 +62,7 @@ module MessageDequeuer
         @queued_message3 = create(:queued_message, message: @message3)
       end
 
-      context "when postal.batch_queued_messages is enabled" do
+      context "when OmmicomMail.batch_queued_messages is enabled" do
         it "calls the single message process for the initial message and all batchable messages" do
           [queued_message, @queued_message2, @queued_message3].each do |msg|
             expect(SingleMessageProcessor).to receive(:process).with(msg,
@@ -73,9 +73,9 @@ module MessageDequeuer
         end
       end
 
-      context "when postal.batch_queued_messages is disabled" do
+      context "when OmmicomMail.batch_queued_messages is disabled" do
         before do
-          allow(Postal::Config.postal).to receive(:batch_queued_messages?) { false }
+          allow(OmmicomMail::Config.postal).to receive(:batch_queued_messages?) { false }
         end
 
         it "does not call the single message process more than once" do

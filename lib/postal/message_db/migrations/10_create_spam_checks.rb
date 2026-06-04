@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class CreateSpamChecks < Postal::MessageDB::Migration
+      class CreateSpamChecks < OmmicomMail::MessageDB::Migration
 
         def up
           @database.provisioner.create_table(:spam_checks,

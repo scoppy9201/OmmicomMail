@@ -19,8 +19,8 @@ module HasAuthentication
   class_methods do
     def authenticate(email_address, password)
       user = find_by(email_address: email_address)
-      raise Postal::Errors::AuthenticationError, "InvalidEmailAddress" if user.nil?
-      raise Postal::Errors::AuthenticationError, "InvalidPassword" unless user.authenticate(password)
+      raise OmmicomMail::Errors::AuthenticationError, "InvalidEmailAddress" if user.nil?
+      raise OmmicomMail::Errors::AuthenticationError, "InvalidPassword" unless user.authenticate(password)
 
       user
     end
@@ -35,8 +35,8 @@ module HasAuthentication
   end
 
   def begin_password_reset(return_to = nil)
-    if Postal::Config.oidc.enabled? && (oidc_uid.present? || password_digest.blank?)
-      raise Postal::Error, "User has OIDC enabled, password resets are not supported"
+    if OmmicomMail::Config.oidc.enabled? && (oidc_uid.present? || password_digest.blank?)
+      raise OmmicomMail::Error, "User has OIDC enabled, password resets are not supported"
     end
 
     self.password_reset_token = SecureRandom.alphanumeric(24)
@@ -55,7 +55,7 @@ module HasAuthentication
   end
 
   def validate_password_presence
-    return if password_digest.present? || Postal::Config.oidc.enabled?
+    return if password_digest.present? || OmmicomMail::Config.oidc.enabled?
 
     errors.add :password, :blank
   end

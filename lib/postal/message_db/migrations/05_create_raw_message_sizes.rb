@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class CreateRawMessageSizes < Postal::MessageDB::Migration
+      class CreateRawMessageSizes < OmmicomMail::MessageDB::Migration
 
         def up
           @database.provisioner.create_table(:raw_message_sizes,

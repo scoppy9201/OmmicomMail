@@ -32,7 +32,7 @@ class UserController < ApplicationController
     @user = User.find(current_user.id)
     safe_params = [:first_name, :last_name, :time_zone, :email_address]
 
-    if @user.password? && Postal::Config.oidc.local_authentication_enabled?
+    if @user.password? && OmmicomMail::Config.oidc.local_authentication_enabled?
       safe_params += [:password, :password_confirmation]
       if @user.authenticate_with_previous_password_first(params[:password])
         @password_correct = true

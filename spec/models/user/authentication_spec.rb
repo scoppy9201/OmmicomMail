@@ -5,14 +5,14 @@ require "rails_helper"
 RSpec.describe User do
   describe ".authenticate" do
     it "does not authenticate users with invalid emails" do
-      expect { User.authenticate("nothing@nothing.com", "hello") }.to raise_error(Postal::Errors::AuthenticationError) do |e|
+      expect { User.authenticate("nothing@nothing.com", "hello") }.to raise_error(OmmicomMail::Errors::AuthenticationError) do |e|
         expect(e.error).to eq "InvalidEmailAddress"
       end
     end
 
     it "does not authenticate users with invalid passwords" do
       user = create(:user)
-      expect { User.authenticate(user.email_address, "hello") }.to raise_error(Postal::Errors::AuthenticationError) do |e|
+      expect { User.authenticate(user.email_address, "hello") }.to raise_error(OmmicomMail::Errors::AuthenticationError) do |e|
         expect(e.error).to eq "InvalidPassword"
       end
     end

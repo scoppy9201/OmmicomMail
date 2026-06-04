@@ -63,11 +63,11 @@ module Postal
 
       def establish_connection
         Mysql2::Client.new(
-          host: Postal::Config.message_db.host,
-          username: Postal::Config.message_db.username,
-          password: Postal::Config.message_db.password,
-          port: Postal::Config.message_db.port,
-          encoding: Postal::Config.message_db.encoding
+          host: OmmicomMail::Config.message_db.host,
+          username: OmmicomMail::Config.message_db.username,
+          password: OmmicomMail::Config.message_db.password,
+          port: OmmicomMail::Config.message_db.port,
+          encoding: OmmicomMail::Config.message_db.encoding
         )
       end
 

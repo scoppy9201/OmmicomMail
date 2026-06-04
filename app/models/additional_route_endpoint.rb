@@ -24,7 +24,7 @@ class AdditionalRouteEndpoint < ApplicationRecord
   def self.find_by_endpoint(endpoint)
     class_name, id = endpoint.split("#", 2)
     unless Route::ENDPOINT_TYPES.include?(class_name)
-      raise Postal::Error, "Invalid endpoint class name '#{class_name}'"
+      raise OmmicomMail::Error, "Invalid endpoint class name '#{class_name}'"
     end
 
     return unless uuid = class_name.constantize.find_by_uuid(id)
@@ -40,7 +40,7 @@ class AdditionalRouteEndpoint < ApplicationRecord
     if value && value =~ /\#/
       class_name, id = value.split("#", 2)
       unless Route::ENDPOINT_TYPES.include?(class_name)
-        raise Postal::Error, "Invalid endpoint class name '#{class_name}'"
+        raise OmmicomMail::Error, "Invalid endpoint class name '#{class_name}'"
       end
 
       self.endpoint = class_name.constantize.find_by_uuid(id)

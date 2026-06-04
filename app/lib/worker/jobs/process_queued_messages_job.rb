@@ -6,7 +6,7 @@ module Worker
 
       def call
         @lock_time = Time.current
-        @locker = Postal.locker_name_with_suffix(SecureRandom.hex(8))
+        @locker = OmmicomMail.locker_name_with_suffix(SecureRandom.hex(8))
 
         find_ip_addresses
         lock_message_for_processing

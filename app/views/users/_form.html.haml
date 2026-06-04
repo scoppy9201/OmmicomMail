@@ -13,17 +13,17 @@
       = f.label :email_address, :class => 'fieldSet__label'
       .fieldSet__input
         = f.text_field :email_address, :class => 'input input--text', autocomplete: 'one-time-code'
-        - if Postal::Config.oidc.enabled?
+        - if OmmicomMail::Config.oidc.enabled?
           %p.fieldSet__text
             This e-mail address should match the address provided by your OpenID Connect identity provider.
 
     
-    - if Postal::Config.oidc.local_authentication_enabled? && !@user.persisted?
+    - if OmmicomMail::Config.oidc.local_authentication_enabled? && !@user.persisted?
       .fieldSet__field
         = f.label :password, :class => 'fieldSet__label'
         .fieldSet__input
           = f.password_field :password, :class => 'input input--text', :placeholder => '•••••••••••', autocomplete: 'one-time-code'
-          - if Postal::Config.oidc.enabled?
+          - if OmmicomMail::Config.oidc.enabled?
             %p.fieldSet__text
               You have enabled OIDC which means a password is not required. If you do not provide
               a password this user will be matched to an OIDC identity based on the e-mail address

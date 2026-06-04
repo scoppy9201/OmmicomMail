@@ -61,7 +61,7 @@ class HealthServer
                                    AccessLog: [],
                                    Logger: LoggerProxy.new)
     rescue Errno::EADDRINUSE
-      Postal.logger.info "health server port (#{bind_address}:#{port}) is already " \
+      OmmicomMail.logger.info "health server port (#{bind_address}:#{port}) is already " \
                          "in use, not starting health server"
     end
 
@@ -90,9 +90,9 @@ class HealthServer
 
       case message
       when /\AWEBrick::HTTPServer#start:.*port=(\d+)/
-        Postal.logger.info "started health server on port #{::Regexp.last_match(1)}", component: "health-server"
+        OmmicomMail.logger.info "started health server on port #{::Regexp.last_match(1)}", component: "health-server"
       when /\AWEBrick::HTTPServer#start done/
-        Postal.logger.info "stopped health server", component: "health-server"
+        OmmicomMail.logger.info "stopped health server", component: "health-server"
       when /\AWEBrick [\d.]+/,
            /\Aruby ([\d.]+)/,
            /\ARackup::Handler::WEBrick is mounted/,
@@ -101,7 +101,7 @@ class HealthServer
         # Don't actually print routine messages to avoid too much
         # clutter when processes start it
       else
-        Postal.logger.debug message, component: "health-server"
+        OmmicomMail.logger.debug message, component: "health-server"
       end
     end
 

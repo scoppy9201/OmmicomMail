@@ -7,16 +7,16 @@
   = form_tag login_path, :class => 'loginForm' do
     = hidden_field_tag 'return_to', params[:return_to]
 
-    - if Postal::Config.oidc.enabled?
+    - if OmmicomMail::Config.oidc.enabled?
       .loginForm__oidcButton
-        = link_to "Login with #{Postal::Config.oidc.name}", "/auth/oidc", method: :post, class: 'button button--full'
+        = link_to "Login with #{OmmicomMail::Config.oidc.name}", "/auth/oidc", method: :post, class: 'button button--full'
 
-    - if Postal::Config.oidc.enabled? && Postal::Config.oidc.local_authentication_enabled?
+    - if OmmicomMail::Config.oidc.enabled? && OmmicomMail::Config.oidc.local_authentication_enabled?
       .loginForm__divider
       %p.loginForm__localTitle or login with a local user
 
-    - if Postal::Config.oidc.local_authentication_enabled?
-      %p.loginForm__input= text_field_tag 'email_address', '', :type => 'email', :spellcheck => 'false', :class => 'input input--text input--onWhite', :placeholder => "Your e-mail address", :autofocus => !Postal::Config.oidc.enabled?, :tabindex => 1
+    - if OmmicomMail::Config.oidc.local_authentication_enabled?
+      %p.loginForm__input= text_field_tag 'email_address', '', :type => 'email', :spellcheck => 'false', :class => 'input input--text input--onWhite', :placeholder => "Your e-mail address", :autofocus => !OmmicomMail::Config.oidc.enabled?, :tabindex => 1
       %p.loginForm__input= password_field_tag 'password', '', :class => 'input input--text input--onWhite', :placeholder => "Your password", :tabindex => 2
       .loginForm__submit
         %ul.loginForm__links

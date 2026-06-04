@@ -71,8 +71,8 @@ class Server < ApplicationRecord
   default_value :raw_message_retention_days, -> { 30 }
   default_value :raw_message_retention_size, -> { 2048 }
   default_value :message_retention_days, -> { 60 }
-  default_value :spam_threshold, -> { Postal::Config.postal.default_spam_threshold }
-  default_value :spam_failure_threshold, -> { Postal::Config.postal.default_spam_failure_threshold }
+  default_value :spam_threshold, -> { OmmicomMail::Config.postal.default_spam_threshold }
+  default_value :spam_failure_threshold, -> { OmmicomMail::Config.postal.default_spam_failure_threshold }
 
   validates :name, presence: true, uniqueness: { scope: :organization_id, case_sensitive: false }
   validates :mode, inclusion: { in: MODES }
@@ -126,7 +126,7 @@ class Server < ApplicationRecord
   end
 
   def message_db
-    @message_db ||= Postal::MessageDB::Database.new(organization_id, id)
+    @message_db ||= OmmicomMail::MessageDB::Database.new(organization_id, id)
   end
 
   delegate :message, to: :message_db
@@ -223,7 +223,7 @@ class Server < ApplicationRecord
   def authenticated_domain_for_address(address)
     return nil if address.blank?
 
-    address = Postal::Helpers.strip_name_from_address(address)
+    address = OmmicomMail::Helpers.strip_name_from_address(address)
     uname, domain_name = address.split("@", 2)
     return nil unless uname
     return nil unless domain_name

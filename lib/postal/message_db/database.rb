@@ -161,7 +161,7 @@ module Postal
         end
         if options[:order]
           direction = (options[:direction] || "ASC").upcase
-          raise Postal::Error, "Invalid direction #{options[:direction]}" unless %w[ASC DESC].include?(direction)
+          raise OmmicomMail::Error, "Invalid direction #{options[:direction]}" unless %w[ASC DESC].include?(direction)
 
           sql_query << " ORDER BY #{escape_identifier(options[:order])} #{direction}"
         end
@@ -272,7 +272,7 @@ module Postal
       # Return the correct database name
       #
       def database_name
-        @database_name ||= "#{Postal::Config.message_db.database_name_prefix}-server-#{@server_id}"
+        @database_name ||= "#{OmmicomMail::Config.message_db.database_name_prefix}-server-#{@server_id}"
       end
 
       #

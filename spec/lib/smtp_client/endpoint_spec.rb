@@ -69,8 +69,8 @@ module SMTPClient
 
         it "sets the appropriate timeouts from the config" do
           client = endpoint.start_smtp_session
-          expect(client.open_timeout).to eq Postal::Config.smtp_client.open_timeout
-          expect(client.read_timeout).to eq Postal::Config.smtp_client.read_timeout
+          expect(client.open_timeout).to eq OmmicomMail::Config.smtp_client.open_timeout
+          expect(client.read_timeout).to eq OmmicomMail::Config.smtp_client.read_timeout
         end
 
         it "does not set a source address" do
@@ -85,7 +85,7 @@ module SMTPClient
 
         it "starts the SMTP client the default HELO" do
           endpoint.start_smtp_session
-          expect(endpoint.smtp_client).to have_received(:start).with(Postal::Config.postal.smtp_hostname)
+          expect(endpoint.smtp_client).to have_received(:start).with(OmmicomMail::Config.postal.smtp_hostname)
         end
 
         context "when the SSL mode is Auto" do
@@ -258,7 +258,7 @@ module SMTPClient
     describe ".default_helo_hostname" do
       context "when the configuration specifies a helo hostname" do
         before do
-          allow(Postal::Config.dns).to receive(:helo_hostname).and_return("helo.example.com")
+          allow(OmmicomMail::Config.dns).to receive(:helo_hostname).and_return("helo.example.com")
         end
 
         it "returns that" do
@@ -268,8 +268,8 @@ module SMTPClient
 
       context "when the configuration does not specify a helo hostname but has an smtp hostname" do
         before do
-          allow(Postal::Config.dns).to receive(:helo_hostname).and_return(nil)
-          allow(Postal::Config.postal).to receive(:smtp_hostname).and_return("smtp.example.com")
+          allow(OmmicomMail::Config.dns).to receive(:helo_hostname).and_return(nil)
+          allow(OmmicomMail::Config.postal).to receive(:smtp_hostname).and_return("smtp.example.com")
         end
 
         it "returns the smtp hostname" do
@@ -279,8 +279,8 @@ module SMTPClient
 
       context "when the configuration has neither a helo hostname or an smtp hostname" do
         before do
-          allow(Postal::Config.dns).to receive(:helo_hostname).and_return(nil)
-          allow(Postal::Config.postal).to receive(:smtp_hostname).and_return(nil)
+          allow(OmmicomMail::Config.dns).to receive(:helo_hostname).and_return(nil)
+          allow(OmmicomMail::Config.postal).to receive(:smtp_hostname).and_return(nil)
         end
 
         it "returns localhost" do

@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class CreateLiveStats < Postal::MessageDB::Migration
+      class CreateLiveStats < OmmicomMail::MessageDB::Migration
 
         def up
           @database.provisioner.create_table(:live_stats,

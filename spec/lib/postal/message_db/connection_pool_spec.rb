@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Postal::MessageDB::ConnectionPool do
+describe OmmicomMail::MessageDB::ConnectionPool do
   subject(:pool) { described_class.new }
 
   describe "#use" do

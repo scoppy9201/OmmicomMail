@@ -274,7 +274,7 @@ RSpec.describe SMTPSender do
             sender.send_message(message)
             expect(sender.endpoints.last).to have_received(:send_message).with(
               kind_of(String),
-              "#{server.token}@#{Postal::Config.dns.return_path_domain}",
+              "#{server.token}@#{OmmicomMail::Config.dns.return_path_domain}",
               ["john@example.com"]
             )
           end
@@ -308,7 +308,7 @@ RSpec.describe SMTPSender do
           it "adds the resent-sender header" do
             sender.send_message(message)
             expect(sender.endpoints.last).to have_received(:send_message).with(
-              "Resent-Sender: #{server.token}@#{Postal::Config.dns.return_path_domain}\r\n#{message.raw_message}",
+              "Resent-Sender: #{server.token}@#{OmmicomMail::Config.dns.return_path_domain}\r\n#{message.raw_message}",
               kind_of(String),
               kind_of(Array)
             )
@@ -317,7 +317,7 @@ RSpec.describe SMTPSender do
 
         context "if the configuration says to not add the Resent-From header" do
           before do
-            allow(Postal::Config.postal).to receive(:use_resent_sender_header?).and_return(false)
+            allow(OmmicomMail::Config.postal).to receive(:use_resent_sender_header?).and_return(false)
           end
 
           it "does not add the resent-from header" do
@@ -533,17 +533,17 @@ RSpec.describe SMTPSender do
     end
 
     it "returns nil if smtp relays is nil" do
-      allow(Postal::Config.postal).to receive(:smtp_relays).and_return(nil)
+      allow(OmmicomMail::Config.postal).to receive(:smtp_relays).and_return(nil)
       expect(described_class.smtp_relays).to be nil
     end
 
     it "returns nil if there are no smtp relays" do
-      allow(Postal::Config.postal).to receive(:smtp_relays).and_return([])
+      allow(OmmicomMail::Config.postal).to receive(:smtp_relays).and_return([])
       expect(described_class.smtp_relays).to be nil
     end
 
     it "does not return relays where the host is nil" do
-      allow(Postal::Config.postal).to receive(:smtp_relays).and_return([
+      allow(OmmicomMail::Config.postal).to receive(:smtp_relays).and_return([
                                                                          Hashie::Mash.new(host: nil, port: 25, ssl_mode: "Auto"),
                                                                          Hashie::Mash.new(host: "test.example.com", port: 25, ssl_mode: "Auto"),
                                                                        ])
@@ -551,7 +551,7 @@ RSpec.describe SMTPSender do
     end
 
     it "returns relays with options" do
-      allow(Postal::Config.postal).to receive(:smtp_relays).and_return([
+      allow(OmmicomMail::Config.postal).to receive(:smtp_relays).and_return([
                                                                          Hashie::Mash.new(host: "test.example.com", port: 25, ssl_mode: "Auto"),
                                                                          Hashie::Mash.new(host: "test2.example.com", port: 2525, ssl_mode: "TLS"),
                                                                        ])

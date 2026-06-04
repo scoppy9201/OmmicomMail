@@ -200,7 +200,7 @@ describe Server do
 
   describe "#message_db" do
     it "returns a message DB instance" do
-      expect(server.message_db).to be_a Postal::MessageDB::Database
+      expect(server.message_db).to be_a OmmicomMail::MessageDB::Database
       expect(server.message_db).to have_attributes(server_id: server.id, organization_id: server.organization.id)
     end
 

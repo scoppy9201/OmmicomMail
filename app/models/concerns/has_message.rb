@@ -10,7 +10,7 @@ module HasMessage
     return @message if instance_variable_defined?("@message")
 
     @message = server.message_db.message(message_id)
-  rescue Postal::MessageDB::Message::NotFound
+  rescue OmmicomMail::MessageDB::Message::NotFound
     @message = nil
   end
 
@@ -27,7 +27,7 @@ module HasMessage
       if server_ids.empty?
         return []
       elsif server_ids.size > 1
-        raise Postal::Error, "'include_message' can only be used on collections of messages from the same server"
+        raise OmmicomMail::Error, "'include_message' can only be used on collections of messages from the same server"
       end
 
       message_ids = queued_messages.map(&:message_id).uniq

@@ -9,7 +9,7 @@ class WellKnownController < ApplicationController
   skip_before_action :set_timezone
 
   def jwks
-    render json: JWT::JWK::Set.new(Postal.signer.jwk).export.to_json
+    render json: JWT::JWK::Set.new(OmmicomMail.signer.jwk).export.to_json
   end
 
 end

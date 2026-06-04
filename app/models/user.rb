@@ -87,7 +87,7 @@ class User < ApplicationRecord
     #
     # @return [User, nil] the user
     def find_from_oidc(auth, logger: nil)
-      config = Postal::Config.oidc
+      config = OmmicomMail::Config.oidc
 
       uid = auth[config.uid_field]
       oidc_name = auth[config.name_field]

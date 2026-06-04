@@ -41,12 +41,12 @@ module Postal
       end
 
       if options[:sign]
-        request.add_field "X-Postal-Signature-KID", Postal.signer.jwk.kid
-        request.add_field "X-Postal-Signature", Postal.signer.sha1_sign64(request.body.to_s)
-        request.add_field "X-Postal-Signature-256", Postal.signer.sign64(request.body.to_s)
+        request.add_field "X-Postal-Signature-KID", OmmicomMail.signer.jwk.kid
+        request.add_field "X-Postal-Signature", OmmicomMail.signer.sha1_sign64(request.body.to_s)
+        request.add_field "X-Postal-Signature-256", OmmicomMail.signer.sign64(request.body.to_s)
       end
 
-      request["User-Agent"] = options[:user_agent] || "Postal/#{Postal.version}"
+      request["User-Agent"] = options[:user_agent] || "Postal/#{OmmicomMail.version}"
 
       timeout = options[:timeout] || 60
       ssl = uri.scheme == "https"

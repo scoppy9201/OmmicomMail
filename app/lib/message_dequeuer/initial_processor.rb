@@ -55,7 +55,7 @@ module MessageDequeuer
     end
 
     def find_other_messages_for_batch
-      return unless Postal::Config.postal.batch_queued_messages?
+      return unless OmmicomMail::Config.postal.batch_queued_messages?
 
       @other_messages = @queued_message.batchable_messages(100)
       log "found #{@other_messages.size} associated messages to process at the same time", batch_key: @queued_message.batch_key

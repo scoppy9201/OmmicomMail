@@ -34,7 +34,7 @@ module Postal
 
           puts "\e[45m++ Migrating #{klass_name} (#{version})\e[0m" unless silent
           require "postal/message_db/migrations/#{version.to_s.rjust(2, '0')}_#{file}"
-          klass = Postal::MessageDB::Migrations.const_get(klass_name)
+          klass = OmmicomMail::MessageDB::Migrations.const_get(klass_name)
           instance = klass.new(database)
           instance.up
           database.insert(:migrations, version: version)

@@ -6,7 +6,7 @@
   = form_for @user, :url => settings_path, :remote => true do |f|
     = f.error_messages
     %fieldset.fieldSet
-      - if @user.password? && Postal::Config.oidc.local_authentication_enabled?
+      - if @user.password? && OmmicomMail::Config.oidc.local_authentication_enabled?
         .fieldSet__field
           = label_tag :password, 'Your Password', :class => 'fieldSet__label'
           .fieldSet__input
@@ -42,7 +42,7 @@
             Choose the time zone that you'd like times to be displayed to you when you use our
             web interface. By default, times are displayed in UTC.
 
-      - if @user.password? && Postal::Config.oidc.local_authentication_enabled?
+      - if @user.password? && OmmicomMail::Config.oidc.local_authentication_enabled?
         .fieldSet__title
           Change your password?
         .fieldSet__field

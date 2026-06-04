@@ -46,7 +46,7 @@ module Postal
         # check here and the actual connection.
         #
         # @param [String] host the hostname or IP literal from the request URL
-        # @raise [Postal::HTTP::BlockedDestinationError] if the host cannot be
+        # @raise [OmmicomMail::HTTP::BlockedDestinationError] if the host cannot be
         #   resolved or any resolved address is not permitted
         # @raise [SocketError] if the host only resolves to addresses whose
         #   family this server cannot reach (e.g. IPv6 with no IPv6 support)
@@ -190,7 +190,7 @@ module Postal
       #
       # @return [Array<IPAddr, String>]
       def allowlist
-        @allowlist ||= Array(Postal::Config.postal.allowed_request_destinations).map do |entry|
+        @allowlist ||= Array(OmmicomMail::Config.postal.allowed_request_destinations).map do |entry|
           IPAddr.new(entry.to_s)
         rescue IPAddr::InvalidAddressError
           entry.to_s

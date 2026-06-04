@@ -3,7 +3,7 @@
 module Postal
   module MessageDB
     module Migrations
-      class ConvertDatabaseToUtf8mb4 < Postal::MessageDB::Migration
+      class ConvertDatabaseToUtf8mb4 < OmmicomMail::MessageDB::Migration
 
         def up
           @database.query("ALTER DATABASE `#{@database.database_name}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")

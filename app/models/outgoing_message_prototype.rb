@@ -25,7 +25,7 @@ class OutgoingMessagePrototype
     @source_type = source_type
     @custom_headers = {}
     @attachments = []
-    @message_id = "#{SecureRandom.uuid}@#{Postal::Config.dns.return_path_domain}"
+    @message_id = "#{SecureRandom.uuid}@#{OmmicomMail::Config.dns.return_path_domain}"
     attributes.each do |key, value|
       instance_variable_set("@#{key}", value)
     end
@@ -34,11 +34,11 @@ class OutgoingMessagePrototype
   attr_reader :message_id
 
   def from_address
-    Postal::Helpers.strip_name_from_address(@from)
+    OmmicomMail::Helpers.strip_name_from_address(@from)
   end
 
   def sender_address
-    Postal::Helpers.strip_name_from_address(@sender)
+    OmmicomMail::Helpers.strip_name_from_address(@sender)
   end
 
   def domain
@@ -75,7 +75,7 @@ class OutgoingMessagePrototype
   def create_messages
     if valid?
       all_addresses.each_with_object({}) do |address, hash|
-        if address = Postal::Helpers.strip_name_from_address(address)
+        if address = OmmicomMail::Helpers.strip_name_from_address(address)
           hash[address] = create_message(address)
         end
       end

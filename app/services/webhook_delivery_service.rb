@@ -34,7 +34,7 @@ class WebhookDeliveryService
   end
 
   def send_request
-    @http_result = Postal::HTTP.post(@webhook_request.url,
+    @http_result = OmmicomMail::HTTP.post(@webhook_request.url,
                                      sign: true,
                                      json: @payload,
                                      timeout: 5)
@@ -91,7 +91,7 @@ class WebhookDeliveryService
   end
 
   def logger
-    Postal.logger
+    OmmicomMail.logger
   end
 
 end
