@@ -23,7 +23,7 @@ RUN apt-get update && \
 
 RUN setcap 'cap_net_bind_service=+ep' /usr/local/bin/ruby
 
-# Configure 'postal' to work everywhere (when the binary exists
+# Configure the application CLI to work everywhere (when the binary exists
 # later in this process)
 ENV PATH="/opt/postal/app/bin:${PATH}"
 

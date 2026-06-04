@@ -26,14 +26,14 @@
         %h2.noData__title No global rules have been configured yet.
         %p.noData__text
           You can use IP pool rules to configure which IP addresses to use based on the
-          message that are passing through Postal. You can add rules globally or on a
+          message that are passing through OmmicomMail. You can add rules globally or on a
           per-server basis.
         %p.noData__button= link_to "Add a global rule", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"
       - else
         %h2.noData__title No IP rules have been configured for this server yet.
         %p.noData__text
           You can use IP pool rules to configure which IP addresses to use based on the
-          message that are passing through Postal. You can add rules globally or on a
+          message that are passing through OmmicomMail. You can add rules globally or on a
           per-server basis.
         %p.noData__button= link_to "Add a server rule", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"
         -

@@ -8,8 +8,8 @@ module UserCreator
 
     def start(&block)
       cli = HighLine.new
-      puts "\e[32mPostal User Creator\e[0m"
-      puts "Enter the information required to create a new Postal user."
+      puts "\e[32mOmmicomMail User Creator\e[0m"
+      puts "Enter the information required to create a new OmmicomMail user."
       puts "This tool is usually only used to create your initial admin user."
       puts
       user = User.new
@@ -30,7 +30,5 @@ module UserCreator
       end
       puts
     end
-
   end
-
 end

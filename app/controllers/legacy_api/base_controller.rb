@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module LegacyAPI
-  # The Legacy API is the Postal v1 API which existed from the start with main
+  # The Legacy API is based on the original Postal v1 API which existed from the start with main
   # aim of allowing e-mails to sent over HTTP rather than SMTP. The API itself
   # did not feature much functionality. This API was implemented using Moonrope
   # which was a self documenting API tool, however, is now no longer maintained.

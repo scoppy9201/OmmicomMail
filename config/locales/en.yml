@@ -56,7 +56,7 @@ en:
     message_sent: An e-mail has been successfully delivered to its endpoint (either SMTP or HTTP).
     message_delayed: An e-mail has been delayed due to an issue with the receiving endpoint. It will be retried automatically.
     message_delivery_failed: An e-mail cannot be delivered to its endpoint. This is a permanent failure so it will no be retried.
-    message_held: An e-mail has been held in Postal. This will be because a limit has been reached or your server is in development mode.
+    message_held: An e-mail has been held in OmmicomMail. This will be because a limit has been reached or your server is in development mode.
     message_bounced: We received a bounce message in response to an email which had previously been successfully sent.
     message_link_clicked: A link in one of your outbound messages has been clicked.
     message_loaded: A message you have sent has been loaded.

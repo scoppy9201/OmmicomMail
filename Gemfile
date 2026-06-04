@@ -38,7 +38,7 @@ gem "webrick"
 
 group :oidc do
   # These are gems which are needed for OpenID connect. They are only required by the application
-  # when OIDC is enabled in the Postal configuration.
+  # when OIDC is enabled in the OmmicomMail configuration.
   gem "omniauth_openid_connect"
   gem "omniauth-rails_csrf_protection"
 end

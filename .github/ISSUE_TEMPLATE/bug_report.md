@@ -1,6 +1,6 @@
 ---
-name: 🐛 Bug report
-about: Create a report to help us improve Postal and fix issues.
+name: Bug report
+about: Create a report to help us improve OmmicomMail and fix issues.
 title: ''
 labels: ''
 assignees: ''
@@ -26,13 +26,13 @@ A clear and concise description of what you expected to happen.
 
 If applicable, add screenshots to help explain your problem.
 
-## Environment details 
+## Environment details
 
  - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
+ - Browser [e.g. Chrome, Safari]
  - Version [e.g. 22]
- - Type [e.g. desktop, mobile etc...]
+ - Type [e.g. desktop, mobile etc.]
 
 ## Additional information/context
 
-Add any other context about the problem here. It is particularily useful to include log extracts (after removing private information). 
+Add any other context about the problem here. It is particularly useful to include log extracts after removing private information.

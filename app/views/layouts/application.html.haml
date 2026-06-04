@@ -21,7 +21,7 @@
             = link_to "Close", '#', :class => 'button button--dark button--small', :data => {:remember => 'no'}
 
       .siteHeader__inside
-        .siteHeader__logo= link_to "Postal", root_path
+        .siteHeader__logo= link_to "OmmicomMail", root_path
         %p.siteHeader__version The open source e-mail platform
         %ul.siteHeader__nav
           - if defined?(organization) && organization
@@ -56,7 +56,7 @@
           %ul.footer__links
             %li.footer__name
               Powered by
-              #{link_to "Postal", "https://postalserver.io", target: '_blank'}
+              #{link_to "OmmicomMail", root_path}
               #{postal_version_string}
-            %li= link_to "Documentation", "https://docs.postalserver.io", target: '_blank'
-            %li= link_to "Ask for help", "https://discussions.postalserver.io", target: '_blank'
+            %li= link_to "Repository", "https://github.com/scoppy9201/OmmicomMail", target: '_blank'
+            %li= link_to "Ask for help", "https://github.com/scoppy9201/OmmicomMail/discussions", target: '_blank'

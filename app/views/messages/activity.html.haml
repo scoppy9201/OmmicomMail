@@ -37,7 +37,7 @@
       %p.messageActivity__timestamp= @message.timestamp.to_fs(:long)
       .messageActivity__details
         %p.messageActivity__subject
-          Message received by Postal
+          Message received by OmmicomMail
         %p.messageActivity__extra
           - if @message.credential
             Received using the #{@message.credential.name} #{@message.credential.type} credential.

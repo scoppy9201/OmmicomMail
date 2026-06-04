@@ -12,7 +12,7 @@ class AppMailer < ApplicationMailer
   def password_reset(user, return_to = nil)
     @user = user
     @return_to = return_to
-    mail to: @user.email_address, subject: "Reset your Postal password"
+    mail to: @user.email_address, subject: "Reset your OmmicomMail password"
   end
 
   def server_send_limit_approaching(server)
@@ -31,7 +31,7 @@ class AppMailer < ApplicationMailer
   end
 
   def test_message(recipient)
-    mail to: recipient, subject: "Postal SMTP Test Message"
+    mail to: recipient, subject: "OmmicomMail SMTP Test Message"
   end
 
 end
