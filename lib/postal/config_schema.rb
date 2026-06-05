@@ -69,7 +69,7 @@ module Postal
       string :signing_key_path do
         description "Path to the private key used for signing"
         default "$config-file-root/signing.key"
-        transform { |v| OmmicomMail.substitute_config_file_root(v) }
+        transform { |v| Postal.substitute_config_file_root(v) }
       end
 
       string :smtp_relays do
@@ -278,13 +278,13 @@ module Postal
       string :tls_certificate_path do
         description "The path to the SMTP server's TLS certificate"
         default "$config-file-root/smtp.cert"
-        transform { |v| OmmicomMail.substitute_config_file_root(v) }
+        transform { |v| Postal.substitute_config_file_root(v) }
       end
 
       string :tls_private_key_path do
         description "The path to the SMTP server's TLS private key"
         default "$config-file-root/smtp.key"
-        transform { |v| OmmicomMail.substitute_config_file_root(v) }
+        transform { |v| Postal.substitute_config_file_root(v) }
       end
 
       string :tls_ciphers do
@@ -604,7 +604,7 @@ module Postal
     def substitute_config_file_root(string)
       return if string.nil?
 
-      string.gsub(/\$config-file-root/i, File.dirname(OmmicomMail.config_file_path))
+      string.gsub(/\$config-file-root/i, File.dirname(Postal.config_file_path))
     end
 
   end
