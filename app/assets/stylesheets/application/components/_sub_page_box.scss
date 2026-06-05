@@ -1,12 +1,12 @@
 .subPageBox {
   background:#fff;
-  border-radius:18px;
-  box-shadow:0 24px 70px rgba(15, 23, 42, 0.16);
-  width:420px;
+  border-radius:0;
+  box-shadow:0 2px 8px rgba(20, 47, 44, 0.36);
+  width:380px;
   max-width:100%;
   margin:auto;
   overflow:hidden;
-  border:1px solid rgba(148, 163, 184, 0.22);
+  border:1px solid rgba(21, 75, 69, 0.25);
 }
 
 .subPageBox--wide {
@@ -14,17 +14,15 @@
 }
 
 .subPageBox__title {
-  background:
-    linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(37, 99, 235, 0.88)),
-    $darkBlue;
+  background:#fff;
   border-bottom:0;
-  padding:34px 34px 30px;
-  color:#fff;
-  text-align: center;
+  padding:0;
+  color:$darkBlue;
+  text-align:left;
 }
 
 .subPageBox__content {
-  padding:30px 34px 34px;
+  padding:40px 40px 34px;
 }
 
 .subPageBox__text {
