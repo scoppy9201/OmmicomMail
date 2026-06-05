@@ -1,9 +1,9 @@
 .largeList {
   font-size:16px;
   color:$darkBlue;
-  border-radius:4px;
+  border-radius:10px;
   overflow:hidden;
-  box-shadow:0 0 10px rgba(0,0,0,0.2);
+  box-shadow:0 10px 28px rgba(15, 23, 42, 0.08);
 }
 
 .largeList__item {
@@ -25,17 +25,51 @@
 }
 
 .largeList__link {
-  display:block;
-  padding:15px;
+  display:flex;
+  align-items:center;
+  padding:18px 22px;
 }
 
 .largeList__link:hover {
-  background:$blue;
-  color:#fff;
+  background:#f3fbf4;
+  color:$darkBlue;
 }
 
 .largeList__link:active {
-  background:darken($blue, 5%);
+  background:#e9f7eb;
+}
+
+.largeList__avatar {
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:#35a047;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  font-weight:700;
+  margin-right:14px;
+}
+
+.largeList__content {
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
+}
+
+.largeList__title {
+  color:$darkBlue;
+  font-size:16px;
+  font-weight:700;
+}
+
+.largeList__arrow {
+  color:#35a047;
+  font-size:22px;
+  line-height:1;
+  opacity:0.78;
 }
 
 .largeList__subText {

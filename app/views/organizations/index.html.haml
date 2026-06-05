@@ -1,9 +1,11 @@
 - page_title << "Welcome"
 
 .pageHeader
-  %h1.pageHeader__title Welcome to OmmicomMail, #{current_user.first_name}
+  %p.pageHeader__eyebrow Ommicom ecosystem
+  %h1.pageHeader__title Welcome back, #{current_user.first_name}
+  %p.pageHeader__text Manage organizations, mail servers, domains, credentials, and delivery operations in one workspace.
 
-.pageContent.pageContent--compact
+.pageContent.pageContent--compact.organizationWelcome
 
   - if @organizations.empty?
     .noData.noData--clean
@@ -18,16 +20,23 @@
           You don't have access to any organizations yet. Ask your administrator to invite
           you to some organizations.
   - else
-    %p.pageContent__intro.u-margin
-      Organizations are entities which are able to deploy mail servers.
-      Choose an existing organization from the list opposite or use the button below
-      to create a new one.
+    .organizationWelcome__panel
+      .organizationWelcome__intro
+        %p.organizationWelcome__eyebrow Workspace
+        %h2.organizationWelcome__title Your organizations
+        %p.organizationWelcome__text
+          Choose an organization to manage its mail servers, domains, routing, credentials, and delivery settings.
 
-    %ul.largeList.u-margin
-      - for organization in @organizations
-        %li.largeList__item
-          = link_to organization_root_path(organization), :class => 'largeList__link' do
-            = organization.name
+      %ul.largeList.organizationWelcome__list
+        - for organization in @organizations
+          %li.largeList__item
+            = link_to organization_root_path(organization), :class => 'largeList__link' do
+              %span.largeList__avatar= organization.name.first.upcase
+              %span.largeList__content
+                %span.largeList__title= organization.name
+                %span.largeList__subText Mail operations workspace
+              %span.largeList__arrow →
 
-    - if current_user.admin?
-      %p.u-center= link_to "Start another organization", :new_organization, :class => 'button button--positive'
+      - if current_user.admin?
+        .organizationWelcome__actions
+          = link_to "Create organization", :new_organization, :class => 'button button--positive'

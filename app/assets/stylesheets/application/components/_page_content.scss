@@ -21,6 +21,55 @@
   margin:60px auto;
 }
 
+.organizationWelcome {
+  max-width:760px;
+}
+
+.organizationWelcome__panel {
+  background:#fff;
+  border:1px solid #e6efe8;
+  border-radius:16px;
+  box-shadow:0 18px 42px rgba(22, 77, 33, 0.10);
+  overflow:hidden;
+}
+
+.organizationWelcome__intro {
+  padding:28px 30px 22px;
+  border-bottom:1px solid #edf3ee;
+}
+
+.organizationWelcome__eyebrow {
+  color:#35a047;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+
+.organizationWelcome__title {
+  color:$darkBlue;
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.organizationWelcome__text {
+  color:$subBlue;
+  font-size:15px;
+  line-height:1.5;
+}
+
+.organizationWelcome__list {
+  box-shadow:none;
+  border-radius:0;
+}
+
+.organizationWelcome__actions {
+  padding:22px 30px 28px;
+  text-align:right;
+}
+
 .pageContent__subTitle {
   font-size:18px;
   font-weight:600;

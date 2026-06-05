@@ -1,12 +1,31 @@
 .pageHeader {
-  background:$darkBlue;
-  padding:22px 25px;
+  background:#2f8f40;
+  padding:34px 36px;
+  color:#fff;
 }
 
 .pageHeader__title {
-  font-size:26px;
-  font-weight:300;
+  font-size:30px;
+  font-weight:700;
   color:#fff;
+  letter-spacing:-0.02em;
+}
+
+.pageHeader__eyebrow {
+  color:rgba(255,255,255,0.72);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+
+.pageHeader__text {
+  color:rgba(255,255,255,0.82);
+  font-size:15px;
+  line-height:1.5;
+  margin-top:8px;
+  max-width:720px;
 }
 
 .pageHeader__titlePrevious {

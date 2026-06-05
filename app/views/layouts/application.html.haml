@@ -22,7 +22,7 @@
 
       .siteHeader__inside
         .siteHeader__logo= link_to "OmmicomMail", root_path
-        %p.siteHeader__version The open source e-mail platform
+        %p.siteHeader__version Hệ sinh thái từ Ommicom
         %ul.siteHeader__nav
           - if defined?(organization) && organization
             %li.siteHeader__navItem
@@ -55,7 +55,7 @@
         %footer.siteContent__footer
           %ul.footer__links
             %li.footer__name
-              Powered by
+              Hệ sinh thái từ
               #{link_to "OmmicomMail", root_path}
               #{ommicommail_version_string}
             %li= link_to "Repository", "https://github.com/scoppy9201/OmmicomMail", target: '_blank'

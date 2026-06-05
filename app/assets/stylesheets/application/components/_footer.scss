@@ -12,7 +12,12 @@
     margin-left:18px;
   }
   a {
-    text-decoration: underline;
+    text-decoration: none;
+    color:#6b7280;
+
+    &:hover {
+      color:#35a047;
+    }
   }
 }
 
