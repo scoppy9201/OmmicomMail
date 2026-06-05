@@ -18,7 +18,10 @@ onComplete = (event, xhr)->
 
     if data.alert
       unSpin($target)
-      alert(data.alert)
+      if window.OmmicomMailDialog
+        window.OmmicomMailDialog.alert(data.alert)
+      else
+        console.log(data.alert)
 
     if data.form_errors
       if $target.is('form')
