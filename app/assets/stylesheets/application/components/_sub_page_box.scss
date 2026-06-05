@@ -1,12 +1,12 @@
 .subPageBox {
   background:#fff;
-  border-radius:0;
-  box-shadow:0 2px 8px rgba(22, 77, 33, 0.32);
-  width:380px;
+  border-radius:18px;
+  box-shadow:0 18px 42px rgba(22, 77, 33, 0.24);
+  width:390px;
   max-width:100%;
   margin:auto;
   overflow:hidden;
-  border:1px solid rgba(29, 112, 43, 0.22);
+  border:1px solid rgba(255, 255, 255, 0.54);
 }
 
 .subPageBox--wide {
@@ -22,7 +22,7 @@
 }
 
 .subPageBox__content {
-  padding:40px 40px 34px;
+  padding:42px 40px 36px;
 }
 
 .subPageBox__text {
