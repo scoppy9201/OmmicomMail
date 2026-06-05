@@ -67,6 +67,6 @@ FROM base AS full
 
 RUN RAILS_GROUPS=assets \
   SILENCE_OMMICOMMAIL_CONFIG_MESSAGES=true \
-  OMMICOMMAIL_RAILS_SECRET_KEY=assets-precompile-secret \
+  RAILS_SECRET_KEY=assets-precompile-secret \
   bundle exec rake assets:precompile
 RUN touch /opt/postal/app/public/assets/.prebuilt
