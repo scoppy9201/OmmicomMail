@@ -21,23 +21,23 @@ module Postal
         if data && data =~ /\Astream:\s+(.*?)[\s\0]+?/
           if ::Regexp.last_match(1).upcase == "OK"
             inspection.threat = false
-            inspection.threat_message = "No threats found"
+            inspection.threat_message = "Không phát hiện mối đe dọa"
           else
             inspection.threat = true
             inspection.threat_message = ::Regexp.last_match(1)
           end
         else
           inspection.threat = false
-          inspection.threat_message = "Could not scan message"
+          inspection.threat_message = "Không thể quét email"
         end
       rescue Timeout::Error
         inspection.threat = false
-        inspection.threat_message = "Timed out scanning for threats"
+        inspection.threat_message = "Quá thời gian quét mối đe dọa"
       rescue StandardError => e
         logger.error "Error talking to clamav: #{e.class} (#{e.message})"
         logger.error e.backtrace[0, 5]
         inspection.threat = false
-        inspection.threat_message = "Error when scanning for threats"
+        inspection.threat_message = "Có lỗi khi quét mối đe dọa"
       ensure
         begin
           tcp_socket.close

@@ -17,7 +17,7 @@ module MessageDequeuer
         when "outgoing"
           processor = OutgoingMessageProcessor
         else
-          create_delivery "HardFail", details: "Scope #{queued_message.message.scope} is not valid"
+          create_delivery "HardFail", details: "Scope #{queued_message.message.scope} không hợp lệ"
           remove_from_queue
           stop_processing
         end
@@ -42,7 +42,7 @@ module MessageDequeuer
       return unless queued_message.server.suspended?
 
       log "server is suspended, holding message"
-      create_delivery "Held", details: "Mail server has been suspended. No e-mails can be processed at present. Contact support for assistance."
+      create_delivery "Held", details: "Máy chủ mail đã bị tạm ngưng. Hiện không thể xử lý email. Vui lòng liên hệ hỗ trợ."
       remove_from_queue
       stop_processing
     end
@@ -50,17 +50,17 @@ module MessageDequeuer
     def check_delivery_attempts
       return if queued_message.attempts < OmmicomMail::Config.postal.default_maximum_delivery_attempts
 
-      details = "Maximum number of delivery attempts (#{queued_message.attempts}) has been reached."
+      details = "Đã đạt số lần thử chuyển phát tối đa (#{queued_message.attempts})."
       if queued_message.message.scope == "incoming"
         # Send bounces to incoming e-mails when they are hard failed
         if bounce_id = queued_message.send_bounce
-          details += " Bounce sent to sender (see message <msg:#{bounce_id}>)"
+          details += " Email bounce đã được gửi tới người gửi (xem email <msg:#{bounce_id}>)."
         end
       elsif queued_message.message.scope == "outgoing"
         # Add the recipient to the suppression list
         if queued_message.server.message_db.suppression_list.add(:recipient, queued_message.message.rcpt_to, reason: "too many soft fails")
           log "added #{queued_message.message.rcpt_to} to suppression list because maximum attempts has been reached"
-          details += " Added #{queued_message.message.rcpt_to} to suppression list because delivery has failed #{queued_message.attempts} times."
+          details += " Đã thêm #{queued_message.message.rcpt_to} vào danh sách chặn gửi vì chuyển phát thất bại #{queued_message.attempts} lần."
         end
       end
 
@@ -74,7 +74,7 @@ module MessageDequeuer
       return if queued_message.message.raw_message?
 
       log "raw message has been removed, not sending"
-      create_delivery "HardFail", details: "Raw message has been removed. Cannot send message."
+      create_delivery "HardFail", details: "Email gốc đã bị xóa. Không thể gửi email."
       remove_from_queue
       stop_processing
     end

@@ -454,7 +454,7 @@ module Postal
       # Mark this message as bounced
       #
       def bounce!(bounce_message)
-        create_delivery("Bounced", details: "We've received a bounce message for this e-mail. See <msg:#{bounce_message.id}> for details.")
+        create_delivery("Bounced", details: "Đã nhận được email bounce cho email này. Xem <msg:#{bounce_message.id}> để biết chi tiết.")
 
         WebhookRequest.trigger(server, "MessageBounced", {
           original_message: webhook_hash,

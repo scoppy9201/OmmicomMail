@@ -52,7 +52,7 @@ class DomainsController < ApplicationController
 
   def verify
     if @domain.verified?
-      redirect_to [organization, @server, :domains], alert: "#{@domain.name} has already been verified."
+      redirect_to [organization, @server, :domains], alert: "#{@domain.name} đã được xác minh trước đó."
       return
     end
 
@@ -61,26 +61,26 @@ class DomainsController < ApplicationController
     case @domain.verification_method
     when "DNS"
       if @domain.verify_with_dns
-        redirect_to_with_json [:setup, organization, @server, @domain], notice: "#{@domain.name} has been verified successfully. You now need to configure your DNS records."
+        redirect_to_with_json [:setup, organization, @server, @domain], notice: "#{@domain.name} đã được xác minh thành công. Bây giờ bạn cần cấu hình bản ghi DNS."
       else
         respond_to do |wants|
-          wants.html { flash.now[:alert] = "We couldn't verify your domain. Please double check you've added the TXT record correctly." }
-          wants.json { render json: { flash: { alert: "We couldn't verify your domain. Please double check you've added the TXT record correctly." } } }
+          wants.html { flash.now[:alert] = "Không thể xác minh tên miền. Vui lòng kiểm tra lại bản ghi TXT đã được thêm đúng chưa." }
+          wants.json { render json: { flash: { alert: "Không thể xác minh tên miền. Vui lòng kiểm tra lại bản ghi TXT đã được thêm đúng chưa." } } }
         end
       end
     when "Email"
       if params[:code]
         if @domain.verification_token == params[:code].to_s.strip
           @domain.mark_as_verified
-          redirect_to_with_json [:setup, organization, @server, @domain], notice: "#{@domain.name} has been verified successfully. You now need to configure your DNS records."
+          redirect_to_with_json [:setup, organization, @server, @domain], notice: "#{@domain.name} đã được xác minh thành công. Bây giờ bạn cần cấu hình bản ghi DNS."
         else
           respond_to do |wants|
-            wants.html { flash.now[:alert] = "Invalid verification code. Please check and try again." }
-            wants.json { render json: { flash: { alert: "Invalid verification code. Please check and try again." } } }
+            wants.html { flash.now[:alert] = "Mã xác minh không hợp lệ. Vui lòng kiểm tra và thử lại." }
+            wants.json { render json: { flash: { alert: "Mã xác minh không hợp lệ. Vui lòng kiểm tra và thử lại." } } }
           end
         end
       elsif params[:email_address].present?
-        raise OmmicomMail::Error, "Invalid email address" unless @domain.verification_email_addresses.include?(params[:email_address])
+        raise OmmicomMail::Error, "Địa chỉ email không hợp lệ" unless @domain.verification_email_addresses.include?(params[:email_address])
 
         AppMailer.verify_domain(@domain, params[:email_address], current_user).deliver
         if @domain.owner.is_a?(Server)
@@ -95,14 +95,14 @@ class DomainsController < ApplicationController
   def setup
     return if @domain.verified?
 
-    redirect_to [:verify, organization, @server, @domain], alert: "You can't set up DNS for this domain until it has been verified."
+    redirect_to [:verify, organization, @server, @domain], alert: "Bạn chưa thể cấu hình DNS cho tên miền này cho tới khi tên miền được xác minh."
   end
 
   def check
     if @domain.check_dns(:manual)
-      redirect_to_with_json [organization, @server, :domains], notice: "Your DNS records for #{@domain.name} look good!"
+      redirect_to_with_json [organization, @server, :domains], notice: "Bản ghi DNS cho #{@domain.name} đã đúng."
     else
-      redirect_to_with_json [:setup, organization, @server, @domain], alert: "There seems to be something wrong with your DNS records. Check below for information."
+      redirect_to_with_json [:setup, organization, @server, @domain], alert: "Có vẻ bản ghi DNS của bạn chưa đúng. Vui lòng xem thông tin bên dưới."
     end
   end
 

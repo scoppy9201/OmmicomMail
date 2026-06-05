@@ -175,7 +175,7 @@ class Route < ApplicationRecord
   def validate_route_is_routed
     return unless mode.nil?
 
-    errors.add :endpoint, "must be chosen"
+    errors.add :endpoint, "cần được chọn"
   end
 
   def validate_domain_belongs_to_server
@@ -185,7 +185,7 @@ class Route < ApplicationRecord
 
     return unless domain && !domain.verified?
 
-    errors.add :domain, "has not been verified yet"
+    errors.add :domain, "chưa được xác minh"
   end
 
   def validate_endpoint_belongs_to_server
@@ -199,10 +199,10 @@ class Route < ApplicationRecord
 
     if domain
       if route = Route.includes(:domain).where(domains: { name: domain.name }, name: name).where.not(id: id).first
-        errors.add :name, "is configured on the #{route.server.full_permalink} mail server"
+        errors.add :name, "đã được cấu hình trên máy chủ mail #{route.server.full_permalink}"
       end
     elsif Route.where(name: "__returnpath__").where.not(id: id).exists?
-      errors.add :base, "A return path route already exists for this server"
+      errors.add :base, "Máy chủ này đã có route return path"
     end
   end
 
@@ -210,13 +210,13 @@ class Route < ApplicationRecord
     return unless return_path?
     return unless mode != "Endpoint" || endpoint_type != "HTTPEndpoint"
 
-    errors.add :base, "Return path routes must point to an HTTP endpoint"
+    errors.add :base, "Route return path phải trỏ tới HTTP endpoint"
   end
 
   def validate_no_additional_routes_on_non_endpoint_route
     return unless mode != "Endpoint" && !additional_route_endpoints_array.empty?
 
-    errors.add :base, "Additional routes are not permitted unless the primary route is an actual endpoint"
+    errors.add :base, "Chỉ được thêm route bổ sung khi route chính là một endpoint thực"
   end
 
   class << self

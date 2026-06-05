@@ -36,7 +36,7 @@ class OrganizationsController < ApplicationController
   def update
     @organization_obj = current_user.organizations_scope.find(organization.id)
     if @organization_obj.update(params.require(:organization).permit(:name, :time_zone))
-      redirect_to_with_json organization_settings_path(@organization_obj), notice: "Settings for #{@organization_obj.name} have been saved successfully."
+      redirect_to_with_json organization_settings_path(@organization_obj), notice: "Cài đặt cho #{@organization_obj.name} đã được lưu thành công."
     else
       render_form_errors "edit", @organization_obj
     end
@@ -45,7 +45,7 @@ class OrganizationsController < ApplicationController
   def destroy
     if params[:confirm_text].blank? || params[:confirm_text].downcase.strip != organization.name.downcase.strip
       respond_to do |wants|
-        alert_text = "The text you entered does not match the organization name. Please check and try again."
+        alert_text = "Nội dung bạn nhập không khớp với tên tổ chức. Vui lòng kiểm tra và thử lại."
         wants.html { redirect_to organization_delete_path(@organization), alert: alert_text }
         wants.json { render json: { alert: alert_text } }
       end
@@ -53,7 +53,7 @@ class OrganizationsController < ApplicationController
     end
 
     organization.soft_destroy
-    redirect_to_with_json root_path(nrd: 1), notice: "#{@organization.name} has been removed successfully."
+    redirect_to_with_json root_path(nrd: 1), notice: "#{@organization.name} đã được xóa thành công."
   end
 
   private

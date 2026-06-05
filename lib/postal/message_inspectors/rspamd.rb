@@ -60,12 +60,12 @@ module Postal
           logger.error "Error talking to rspamd: #{e.class} (#{e.message})"
           logger.error e.backtrace[0, 5]
 
-          raise Error, "Error when scanning with rspamd (#{e.class})"
+          raise Error, "Có lỗi khi quét bằng rspamd (#{e.class})"
         end
 
         unless response.is_a?(Net::HTTPOK)
           logger.info "Got #{response.code} status from rspamd, wanted 200"
-          raise Error, "Error when scanning with rspamd (got #{response.code})"
+          raise Error, "Có lỗi khi quét bằng rspamd (nhận mã #{response.code})"
         end
 
         response

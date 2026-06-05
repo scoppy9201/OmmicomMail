@@ -58,7 +58,7 @@ class ServersController < ApplicationController
     end
 
     if @server.update(safe_params(*extra_params))
-      redirect_to_with_json organization_server_path(organization, @server), notice: "Server settings have been updated"
+      redirect_to_with_json organization_server_path(organization, @server), notice: "Cài đặt máy chủ đã được cập nhật."
     else
       render_form_errors "edit", @server
     end
@@ -67,7 +67,7 @@ class ServersController < ApplicationController
   def destroy
     if params[:confirm_text].blank? || params[:confirm_text].downcase.strip != @server.name.downcase.strip
       respond_to do |wants|
-        alert_text = "The text you entered does not match the server name. Please check and try again."
+        alert_text = "Nội dung bạn nhập không khớp với tên máy chủ. Vui lòng kiểm tra và thử lại."
         wants.html { redirect_to organization_delete_path(@organization), alert: alert_text }
         wants.json { render json: { alert: alert_text } }
       end
@@ -75,7 +75,7 @@ class ServersController < ApplicationController
     end
 
     @server.soft_destroy
-    redirect_to_with_json organization_root_path(organization), notice: "#{@server.name} has been deleted successfully"
+    redirect_to_with_json organization_root_path(organization), notice: "#{@server.name} đã được xóa thành công."
   end
 
   def queue
@@ -85,12 +85,12 @@ class ServersController < ApplicationController
 
   def suspend
     @server.suspend(params[:reason])
-    redirect_to_with_json [organization, @server], notice: "Server has been suspended"
+    redirect_to_with_json [organization, @server], notice: "Máy chủ đã bị tạm ngưng."
   end
 
   def unsuspend
     @server.unsuspend
-    redirect_to_with_json [organization, @server], notice: "Server has been unsuspended"
+    redirect_to_with_json [organization, @server], notice: "Máy chủ đã được mở tạm ngưng."
   end
 
   private

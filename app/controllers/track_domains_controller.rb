@@ -38,15 +38,15 @@ class TrackDomainsController < ApplicationController
 
   def check
     if @track_domain.check_dns
-      redirect_to_with_json [organization, @server, :track_domains], notice: "Your CNAME for #{@track_domain.full_name} looks good!"
+      redirect_to_with_json [organization, @server, :track_domains], notice: "Bản ghi CNAME cho #{@track_domain.full_name} đã đúng."
     else
-      redirect_to_with_json [organization, @server, :track_domains], alert: "There seems to be something wrong with your DNS record. Check documentation for information."
+      redirect_to_with_json [organization, @server, :track_domains], alert: "Có vẻ bản ghi DNS của bạn chưa đúng. Vui lòng kiểm tra lại cấu hình."
     end
   end
 
   def toggle_ssl
     @track_domain.update(ssl_enabled: !@track_domain.ssl_enabled)
-    redirect_to_with_json [organization, @server, :track_domains], notice: "SSL settings for #{@track_domain.full_name} updated successfully."
+    redirect_to_with_json [organization, @server, :track_domains], notice: "Cài đặt SSL cho #{@track_domain.full_name} đã được cập nhật thành công."
   end
 
 end

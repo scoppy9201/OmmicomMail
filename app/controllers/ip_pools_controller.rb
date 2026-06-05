@@ -16,7 +16,7 @@ class IPPoolsController < ApplicationController
   def create
     @ip_pool = IPPool.new(safe_params)
     if @ip_pool.save
-      redirect_to_with_json [:edit, @ip_pool], notice: "IP Pool has been added successfully. You can now add IP addresses to it."
+      redirect_to_with_json [:edit, @ip_pool], notice: "IP pool đã được thêm thành công. Bạn có thể thêm địa chỉ IP vào pool này."
     else
       render_form_errors "new", @ip_pool
     end
@@ -24,7 +24,7 @@ class IPPoolsController < ApplicationController
 
   def update
     if @ip_pool.update(safe_params)
-      redirect_to_with_json [:edit, @ip_pool], notice: "IP Pool has been updated."
+      redirect_to_with_json [:edit, @ip_pool], notice: "IP pool đã được cập nhật."
     else
       render_form_errors "edit", @ip_pool
     end
@@ -32,9 +32,9 @@ class IPPoolsController < ApplicationController
 
   def destroy
     @ip_pool.destroy
-    redirect_to_with_json :ip_pools, notice: "IP pool has been removed successfully."
+    redirect_to_with_json :ip_pools, notice: "IP pool đã được xóa thành công."
   rescue ActiveRecord::DeleteRestrictionError
-    redirect_to_with_json [:edit, @ip_pool], alert: "IP pool cannot be removed because it still has associated addresses or servers."
+    redirect_to_with_json [:edit, @ip_pool], alert: "Không thể xóa IP pool vì vẫn còn địa chỉ IP hoặc máy chủ liên quan."
   end
 
   private

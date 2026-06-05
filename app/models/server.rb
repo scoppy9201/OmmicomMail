@@ -302,7 +302,7 @@ class Server < ApplicationRecord
   def validate_ip_pool_belongs_to_organization
     return unless ip_pool && ip_pool_id_changed? && !organization.ip_pools.include?(ip_pool)
 
-    errors.add :ip_pool_id, "must belong to the organization"
+    errors.add :ip_pool_id, "phải thuộc tổ chức"
   end
 
   class << self

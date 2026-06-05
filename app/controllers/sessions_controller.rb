@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     flash[:remember_login] = true
     redirect_to_with_return_to root_path
   rescue OmmicomMail::Errors::AuthenticationError
-    flash.now[:alert] = "The credentials you've provided are incorrect. Please check and try again."
+    flash.now[:alert] = "Thông tin đăng nhập không đúng. Vui lòng kiểm tra và thử lại."
     render "new"
   end
 
@@ -34,24 +34,24 @@ class SessionsController < ApplicationController
     user = user_scope.find_by(email_address: params[:email_address])
 
     if user.nil?
-      redirect_to login_reset_path(return_to: params[:return_to]), alert: "No local user exists with that e-mail address. Please check and try again."
+      redirect_to login_reset_path(return_to: params[:return_to]), alert: "Không tìm thấy người dùng cục bộ với địa chỉ email này. Vui lòng kiểm tra và thử lại."
       return
     end
 
     user.begin_password_reset(params[:return_to])
-    redirect_to login_path(return_to: params[:return_to]), notice: "Please check your e-mail and click the link in the e-mail we've sent you."
+    redirect_to login_path(return_to: params[:return_to]), notice: "Vui lòng kiểm tra email và nhấp vào liên kết hệ thống đã gửi."
   end
 
   def finish_password_reset
     @user = User.where(password_reset_token: params[:token]).where("password_reset_token_valid_until > ?", Time.now).first
     if @user.nil?
-      redirect_to login_path(return_to: params[:return_to]), alert: "This link has expired or never existed. Please choose reset password to try again."
+      redirect_to login_path(return_to: params[:return_to]), alert: "Liên kết này đã hết hạn hoặc không tồn tại. Vui lòng chọn đặt lại mật khẩu để thử lại."
     end
 
     return unless request.post?
 
     if params[:password].blank?
-      flash.now[:alert] = "You must enter a new password"
+      flash.now[:alert] = "Bạn cần nhập mật khẩu mới."
       return
     end
 
@@ -60,7 +60,7 @@ class SessionsController < ApplicationController
     return unless @user.save
 
     login(@user)
-    redirect_to_with_return_to root_path, notice: "Your new password has been set and you've been logged in."
+    redirect_to_with_return_to root_path, notice: "Mật khẩu mới đã được đặt và bạn đã đăng nhập."
   end
 
   def ip
@@ -69,13 +69,13 @@ class SessionsController < ApplicationController
 
   def create_from_oidc
     unless OmmicomMail::Config.oidc.enabled?
-      raise OmmicomMail::Error, "OIDC cannot be used unless enabled in the configuration"
+      raise OmmicomMail::Error, "Không thể dùng OIDC khi chưa bật trong cấu hình"
     end
 
     auth = request.env["omniauth.auth"]
     user = User.find_from_oidc(auth.extra.raw_info, logger: OmmicomMail.logger)
     if user.nil?
-      redirect_to login_path, alert: "No user was found matching your identity. Please contact your administrator."
+      redirect_to login_path, alert: "Không tìm thấy người dùng khớp với danh tính của bạn. Vui lòng liên hệ quản trị viên."
       return
     end
 
@@ -85,7 +85,7 @@ class SessionsController < ApplicationController
   end
 
   def oauth_failure
-    redirect_to login_path, alert: "An issue occurred while logging you in with OpenID. Please try again later or contact your administrator."
+    redirect_to login_path, alert: "Đã xảy ra sự cố khi đăng nhập bằng OpenID. Vui lòng thử lại sau hoặc liên hệ quản trị viên."
   end
 
   private
@@ -93,7 +93,7 @@ class SessionsController < ApplicationController
   def require_local_authentication
     return if OmmicomMail::Config.oidc.local_authentication_enabled?
 
-    redirect_to login_path, alert: "Local authentication is not enabled"
+    redirect_to login_path, alert: "Xác thực cục bộ chưa được bật."
   end
 
 end

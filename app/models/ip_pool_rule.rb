@@ -58,14 +58,14 @@ class IPPoolRule < ApplicationRecord
   def validate_from_and_to_addresses
     return unless from.empty? && to.empty?
 
-    errors.add :base, "At least one rule condition must be specified"
+    errors.add :base, "Cần nhập ít nhất một điều kiện cho rule"
   end
 
   def validate_ip_pool_belongs_to_organization
     org = owner.is_a?(Organization) ? owner : owner.organization
     return unless ip_pool && ip_pool_id_changed? && !org.ip_pools.include?(ip_pool)
 
-    errors.add :ip_pool_id, "must belong to the organization"
+    errors.add :ip_pool_id, "phải thuộc tổ chức"
   end
 
   class << self

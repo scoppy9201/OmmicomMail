@@ -39,11 +39,11 @@ class UserController < ApplicationController
       else
         respond_to do |wants|
           wants.html do
-            flash.now[:alert] = "The current password you have entered is incorrect. Please check and try again."
+            flash.now[:alert] = "Mật khẩu hiện tại bạn nhập không đúng. Vui lòng kiểm tra và thử lại."
             render "edit"
           end
           wants.json do
-            render json: { alert: "The current password you've entered is incorrect. Please check and try again" }
+            render json: { alert: "Mật khẩu hiện tại bạn nhập không đúng. Vui lòng kiểm tra và thử lại." }
           end
         end
         return
@@ -53,7 +53,7 @@ class UserController < ApplicationController
     @user.attributes = params.require(:user).permit(safe_params)
 
     if @user.save
-      redirect_to_with_json settings_path, notice: "Your settings have been updated successfully."
+      redirect_to_with_json settings_path, notice: "Cài đặt của bạn đã được cập nhật thành công."
     else
       render_form_errors "edit", @user
     end

@@ -29,8 +29,8 @@ class TrackDomain < ApplicationRecord
   belongs_to :server
   belongs_to :domain
 
-  validates :name, presence: true, format: { with: /\A[a-z0-9-]+\z/ }, uniqueness: { scope: :domain_id, case_sensitive: false, message: "is already added" }
-  validates :domain_id, uniqueness: { scope: :server_id, case_sensitive: false, message: "already has a track domain for this server" }
+  validates :name, presence: true, format: { with: /\A[a-z0-9-]+\z/ }, uniqueness: { scope: :domain_id, case_sensitive: false, message: "đã được thêm" }
+  validates :domain_id, uniqueness: { scope: :server_id, case_sensitive: false, message: "đã có tracking domain cho máy chủ này" }
   validate :validate_domain_belongs_to_server
 
   scope :ok, -> { where(dns_status: "OK") }
@@ -57,13 +57,13 @@ class TrackDomain < ApplicationRecord
     records = domain.resolver.cname(full_name)
     if records.empty?
       self.dns_status = "Missing"
-      self.dns_error = "There is no record at #{full_name}"
+      self.dns_error = "Chưa có bản ghi tại #{full_name}."
     elsif records.size == 1 && records.first == OmmicomMail::Config.dns.track_domain
       self.dns_status = "OK"
       self.dns_error = nil
     else
       self.dns_status = "Invalid"
-      self.dns_error = "There is a CNAME record at #{full_name} but it points to #{records.first} which is incorrect. It should point to #{OmmicomMail::Config.dns.track_domain}."
+      self.dns_error = "Có bản ghi CNAME tại #{full_name} nhưng đang trỏ tới #{records.first}, giá trị này chưa đúng. Bản ghi cần trỏ tới #{OmmicomMail::Config.dns.track_domain}."
     end
     self.dns_checked_at = Time.now
     save!
@@ -77,7 +77,7 @@ class TrackDomain < ApplicationRecord
   def validate_domain_belongs_to_server
     return unless domain && ![server, server.organization].include?(domain.owner)
 
-    errors.add :domain, "does not belong to the server or the server's organization"
+    errors.add :domain, "không thuộc máy chủ hoặc tổ chức của máy chủ"
   end
 
 end

@@ -10,10 +10,10 @@ class BounceMessage
   def raw_message
     mail = Mail.new
     mail.to = @message.mail_from
-    mail.from = "Mail Delivery Service <#{@message.route.description}>"
-    mail.subject = "Mail Delivery Failed (#{@message.subject})"
+    mail.from = "Dịch vụ chuyển phát mail <#{@message.route.description}>"
+    mail.subject = "Chuyển phát email thất bại (#{@message.subject})"
     mail.text_part = body
-    mail.attachments["Original Message.eml"] = { mime_type: "message/rfc822", encoding: "quoted-printable", content: @message.raw_message }
+    mail.attachments["Email goc.eml"] = { mime_type: "message/rfc822", encoding: "quoted-printable", content: @message.raw_message }
     mail.message_id = "<#{SecureRandom.uuid}@#{OmmicomMail::Config.dns.return_path_domain}>"
     mail.to_s
   end
@@ -39,16 +39,16 @@ class BounceMessage
 
   def body
     <<~BODY
-      This is the mail delivery service responsible for delivering mail to #{@message.route.description}.
+      Đây là dịch vụ chuyển phát mail chịu trách nhiệm gửi email tới #{@message.route.description}.
 
-      The message you've sent cannot be delivered. Your original message is attached to this message.
+      Email bạn đã gửi không thể chuyển phát. Email gốc được đính kèm trong thư này.
 
-      For further assistance please contact #{postmaster_address}. Please include the details below to help us identify the issue.
+      Nếu cần hỗ trợ thêm, vui lòng liên hệ #{postmaster_address}. Hãy gửi kèm các thông tin bên dưới để chúng tôi xác định sự cố.
 
-      Message Token: #{@message.token}@#{@server.token}
-      Orginal Message ID: #{@message.message_id}
-      Mail from: #{@message.mail_from}
-      Rcpt To: #{@message.rcpt_to}
+      Token email: #{@message.token}@#{@server.token}
+      Message ID gốc: #{@message.message_id}
+      Người gửi: #{@message.mail_from}
+      Người nhận: #{@message.rcpt_to}
     BODY
   end
 

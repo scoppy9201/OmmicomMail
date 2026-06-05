@@ -60,14 +60,14 @@ class AdditionalRouteEndpoint < ApplicationRecord
   def validate_uniqueness
     return unless endpoint == route.endpoint
 
-    errors.add :base, "You can only add an endpoint to a route once"
+    errors.add :base, "Chỉ được thêm một endpoint vào route một lần"
   end
 
   def validate_wildcard
     return unless route.wildcard?
     return unless endpoint_type == "SMTPEndpoint" || endpoint_type == "AddressEndpoint"
 
-    errors.add :base, "SMTP or address endpoints are not permitted on wildcard routes"
+    errors.add :base, "Không được dùng SMTP endpoint hoặc endpoint địa chỉ trên wildcard route"
   end
 
 end

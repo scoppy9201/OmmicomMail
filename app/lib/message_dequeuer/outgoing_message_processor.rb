@@ -33,7 +33,7 @@ module MessageDequeuer
       return if queued_message.message.domain
 
       log "message has no domain, hard failing"
-      create_delivery "HardFail", details: "Message's domain no longer exist"
+      create_delivery "HardFail", details: "Tên miền của thư không còn tồn tại."
       remove_from_queue
       stop_processing
     end
@@ -42,7 +42,7 @@ module MessageDequeuer
       return unless queued_message.message.rcpt_to.blank?
 
       log "message has no 'to' address, hard failing"
-      create_delivery "HardFail", details: "Message doesn't have an RCPT to"
+      create_delivery "HardFail", details: "Thư chưa có địa chỉ người nhận RCPT."
       remove_from_queue
       stop_processing
     end
@@ -61,7 +61,7 @@ module MessageDequeuer
       return unless queued_message.message.credential.hold?
 
       log "credential wants us to hold messages, holding"
-      create_delivery "Held", details: "Credential is configured to hold all messages authenticated by it."
+      create_delivery "Held", details: "Thông tin xác thực này đang được cấu hình để giữ lại tất cả thư đã xác thực qua nó."
       remove_from_queue
       stop_processing
     end
@@ -71,7 +71,7 @@ module MessageDequeuer
       return unless sl = queued_message.server.message_db.suppression_list.get(:recipient, queued_message.message.rcpt_to)
 
       log "recipient is on the suppression list, holding"
-      create_delivery "Held", details: "Recipient (#{queued_message.message.rcpt_to}) is on the suppression list (reason: #{sl['reason']})"
+      create_delivery "Held", details: "Người nhận (#{queued_message.message.rcpt_to}) đang nằm trong danh sách chặn gửi (lý do: #{sl['reason']})."
       remove_from_queue
       stop_processing
     end
@@ -103,8 +103,8 @@ module MessageDequeuer
 
       log "message is spam (#{queued_message.message.spam_score}), hard failing", server_threshold: queued_message.server.outbound_spam_threshold
       create_delivery "HardFail",
-                      details: "Message is likely spam. Threshold is #{queued_message.server.outbound_spam_threshold} and " \
-                               "the message scored #{queued_message.message.spam_score}."
+                      details: "Thư có khả năng là spam. Ngưỡng hiện tại là #{queued_message.server.outbound_spam_threshold} và " \
+                               "điểm của thư là #{queued_message.message.spam_score}."
       remove_from_queue
       stop_processing
     end
@@ -120,7 +120,7 @@ module MessageDequeuer
         # If we're over the limit, we're going to be holding this message
         log "server send limit has been exceeded, holding", send_limit: queued_message.server.send_limit
         queued_message.server.update_columns(send_limit_exceeded_at: Time.now, send_limit_approaching_at: nil)
-        create_delivery "Held", details: "Message held because send limit (#{queued_message.server.send_limit}) has been reached."
+        create_delivery "Held", details: "Thư đã được giữ lại vì đã đạt giới hạn gửi (#{queued_message.server.send_limit})."
         remove_from_queue
         stop_processing
       elsif queued_message.server.send_limit_approaching?
@@ -158,11 +158,11 @@ module MessageDequeuer
       return if recent_hard_fails < 1
 
       added = queued_message.server.message_db.suppression_list.add(:recipient, queued_message.message.rcpt_to,
-                                                                    reason: "too many hard fails")
+                                                                    reason: "quá nhiều lần gửi thất bại vĩnh viễn")
       return unless added
 
       log "Added #{queued_message.message.rcpt_to} to suppression list because #{recent_hard_fails} hard fails in 24 hours"
-      @additional_delivery_details = "Recipient added to suppression list (too many hard fails)"
+      @additional_delivery_details = "Người nhận đã được thêm vào danh sách chặn gửi do có quá nhiều lần gửi thất bại vĩnh viễn."
     end
 
     def remove_recipient_from_suppression_list_on_success
@@ -172,7 +172,7 @@ module MessageDequeuer
       return unless removed
 
       log "removed #{queued_message.message.rcpt_to} from suppression list"
-      @additional_delivery_details = "Recipient removed from suppression list"
+      @additional_delivery_details = "Người nhận đã được xóa khỏi danh sách chặn gửi."
     end
 
     def finish_processing

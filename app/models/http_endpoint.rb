@@ -67,9 +67,9 @@ class HTTPEndpoint < ApplicationRecord
     uri = URI.parse(url)
     return if uri.is_a?(URI::HTTP) && uri.host.present?
 
-    errors.add(:url, "must be an HTTP or HTTPS URL")
+    errors.add(:url, "phải là URL HTTP hoặc HTTPS")
   rescue URI::InvalidURIError
-    errors.add(:url, "must be a valid HTTP or HTTPS URL")
+    errors.add(:url, "phải là URL HTTP hoặc HTTPS hợp lệ")
   end
 
 end

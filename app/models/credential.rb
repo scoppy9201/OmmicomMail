@@ -83,7 +83,7 @@ class Credential < ApplicationRecord
     return unless key_changed?
     return if type == "SMTP-IP"
 
-    errors.add :key, "cannot be changed"
+    errors.add :key, "không thể thay đổi"
   end
 
   def validate_key_for_smtp_ip
@@ -91,7 +91,7 @@ class Credential < ApplicationRecord
 
     IPAddr.new(key.to_s)
   rescue IPAddr::InvalidAddressError
-    errors.add :key, "must be a valid IPv4 or IPv6 address"
+    errors.add :key, "phải là địa chỉ IPv4 hoặc IPv6 hợp lệ"
   end
 
 end

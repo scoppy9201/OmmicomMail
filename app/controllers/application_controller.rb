@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   def admin_required
     if logged_in?
       unless current_user.admin?
-        render plain: "Not permitted"
+        render plain: "Không được phép"
       end
     else
       redirect_to login_path(return_to: request.fullpath)
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   def require_organization_owner
     return if organization.owner == current_user
 
-    redirect_to organization_root_path(organization), alert: "This page can only be accessed by the organization's owner (#{organization.owner.name})"
+    redirect_to organization_root_path(organization), alert: "Trang này chỉ chủ sở hữu tổ chức mới có thể truy cập (#{organization.owner.name})."
   end
 
   def auth_session_error(exception)

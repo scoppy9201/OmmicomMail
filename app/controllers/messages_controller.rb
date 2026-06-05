@@ -19,33 +19,33 @@ class MessagesController < ApplicationController
         @message.from = "test@#{domain.name}"
       end
     end
-    @message.subject = "Test Message at #{Time.zone.now.to_fs(:long)}"
-    @message.plain_body = "This is a message to test the delivery of messages through OmmicomMail."
+    @message.subject = "Email kiểm tra lúc #{Time.zone.now.to_fs(:long)}"
+    @message.plain_body = "Đây là email dùng để kiểm tra quá trình gửi qua OmmicomMail."
   end
 
   def create
     if params[:direction] == "incoming"
       session[:test_in_from] = params[:message][:from] if params[:message]
       @message = IncomingMessagePrototype.new(@server, request.ip, "web-ui", params[:message])
-      @message.attachments = [{ name: "test.txt", content_type: "text/plain", data: "Hello world!" }]
+      @message.attachments = [{ name: "test.txt", content_type: "text/plain", data: "Xin chào!" }]
     else
       session[:test_out_to] = params[:message][:to] if params[:message]
       @message = OutgoingMessagePrototype.new(@server, request.ip, "web-ui", params[:message])
     end
     if result = @message.create_messages
       if result.size == 1
-        redirect_to_with_json organization_server_message_path(organization, @server, result.first.last[:id]), notice: "Message was queued successfully"
+        redirect_to_with_json organization_server_message_path(organization, @server, result.first.last[:id]), notice: "Email đã được đưa vào hàng đợi thành công."
       else
-        redirect_to_with_json [:queue, organization, @server], notice: "Messages queued successfully "
+        redirect_to_with_json [:queue, organization, @server], notice: "Các email đã được đưa vào hàng đợi thành công."
       end
     else
       respond_to do |wants|
         wants.html do
-          flash.now[:alert] = "Your message could not be sent. Ensure that all fields are completed fully. #{result.errors.inspect}"
+          flash.now[:alert] = "Không thể gửi email. Vui lòng đảm bảo tất cả trường đã được nhập đầy đủ. #{result.errors.inspect}"
           render "new"
         end
         wants.json do
-          render json: { flash: { alert: "Your message could not be sent. Please check all field are completed fully." } }
+          render json: { flash: { alert: "Không thể gửi email. Vui lòng kiểm tra tất cả trường đã được nhập đầy đủ." } }
         end
       end
 
@@ -113,7 +113,7 @@ class MessagesController < ApplicationController
       attachment = @message.attachments[params[:attachment].to_i]
       send_data attachment.body, content_type: attachment.mime_type, disposition: "download", filename: attachment.filename
     else
-      redirect_to attachments_organization_server_message_path(organization, @server, @message.id), alert: "Attachment not found. Choose an attachment from the list below."
+      redirect_to attachments_organization_server_message_path(organization, @server, @message.id), alert: "Không tìm thấy tệp đính kèm. Vui lòng chọn tệp trong danh sách bên dưới."
     end
   end
 
@@ -121,7 +121,7 @@ class MessagesController < ApplicationController
     if @message.raw_message
       send_data @message.raw_message, filename: "Message-#{organization.permalink}-#{@server.permalink}-#{@message.id}.eml", content_type: "text/plain"
     else
-      redirect_to organization_server_message_path(organization, @server, @message.id), alert: "We no longer have the raw message stored for this message."
+      redirect_to organization_server_message_path(organization, @server, @message.id), alert: "Hệ thống không còn lưu email gốc của email này."
     end
   end
 
@@ -129,16 +129,16 @@ class MessagesController < ApplicationController
     if @message.raw_message?
       if @message.queued_message
         @message.queued_message.retry_now
-        flash[:notice] = "This message will be retried shortly."
+        flash[:notice] = "Email này sẽ được thử gửi lại trong giây lát."
       elsif @message.held?
         @message.add_to_message_queue(manual: true)
-        flash[:notice] = "This message has been released. Delivery will be attempted shortly."
+        flash[:notice] = "Email này đã được mở giữ. Hệ thống sẽ thử chuyển phát trong giây lát."
       else
         @message.add_to_message_queue(manual: true)
-        flash[:notice] = "This message will be redelivered shortly."
+        flash[:notice] = "Email này sẽ được gửi lại trong giây lát."
       end
     else
-      flash[:alert] = "This message is no longer available."
+      flash[:alert] = "Email này không còn khả dụng."
     end
     redirect_to_with_json organization_server_message_path(organization, @server, @message.id)
   end
@@ -175,7 +175,7 @@ class MessagesController < ApplicationController
         session["msg_query_#{@server.id}_#{scope}"] = @query
         qs = QueryString.new(@query)
         if qs.empty?
-          flash.now[:alert] = "It doesn't appear you entered anything to filter on. Please double check your query."
+          flash.now[:alert] = "Có vẻ bạn chưa nhập điều kiện lọc nào. Vui lòng kiểm tra lại truy vấn."
         else
           @queried = true
           if qs[:order] == "oldest-first"
@@ -201,7 +201,7 @@ class MessagesController < ApplicationController
               begin
                 options[:where][:timestamp][:less_than] = get_time_from_string(qs[:before]).to_f
               rescue TimeUndetermined
-                flash.now[:alert] = "Couldn't determine time for before from '#{qs[:before]}'"
+                flash.now[:alert] = "Không thể xác định thời gian cho điều kiện before từ '#{qs[:before]}'"
               end
             end
 
@@ -209,7 +209,7 @@ class MessagesController < ApplicationController
               begin
                 options[:where][:timestamp][:greater_than] = get_time_from_string(qs[:after]).to_f
               rescue TimeUndetermined
-                flash.now[:alert] = "Couldn't determine time for after from '#{qs[:after]}'"
+                flash.now[:alert] = "Không thể xác định thời gian cho điều kiện after từ '#{qs[:after]}'"
               end
             end
           end

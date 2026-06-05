@@ -52,7 +52,7 @@ class Domain < ApplicationRecord
   has_many :routes, dependent: :destroy
   has_many :track_domains, dependent: :destroy
 
-  validates :name, presence: true, format: { with: /\A[a-z0-9\-.]*\z/ }, uniqueness: { case_sensitive: false, scope: [:owner_type, :owner_id], message: "is already added" }
+  validates :name, presence: true, format: { with: /\A[a-z0-9\-.]*\z/ }, uniqueness: { case_sensitive: false, scope: [:owner_type, :owner_id], message: "đã được thêm" }
   validates :verification_method, inclusion: { in: VERIFICATION_METHODS }
 
   random_string :dkim_identifier_string, type: :chars, length: 6, unique: true, upper_letters_only: true

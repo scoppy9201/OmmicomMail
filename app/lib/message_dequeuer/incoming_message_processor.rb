@@ -38,7 +38,7 @@ module MessageDequeuer
       unless original_messages.empty?
         queued_message.message.original_messages.each do |orig_msg|
           queued_message.message.update(bounce_for_id: orig_msg.id, domain_id: orig_msg.domain_id)
-          create_delivery "Processed", details: "This has been detected as a bounce message for <msg:#{orig_msg.id}>."
+          create_delivery "Processed", details: "Email này được phát hiện là bounce cho <msg:#{orig_msg.id}>."
           orig_msg.bounce!(queued_message.message)
           log "bounce linked with message #{orig_msg.id}"
         end
@@ -52,7 +52,7 @@ module MessageDequeuer
       return unless queued_message.message.route_id.nil?
 
       log "no source messages found, hard failing"
-      create_delivery "HardFail", details: "This message was a bounce but we couldn't link it with any outgoing message and there was no route for it."
+      create_delivery "HardFail", details: "Email này là bounce nhưng không thể liên kết với email gửi đi nào và không có route phù hợp."
       remove_from_queue
       stop_processing
     end
@@ -84,8 +84,8 @@ module MessageDequeuer
 
       log "message has a spam score higher than the server's maxmimum, hard failing", server_threshold: queued_message.server.spam_failure_threshold
       create_delivery "HardFail",
-                      details: "Message's spam score is higher than the failure threshold for this server. " \
-                               "Threshold is currently #{queued_message.server.spam_failure_threshold}."
+                      details: "Điểm spam của email cao hơn ngưỡng từ chối của máy chủ này. " \
+                               "Ngưỡng hiện tại là #{queued_message.server.spam_failure_threshold}."
       remove_from_queue
       stop_processing
     end
@@ -95,7 +95,7 @@ module MessageDequeuer
       return if @route
 
       log "no route and/or endpoint available for processing, hard failing"
-      create_delivery "HardFail", details: "Message does not have a route and/or endpoint available for delivery."
+      create_delivery "HardFail", details: "Email không có route hoặc endpoint khả dụng để chuyển phát."
       remove_from_queue
       stop_processing
     end
@@ -107,10 +107,10 @@ module MessageDequeuer
       case @route.spam_mode
       when "Quarantine"
         log "message is spam and route says to quarantine spam message, holding"
-        create_delivery "Held", details: "Message placed into quarantine."
+        create_delivery "Held", details: "Email đã được đưa vào cách ly."
       when "Fail"
         log "message is spam and route says to fail spam message, hard failing"
-        create_delivery "HardFail", details: "Message is spam and the route specifies it should be failed."
+        create_delivery "HardFail", details: "Email là spam và route yêu cầu từ chối email này."
       else
         return
       end
@@ -123,7 +123,7 @@ module MessageDequeuer
       return unless @route.mode == "Accept"
 
       log "route says to accept without endpoint, marking as processed"
-      create_delivery "Processed", details: "Message has been accepted but not sent to any endpoints."
+      create_delivery "Processed", details: "Email đã được chấp nhận nhưng không gửi tới endpoint nào."
       remove_from_queue
       stop_processing
     end
@@ -133,10 +133,10 @@ module MessageDequeuer
 
       if queued_message.manual?
         log "route says to hold and message was queued manually, marking as processed"
-        create_delivery "Processed", details: "Message has been processed."
+        create_delivery "Processed", details: "Email đã được xử lý."
       else
         log "route says to hold, marking as held"
-        create_delivery "Held", details: "Message has been accepted but not sent to any endpoints."
+        create_delivery "Held", details: "Email đã được chấp nhận nhưng không gửi tới endpoint nào."
       end
 
       remove_from_queue
@@ -150,7 +150,7 @@ module MessageDequeuer
 
       if id = queued_message.send_bounce
         log "bounce sent with id #{id}"
-        create_delivery "HardFail", details: "Message has been bounced because the route asks for this. See message <msg:#{id}>"
+        create_delivery "HardFail", details: "Email đã bị bounce vì route yêu cầu xử lý như vậy. Xem email <msg:#{id}>"
       end
 
       remove_from_queue
@@ -170,7 +170,7 @@ module MessageDequeuer
         sender = @state.sender_for(SMTPSender, queued_message.message.endpoint.domain, nil, rcpt_to: queued_message.message.endpoint.address)
       else
         log "invalid endpoint for route (#{queued_message.message.endpoint_type})"
-        create_delivery "HardFail", details: "Invalid endpoint for route."
+        create_delivery "HardFail", details: "Endpoint của route không hợp lệ."
         remove_from_queue
         stop_processing
       end
@@ -194,7 +194,7 @@ module MessageDequeuer
       log "sending a bounce because message hard failed"
       return unless bounce_id = queued_message.send_bounce
 
-      @additional_delivery_details = "Sent bounce message to sender (see message <msg:#{bounce_id}>)"
+      @additional_delivery_details = "Đã gửi email bounce tới người gửi (xem email <msg:#{bounce_id}>)"
     end
 
     def finish_processing

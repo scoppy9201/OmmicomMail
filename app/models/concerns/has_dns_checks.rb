@@ -47,12 +47,12 @@ module HasDNSChecks
     spf_records = result.grep(/\Av=spf1/)
     if spf_records.empty?
       self.spf_status = "Missing"
-      self.spf_error = "No SPF record exists for this domain"
+      self.spf_error = "Tên miền này chưa có bản ghi SPF."
     else
       suitable_spf_records = spf_records.grep(/include:\s*#{Regexp.escape(OmmicomMail::Config.dns.spf_include)}/)
       if suitable_spf_records.empty?
         self.spf_status = "Invalid"
-        self.spf_error = "An SPF record exists but it doesn't include #{OmmicomMail::Config.dns.spf_include}"
+        self.spf_error = "Đã có bản ghi SPF nhưng chưa bao gồm #{OmmicomMail::Config.dns.spf_include}."
         false
       else
         self.spf_status = "OK"
@@ -76,15 +76,15 @@ module HasDNSChecks
     records = resolver.txt(domain)
     if records.empty?
       self.dkim_status = "Missing"
-      self.dkim_error = "No TXT records were returned for #{domain}"
+      self.dkim_error = "Không tìm thấy bản ghi TXT cho #{domain}."
     else
       sanitised_dkim_record = records.first.strip.ends_with?(";") ? records.first.strip : "#{records.first.strip};"
       if records.size > 1
         self.dkim_status = "Invalid"
-        self.dkim_error = "There are #{records.size} records for at #{domain}. There should only be one."
+        self.dkim_error = "Có #{records.size} bản ghi tại #{domain}. Chỉ nên có một bản ghi."
       elsif sanitised_dkim_record != dkim_record
         self.dkim_status = "Invalid"
-        self.dkim_error = "The DKIM record at #{domain} does not match the record we have provided. Please check it has been copied correctly."
+        self.dkim_error = "Bản ghi DKIM tại #{domain} không khớp với bản ghi hệ thống cung cấp. Vui lòng kiểm tra lại nội dung đã sao chép."
       else
         self.dkim_status = "OK"
         self.dkim_error = nil
@@ -106,7 +106,7 @@ module HasDNSChecks
     records = resolver.mx(name).map(&:last)
     if records.empty?
       self.mx_status = "Missing"
-      self.mx_error = "There are no MX records for #{name}"
+      self.mx_error = "Không có bản ghi MX cho #{name}."
     else
       missing_records = OmmicomMail::Config.dns.mx_records.dup - records.map { |r| r.to_s.downcase }
       if missing_records.empty?
@@ -114,10 +114,10 @@ module HasDNSChecks
         self.mx_error = nil
       elsif missing_records.size == OmmicomMail::Config.dns.mx_records.size
         self.mx_status = "Missing"
-        self.mx_error = "You have MX records but none of them point to us."
+        self.mx_error = "Tên miền có bản ghi MX nhưng không có bản ghi nào trỏ về hệ thống."
       else
         self.mx_status = "Invalid"
-        self.mx_error = "MX #{missing_records.size == 1 ? 'record' : 'records'} for #{missing_records.to_sentence} are missing and are required."
+        self.mx_error = "Thiếu bản ghi MX bắt buộc cho #{missing_records.to_sentence}."
       end
     end
   end
@@ -135,13 +135,13 @@ module HasDNSChecks
     records = resolver.cname(return_path_domain)
     if records.empty?
       self.return_path_status = "Missing"
-      self.return_path_error = "There is no return path record at #{return_path_domain}"
+      self.return_path_error = "Chưa có bản ghi return path tại #{return_path_domain}."
     elsif records.size == 1 && records.first == OmmicomMail::Config.dns.return_path_domain
       self.return_path_status = "OK"
       self.return_path_error = nil
     else
       self.return_path_status = "Invalid"
-      self.return_path_error = "There is a CNAME record at #{return_path_domain} but it points to #{records.first} which is incorrect. It should point to #{OmmicomMail::Config.dns.return_path_domain}."
+      self.return_path_error = "Có bản ghi CNAME tại #{return_path_domain} nhưng đang trỏ tới #{records.first}, giá trị này chưa đúng. Bản ghi cần trỏ tới #{OmmicomMail::Config.dns.return_path_domain}."
     end
   end
 

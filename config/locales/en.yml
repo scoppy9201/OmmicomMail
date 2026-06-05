@@ -24,17 +24,64 @@ en:
   activerecord:
     attributes:
       organization:
+        name: Tên tổ chức
         permalink: Tên ngắn
+        time_zone: Múi giờ
       server:
+        name: Tên máy chủ
         permalink: Tên ngắn
+        mode: Chế độ
+        ip_pool_id: IP pool
+        send_limit: Giới hạn gửi
+        outbound_spam_threshold: Ngưỡng spam gửi đi
+        message_retention_days: Số ngày lưu metadata
+        raw_message_retention_days: Số ngày lưu email gốc
+        raw_message_retention_size: Dung lượng lưu email gốc
+        spam_threshold: Ngưỡng spam
+        spam_failure_threshold: Ngưỡng từ chối spam
       domain:
+        name: Tên miền
         verification_method: Phương thức xác minh
       http_endpoint:
+        name: Tên
         url: URL
+        encoding: Kiểu gửi dữ liệu
+        format: Định dạng
+        strip_replies: Tách nội dung trả lời
+        timeout: Thời gian chờ
+      smtp_endpoint:
+        name: Tên
+        hostname: Hostname
+        port: Cổng
+        ssl_mode: Chế độ SSL
+      address_endpoint:
+        address: Địa chỉ email
+      route:
+        name: Địa chỉ
+        endpoint: Endpoint
+        spam_mode: Chế độ xử lý spam
+        domain: Tên miền
+      credential:
+        type: Loại
+        name: Tên
+        key: Khóa
+        hold: Giữ email
+      track_domain:
+        name: Tên miền
+        ssl_enabled: SSL
+        track_loads: Theo dõi lượt mở
+        track_clicks: Theo dõi lượt nhấp
       user:
+        first_name: Tên
+        last_name: Họ
+        password: Mật khẩu
+        password_confirmation: Xác nhận mật khẩu
         email_address: Địa chỉ email
+        time_zone: Múi giờ
       webhook:
+        name: Tên
         url: URL
+        enabled: Trạng thái
         sign: Ký yêu cầu
 
   server_statuses:

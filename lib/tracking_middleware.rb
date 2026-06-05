@@ -25,7 +25,7 @@ class TrackingMiddleware
       link_token = ::Regexp.last_match(2)
       dispatch_redirect_request(request, server_token, link_token)
     else
-      [200, {}, ["Hello."]]
+      [200, {}, ["Xin chào."]]
     end
   end
 
@@ -34,7 +34,7 @@ class TrackingMiddleware
   def dispatch_image_request(request, server_token, message_token)
     message_db = get_message_db_from_server_token(server_token)
     if message_db.nil?
-      return [404, {}, ["Invalid Server Token"]]
+      return [404, {}, ["Token máy chủ không hợp lệ"]]
     end
 
     begin
@@ -54,19 +54,19 @@ class TrackingMiddleware
       headers["Content-Length"] = TRACKING_PIXEL.bytesize.to_s
       [200, headers, [TRACKING_PIXEL]]
     else
-      [400, {}, ["Invalid/missing source image"]]
+      [400, {}, ["Ảnh nguồn không hợp lệ hoặc bị thiếu"]]
     end
   end
 
   def dispatch_redirect_request(request, server_token, link_token)
     message_db = get_message_db_from_server_token(server_token)
     if message_db.nil?
-      return [404, {}, ["Invalid Server Token"]]
+      return [404, {}, ["Token máy chủ không hợp lệ"]]
     end
 
     link = message_db.select(:links, where: { token: link_token }, limit: 1).first
     if link.nil?
-      return [404, {}, ["Link not found"]]
+      return [404, {}, ["Không tìm thấy liên kết"]]
     end
 
     time = Time.now.to_f
@@ -95,7 +95,7 @@ class TrackingMiddleware
       end
     end
 
-    [307, { "Location" => link["url"] }, ["Redirected to: #{link['url']}"]]
+    [307, { "Location" => link["url"] }, ["Đã chuyển hướng tới: #{link['url']}"]]
   end
 
   def get_message_db_from_server_token(token)
