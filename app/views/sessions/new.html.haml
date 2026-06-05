@@ -1,6 +1,9 @@
 - page_title << "Login"
-.subPageBox__title
-  Welcome to OmmicomMail
+.subPageBox__title.loginForm__brand
+  .loginForm__mark OM
+  %p.loginForm__eyebrow Secure mail operations
+  %h1.loginForm__heading Welcome to OmmicomMail
+  %p.loginForm__intro Sign in to manage your mail servers, domains, credentials, and delivery flow.
 = display_flash
 
 .subPageBox__content
@@ -20,5 +23,5 @@
       %p.loginForm__input= password_field_tag 'password', '', :class => 'input input--text input--onWhite', :placeholder => "Your password", :tabindex => 2
       .loginForm__submit
         %ul.loginForm__links
-          %li= link_to "Forgotten your password?", login_reset_path(:return_to => params[:return_to])
-        %p= submit_tag "Login", :class => 'button button--positive', :tabindex => 3
+          %li= link_to "Forgot password?", login_reset_path(:return_to => params[:return_to])
+        %p= submit_tag "Sign in", :class => 'button button--positive', :tabindex => 3

@@ -1,22 +1,109 @@
 .loginForm {}
 
+.loginForm__brand {
+  position:relative;
+}
+
+.loginForm__mark {
+  width:62px;
+  height:62px;
+  margin:0 auto 16px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg, #5eead4, #2563eb);
+  box-shadow:0 14px 32px rgba(37, 99, 235, 0.32);
+  color:#fff;
+  font-weight:800;
+  letter-spacing:0.08em;
+}
+
+.loginForm__eyebrow {
+  color:#99f6e4;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.14em;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+
+.loginForm__heading {
+  color:#fff;
+  font-size:26px;
+  font-weight:800;
+  line-height:1.15;
+  margin-bottom:10px;
+}
+
+.loginForm__intro {
+  color:rgba(226, 232, 240, 0.84);
+  font-size:14px;
+  line-height:1.45;
+  margin:0 auto;
+  max-width:310px;
+}
 
 .loginForm__input {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
+
+  .input {
+    min-height:46px;
+    border-radius:10px;
+    border-color:#dbe7f0;
+    background:#f8fafc;
+    color:#172033;
+    font-size:14px;
+    transition:border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  }
+
+  .input:focus {
+    border-color:#14b8a6;
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(20, 184, 166, 0.14);
+  }
 }
 
 .loginForm__submit {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap:18px;
+  margin-top:8px;
+
+  .button {
+    min-width:112px;
+    min-height:42px;
+    border:0;
+    border-radius:10px;
+    background:linear-gradient(135deg, #14b8a6, #2563eb);
+    box-shadow:0 12px 24px rgba(37, 99, 235, 0.20);
+    font-weight:700;
+  }
+
+  .button:focus,
+  .button:active {
+    background:linear-gradient(135deg, darken(#14b8a6, 6%), darken(#2563eb, 6%));
+    box-shadow:0 0 0 4px rgba(37, 99, 235, 0.16);
+  }
 }
 
 
 .loginForm__links {
   font-size: 12px;
-  color: #999;
-  text-decoration: underline;
+  color: #64748b;
   line-height: 1.7;
+
+  a {
+    color:#64748b;
+    text-decoration:none;
+    border-bottom:1px solid rgba(100, 116, 139, 0.35);
+  }
+
+  a:hover {
+    color:#2563eb;
+    border-bottom-color:#2563eb;
+  }
 }
 
 .loginForm__divider {

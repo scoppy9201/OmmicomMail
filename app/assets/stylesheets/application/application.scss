@@ -26,10 +26,18 @@ html.main {
 html.subPage {
   font-family: 'Source Sans Pro', sans-serif;
   font-size:14px;
-  background:$backgroundGrey;
+  min-height:100%;
+  background:
+    radial-gradient(circle at top left, rgba(45, 156, 219, 0.18), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(34, 197, 181, 0.20), transparent 34%),
+    linear-gradient(135deg, #f7fbff 0%, #eef7f8 48%, #f9fbff 100%);
   body {
-    padding-top:100px;
-    padding-bottom:100px;
+    min-height:100vh;
+    padding:60px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-sizing:border-box;
   }
   .subPage__logo {
     margin-bottom:40px;
