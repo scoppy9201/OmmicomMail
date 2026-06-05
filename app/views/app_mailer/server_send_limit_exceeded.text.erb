@@ -1,17 +1,17 @@
-We're writing to let you know that your <%= @server.name %> mail server has exceeded its send limit. All mail servers have a limit of how much e-mail they are permitted to send in a rolling 60 minute window. At present you have sent <%= @server.send_volume %> messages and have a limit of <%= @server.send_limit %>.
+Máy chủ mail <%= @server.name %> đã vượt quá giới hạn gửi. Mỗi máy chủ mail có giới hạn số lượng email được phép gửi trong khoảng thời gian 60 phút gần nhất. Hiện tại máy chủ đã gửi <%= @server.send_volume %> email trên giới hạn <%= @server.send_limit %>.
 
-Orgaization: <%= @server.organization.name %>
-Server: <%= @server.name %>
-Send Limit: <%= @server.send_limit %>
-Current Volume: <%= @server.send_volume %>
+Tổ chức: <%= @server.organization.name %>
+Máy chủ: <%= @server.name %>
+Giới hạn gửi: <%= @server.send_limit %>
+Số lượng hiện tại: <%= @server.send_volume %>
 
-All messages that you send until your volume drops will now be held in the system. You will need to manually release any of these messages that you wish to send. You can do this through the web interface or using the API.
+Tất cả email mới sẽ được giữ trong hệ thống cho đến khi lưu lượng gửi giảm xuống dưới giới hạn. Bạn cần mở giữ thủ công các email muốn gửi qua giao diện web hoặc API.
 
-You can view more information about this server at:
+Bạn có thể xem thêm thông tin về máy chủ tại:
 
 <%= OmmicomMail.host_with_protocol %>/org/<%= @server.organization.permalink %>/servers/<%= @server.permalink %>
 
-Thanks,
+Trân trọng,
 
 <%= OmmicomMail::Config.smtp.from_name %>
 <%= OmmicomMail::Config.smtp.from_address %>

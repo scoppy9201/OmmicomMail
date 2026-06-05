@@ -1,24 +1,24 @@
-- page_title << "Choose mail server"
+- page_title << "Chọn máy chủ mail"
 .pageHeader
   %h1.pageHeader__title
     %span.pageHeader__titlePrevious
       = @organization.name
       &rarr;
-    Mail Servers
+    Máy chủ mail
 = render 'organizations/nav', :active_nav => :servers
 .pageContent.pageContent--compact
 
   - if @servers.empty?
     .noData.noData--clean
-      %p.noData__title There are no mail servers for this organization yet.
+      %p.noData__title Tổ chức này chưa có máy chủ mail.
       %p.noData__text
-        Great - you've got an organization, now you need to provision a mail server.
-        Once you've got a mail server, you can start sending & receiving messages.
+        Bạn đã có tổ chức, bước tiếp theo là tạo máy chủ mail.
+        Sau khi tạo máy chủ, bạn có thể bắt đầu gửi và nhận email.
       %p.noData__button.buttonSet.buttonSet--center
-        = link_to "Build your first mail server", [:new, organization, :server], :class => 'button button--positive'
+        = link_to "Tạo máy chủ mail đầu tiên", [:new, organization, :server], :class => 'button button--positive'
   - else
     .js-searchable
-      %p.messageSearch= text_field_tag 'query', params[:query], :class => 'messageSearch__input js-searchable__input js-focus-on-s', :placeholder => "Find a server..."
+      %p.messageSearch= text_field_tag 'query', params[:query], :class => 'messageSearch__input js-searchable__input js-focus-on-s', :placeholder => "Tìm máy chủ..."
 
       %ul.largeList.u-margin.js-searchable__list
         - for server in @servers
@@ -26,10 +26,10 @@
             = link_to [organization, server], :class => 'largeList__link' do
               %span.largeList__rightLabel.label{:class => "label--serverStatus-#{server.status.underscore}"}= t("server_statuses.#{server.status.underscore}")
               %p= server.name
-              %p.largeList__subText #{number_with_precision server.message_rate, :precision => 2} messages/minute
+              %p.largeList__subText #{number_with_precision server.message_rate, :precision => 2} email/phút
       .js-searchable__empty.is-hidden
         .noData.noData--clean
-          %p.noData__title No servers were found...
+          %p.noData__title Không tìm thấy máy chủ...
           %p.noData__text
-            There were no servers found matching what you've typed it.
-    %p.u-center= link_to "Build a new mail server", [:new, organization, :server], :class => 'button button--positive'
+            Không có máy chủ nào khớp với nội dung bạn đã nhập.
+    %p.u-center= link_to "Tạo máy chủ mail mới", [:new, organization, :server], :class => 'button button--positive'

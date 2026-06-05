@@ -20,61 +20,61 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  hello: "Xin chào"
   activerecord:
     attributes:
       organization:
-        permalink: Short name
+        permalink: Tên ngắn
       server:
-        permalink: Short name
+        permalink: Tên ngắn
       domain:
-        verification_method: Verify Method
+        verification_method: Phương thức xác minh
       http_endpoint:
         url: URL
       user:
-        email_address: E-Mail address
+        email_address: Địa chỉ email
       webhook:
         url: URL
-        sign: Sign requests
+        sign: Ký yêu cầu
 
   server_statuses:
-    live: Live
-    development: Dev
-    suspended: Suspended
+    live: Đang hoạt động
+    development: Phát triển
+    suspended: Tạm ngưng
   route_spam_modes:
-    quarantine: Spam will be quarantined
-    mark: Spam will be marked
+    quarantine: Spam sẽ được cách ly
+    mark: Spam sẽ được đánh dấu
 
   http_endpoint_formats:
-    hash: Delivered as a hash
-    raw_message: Delivered as the raw message
+    hash: Gửi dưới dạng hash
+    raw_message: Gửi dưới dạng email gốc
   http_endpoint_encodings:
-    body_as_json: Sent in the body as JSON
-    form_data: Sent as form data
+    body_as_json: Gửi trong phần body dạng JSON
+    form_data: Gửi dưới dạng form data
 
   webhook_events:
-    message_sent: An e-mail has been successfully delivered to its endpoint (either SMTP or HTTP).
-    message_delayed: An e-mail has been delayed due to an issue with the receiving endpoint. It will be retried automatically.
-    message_delivery_failed: An e-mail cannot be delivered to its endpoint. This is a permanent failure so it will no be retried.
-    message_held: An e-mail has been held in OmmicomMail. This will be because a limit has been reached or your server is in development mode.
-    message_bounced: We received a bounce message in response to an email which had previously been successfully sent.
-    message_link_clicked: A link in one of your outbound messages has been clicked.
-    message_loaded: A message you have sent has been loaded.
-    domain_dns_error: This will be triggered when we detect an issue with the DNS configuration for any domain for this server.
-    send_limit_approaching: This will be triggered when your mail server is approaching its send limit. It will only be sent once per hour.
-    send_limit_exceeded: This will be triggered when your mail server exceeded its send limit.
+    message_sent: Email đã được gửi thành công tới endpoint SMTP hoặc HTTP.
+    message_delayed: Email bị trì hoãn do endpoint nhận gặp sự cố. Hệ thống sẽ tự động thử lại.
+    message_delivery_failed: Email không thể gửi tới endpoint. Đây là lỗi vĩnh viễn và hệ thống sẽ không thử lại.
+    message_held: Email đã được giữ trong OmmicomMail vì đạt giới hạn hoặc máy chủ đang ở chế độ phát triển.
+    message_bounced: Hệ thống đã nhận được email bounce phản hồi cho một email đã gửi trước đó.
+    message_link_clicked: Một liên kết trong email gửi ra đã được nhấp.
+    message_loaded: Email bạn gửi đã được mở.
+    domain_dns_error: Kích hoạt khi phát hiện vấn đề cấu hình DNS của một tên miền trên máy chủ này.
+    send_limit_approaching: Kích hoạt khi máy chủ mail sắp đạt giới hạn gửi. Sự kiện này chỉ gửi tối đa một lần mỗi giờ.
+    send_limit_exceeded: Kích hoạt khi máy chủ mail đã vượt quá giới hạn gửi.
 
   currencies:
-    gbp: GBP - Great British Pound (£)
-    usd: USD - United States Dollar ($)
+    gbp: GBP - Bảng Anh (£)
+    usd: USD - Đô la Mỹ ($)
     eur: EUR - Euro (€)
 
   route_modes:
-    accept: Accept message with no endpoint
-    hold: Accept message and put message in hold queue
-    bounce: Accept message and immediately send bounce to sender
-    reject: Do not accept any incoming messages
+    accept: Nhận email nhưng không chuyển tới endpoint
+    hold: Nhận email và đưa vào hàng đợi giữ
+    bounce: Nhận email rồi gửi bounce ngay cho người gửi
+    reject: Không nhận bất kỳ email đến nào
 
   renewal_issues:
-    no_payment_card: You don't have a payment card on file
-    payment_declined: The payment for this service was declined
+    no_payment_card: Bạn chưa có thẻ thanh toán trong hồ sơ
+    payment_declined: Thanh toán cho dịch vụ này đã bị từ chối

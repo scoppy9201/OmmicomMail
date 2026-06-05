@@ -1,31 +1,30 @@
-- page_title << "Welcome"
+- page_title << "Trang chủ"
 
 .pageHeader
-  %p.pageHeader__eyebrow Ommicom ecosystem
-  %h1.pageHeader__title Welcome back, #{current_user.first_name}
-  %p.pageHeader__text Manage organizations, mail servers, domains, credentials, and delivery operations in one workspace.
+  %p.pageHeader__eyebrow Hệ sinh thái Ommicom
+  %h1.pageHeader__title Xin chào, #{current_user.first_name}
+  %p.pageHeader__text Quản lý tổ chức, máy chủ mail, tên miền, thông tin xác thực và luồng gửi nhận trong một không gian làm việc.
 
 .pageContent.pageContent--compact.organizationWelcome
 
   - if @organizations.empty?
     .noData.noData--clean
-      %p.noData__title There are no organizations.
+      %p.noData__title Chưa có tổ chức nào.
       - if current_user.admin?
         %p.noData__text
-          You need an organization otherwise you can't do much here. Hit
-          the button below to create the first organization.
-        %p.noData__button= link_to "Create the first organization", :new_organization, :class => 'button button--positive'
+          Bạn cần tạo một tổ chức trước khi có thể quản lý hệ thống mail.
+          Hãy dùng nút bên dưới để tạo tổ chức đầu tiên.
+        %p.noData__button= link_to "Tạo tổ chức đầu tiên", :new_organization, :class => 'button button--positive'
       - else
         %p.noData__text
-          You don't have access to any organizations yet. Ask your administrator to invite
-          you to some organizations.
+          Bạn chưa có quyền truy cập tổ chức nào. Vui lòng liên hệ quản trị viên để được cấp quyền.
   - else
     .organizationWelcome__panel
       .organizationWelcome__intro
-        %p.organizationWelcome__eyebrow Workspace
-        %h2.organizationWelcome__title Your organizations
+        %p.organizationWelcome__eyebrow Không gian làm việc
+        %h2.organizationWelcome__title Tổ chức của bạn
         %p.organizationWelcome__text
-          Choose an organization to manage its mail servers, domains, routing, credentials, and delivery settings.
+          Chọn một tổ chức để quản lý máy chủ mail, tên miền, định tuyến, thông tin xác thực và cấu hình gửi nhận.
 
       %ul.largeList.organizationWelcome__list
         - for organization in @organizations
@@ -34,9 +33,9 @@
               %span.largeList__avatar= organization.name.first.upcase
               %span.largeList__content
                 %span.largeList__title= organization.name
-                %span.largeList__subText Mail operations workspace
+                %span.largeList__subText Không gian vận hành hệ thống mail
               %span.largeList__arrow →
 
       - if current_user.admin?
         .organizationWelcome__actions
-          = link_to "Create organization", :new_organization, :class => 'button button--positive'
+          = link_to "Tạo tổ chức", :new_organization, :class => 'button button--positive'

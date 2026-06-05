@@ -14,11 +14,11 @@
       - if flash[:remember_login] && !auth_session.persistent?
         .siteHeader__remember.js-remember
           .siteHeader__rememberText
-            %p.siteHeader__rememberTextTitle Would you like to stay logged in?
-            %p This will keep you logged in in this browser for 2 months.
+            %p.siteHeader__rememberTextTitle Bạn muốn duy trì đăng nhập?
+            %p Trình duyệt này sẽ giữ phiên đăng nhập của bạn trong 2 tháng.
           .siteHeader__rememberButtons.buttonSet
-            = link_to "Remember me", '#', :class => 'button button--positive button--small', :data => {:remember => 'yes'}
-            = link_to "Close", '#', :class => 'button button--dark button--small', :data => {:remember => 'no'}
+            = link_to "Ghi nhớ", '#', :class => 'button button--positive button--small', :data => {:remember => 'yes'}
+            = link_to "Đóng", '#', :class => 'button button--dark button--small', :data => {:remember => 'no'}
 
       .siteHeader__inside
         .siteHeader__logo= link_to "OmmicomMail", root_path
@@ -30,20 +30,20 @@
               = link_to organization.name, organization_root_path(organization), :class => 'siteHeader__navLinkWithMenu'
               %ul.siteHeader__subMenu
                 %li.siteHeader__subMenuItem.siteHeader__subMenuItem--header= link_to organization.name, organization_root_path(organization)
-                %li.siteHeader__subMenuItem= link_to "Mail servers", organization_root_path(organization), :class => 'siteHeader__subMenuLink'
-                %li.siteHeader__subMenuItem= link_to "Domains", organization_domains_path(organization), :class => 'siteHeader__subMenuLink'
-                %li.siteHeader__subMenuItem= link_to "Organization Settings", organization_settings_path(organization), :class => 'siteHeader__subMenuLink'
+                %li.siteHeader__subMenuItem= link_to "Máy chủ mail", organization_root_path(organization), :class => 'siteHeader__subMenuLink'
+                %li.siteHeader__subMenuItem= link_to "Tên miền", organization_domains_path(organization), :class => 'siteHeader__subMenuLink'
+                %li.siteHeader__subMenuItem= link_to "Cài đặt tổ chức", organization_settings_path(organization), :class => 'siteHeader__subMenuLink'
                 - if current_user.admin?
-                  %li.siteHeader__subMenuItem= link_to "Create new organization", :new_organization, :class => 'siteHeader__subMenuLink'
+                  %li.siteHeader__subMenuItem= link_to "Tạo tổ chức mới", :new_organization, :class => 'siteHeader__subMenuLink'
                 - if current_user.organizations.present.count > 1
-                  %li.siteHeader__subMenuItem= link_to "Switch organization", root_path, :class => 'siteHeader__subMenuLink'
+                  %li.siteHeader__subMenuItem= link_to "Chuyển tổ chức", root_path, :class => 'siteHeader__subMenuLink'
           %li.siteHeader__navItem.siteHeader__navItem--user= current_user.name
-          %li.siteHeader__navItem= link_to "My Settings", settings_path, :class => 'sideHeader__navItemLink'
+          %li.siteHeader__navItem= link_to "Cài đặt của tôi", settings_path, :class => 'sideHeader__navItemLink'
           - if current_user.admin?
             - if OmmicomMail.ip_pools?
               %li.siteHeader__navItem= link_to "IP Pools", ip_pools_path, :class => 'sideHeader__navItemLink'
-            %li.siteHeader__navItem= link_to "Users", users_path, :class => 'sideHeader__navItemLink'
-          %li.siteHeader__navItem= link_to "Logout", logout_path, :method => :delete, :class => 'sideHeader__navItemLink'
+            %li.siteHeader__navItem= link_to "Người dùng", users_path, :class => 'sideHeader__navItemLink'
+          %li.siteHeader__navItem= link_to "Đăng xuất", logout_path, :method => :delete, :class => 'sideHeader__navItemLink'
 
     .siteContent
       - if content_for?(:sidebar)
@@ -58,5 +58,5 @@
               Hệ sinh thái từ
               #{link_to "OmmicomMail", root_path}
               #{ommicommail_version_string}
-            %li= link_to "Repository", "https://github.com/scoppy9201/OmmicomMail", target: '_blank'
-            %li= link_to "Ask for help", "https://github.com/scoppy9201/OmmicomMail/discussions", target: '_blank'
+            %li= link_to "Kho mã nguồn", "https://github.com/scoppy9201/OmmicomMail", target: '_blank'
+            %li= link_to "Hỗ trợ", "https://github.com/scoppy9201/OmmicomMail/discussions", target: '_blank'

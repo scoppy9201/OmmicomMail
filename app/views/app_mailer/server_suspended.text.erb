@@ -1,12 +1,12 @@
-Hello,
+Xin chào,
 
-We're writing to inform you that, unfortunately, we have had to suspend one of your mail servers on OmmicomMail.
+Chúng tôi thông báo rằng một máy chủ mail của bạn trên OmmicomMail đã bị tạm ngưng.
 
-Organization: <%= @server.organization.name %>
-Server: <%= @server.name %>
-Reason: <%= @server.actual_suspension_reason %>
+Tổ chức: <%= @server.organization.name %>
+Máy chủ: <%= @server.name %>
+Lý do: <%= @server.actual_suspension_reason %>
 
-Thanks,
+Trân trọng,
 
 <%= OmmicomMail::Config.smtp.from_name %>
 <%= OmmicomMail::Config.smtp.from_address %>

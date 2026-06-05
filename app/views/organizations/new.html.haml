@@ -1,10 +1,10 @@
-- page_title << "Create a new organization"
+- page_title << "Tạo tổ chức mới"
 .pageHeader
-  %h1.pageHeader__title Create a new organization
+  %h1.pageHeader__title Tạo tổ chức mới
 .pageContent.pageContent--compact
   %p.pageContent__intro.u-margin
-    If you're starting a new organization you can do so by completing this form. You'll be able
-    to invite new users & create mail servers as soon as it has been created.
+    Hoàn tất biểu mẫu này để tạo một tổ chức mới. Sau khi tạo xong, bạn có thể mời người dùng
+    và tạo máy chủ mail cho tổ chức này.
   = form_for @organization, :remote => true do |f|
     = f.error_messages
     %fieldset.fieldSet
@@ -14,12 +14,12 @@
       .fieldSet__field
         = f.label :permalink, :class => 'fieldSet__label'
         .fieldSet__input
-          = f.text_field :permalink, :class => 'input input--text', :placeholder => "Automatically generated"
+          = f.text_field :permalink, :class => 'input input--text', :placeholder => "Tự động tạo"
           %p.fieldSet__text
-            This is a short name which is used in usernames and the API to identify your organization.
-            It should only contain letters, numbers & hyphens.
+            Đây là tên ngắn dùng trong tài khoản và API để định danh tổ chức của bạn.
+            Chỉ nên dùng chữ cái, số và dấu gạch nối.
 
     .fieldSetSubmit.buttonSet
-      = f.submit "Create organization", :class => 'button button--positive js-form-submit'
+      = f.submit "Tạo tổ chức", :class => 'button button--positive js-form-submit'
       .fieldSetSubmit__delete
-        = link_to "Back to homepage", root_path, :class => 'button button--neutral'
+        = link_to "Quay lại trang chủ", root_path, :class => 'button button--neutral'

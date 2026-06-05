@@ -5,42 +5,41 @@
 - if @messages.empty?
   .pageContent--compact
     .noData.noData--clean
-      %h2.noData__title Your new mail server is ready to go.
+      %h2.noData__title Máy chủ mail mới đã sẵn sàng.
       %p.noData__text
-        Check out the information below to get started sending & receiving e-mail through your new mail server.
+        Xem thông tin bên dưới để bắt đầu gửi và nhận email qua máy chủ mail mới.
       %p.noData__button.buttonSet.buttonSet--center
-        = link_to "Read about sending e-mail", [organization, @server, :help_outgoing], :class => "button"
-        = link_to "Read about receiving e-mail", [organization, @server, :help_incoming], :class => "button"
+        = link_to "Hướng dẫn gửi email", [organization, @server, :help_outgoing], :class => "button"
+        = link_to "Hướng dẫn nhận email", [organization, @server, :help_incoming], :class => "button"
 - else
   .pageContent
     - if @server.suspended?
       .suspensionBox.u-margin
         %p
-          This server has been suspended and is not permitted to send or receive e-mail.
-          If you have any questions about this please contact our support team for assistance.
-          Please be aware that suspended servers will be fully deleted from our system 30 days after
-          suspension.
+          Máy chủ này đã bị tạm ngưng và không được phép gửi hoặc nhận email.
+          Nếu có câu hỏi, vui lòng liên hệ đội ngũ hỗ trợ để được trợ giúp.
+          Máy chủ bị tạm ngưng sẽ bị xóa hoàn toàn khỏi hệ thống sau 30 ngày kể từ thời điểm tạm ngưng.
         - if @server.actual_suspension_reason
           %p.suspensionBox__reason
-            <b>Reason:</b> #{@server.actual_suspension_reason}
+            <b>Lý do:</b> #{@server.actual_suspension_reason}
 
     .mailGraph.u-margin{:data => {:data => @graph_data.to_json}}
       %ul.mailGraph__key
-        %li.mailGraph__key--in Incoming Messages
-        %li.mailGraph__key--out Outgoing Messages
+        %li.mailGraph__key--in Email nhận vào
+        %li.mailGraph__key--out Email gửi đi
 
       .mailGraph__graph
       %ul.mailGraph__labels
         - if @graph_type == :hourly
           %li #{@first_date.strftime("%A at %l%P")} &rarr;
-          %li Today at #{Time.now.strftime("%l%P")}
+          %li Hôm nay lúc #{Time.now.strftime("%l%P")}
         - else
           %li #{@first_date.to_date.to_fs(:long)} &rarr;
-          %li Today
+          %li Hôm nay
 
     .titleWithLinks.u-margin
-      %h2.titleWithLinks__title Recently processed e-mails
+      %h2.titleWithLinks__title Email xử lý gần đây
       %ul.titleWithLinks__links
-        %li= link_to "View message queue", [:queue, organization, @server], :class => 'titleWithLinks__link'
-        %li= link_to "View full e-mail history", [:outgoing, organization, @server, :messages], :class => 'titleWithLinks__link'
+        %li= link_to "Xem hàng đợi email", [:queue, organization, @server], :class => 'titleWithLinks__link'
+        %li= link_to "Xem toàn bộ lịch sử email", [:outgoing, organization, @server, :messages], :class => 'titleWithLinks__link'
     = render 'messages/list', :messages => @messages

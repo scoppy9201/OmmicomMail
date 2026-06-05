@@ -1,6 +1,6 @@
 - if @server
   - page_title << @server.name
-- page_title << "Domains"
+- page_title << "Tên miền"
 
 - if @server
   = render 'servers/sidebar', :active_server => @server
@@ -12,18 +12,18 @@
       %span.pageHeader__titlePrevious
         = @organization.name
         &rarr;
-      Domains
+      Tên miền
   = render 'organizations/nav', :active_nav => :domains
 
 .pageContent.pageContent--compact
 
   - if @domains.empty?
     .noData.noData--clean
-      %h2.noData__title There are no domains for this server.
+      %h2.noData__title Máy chủ này chưa có tên miền.
       %p.noData__text
-        To send & receive messages you need to add & verify the domain you wish to send/receive
-        messages to/from. Add your domain below to get started.
-      %p.noData__button= link_to "Add your first domain", [:new, organization, @server, :domain], :class => "button button--positive"
+        Để gửi và nhận email, bạn cần thêm và xác minh tên miền muốn sử dụng.
+        Hãy thêm tên miền đầu tiên để bắt đầu.
+      %p.noData__button= link_to "Thêm tên miền đầu tiên", [:new, organization, @server, :domain], :class => "button button--positive"
 
   - else
     %ul.domainList.u-margin
@@ -33,7 +33,7 @@
             %p.domainList__name
               = link_to domain.name, [:setup, organization, @server, domain]
               - if domain.use_for_any?
-                %span.label.label--blue Any
+                %span.label.label--blue Bất kỳ
             %ul.domainList__checks
               - if domain.spf_status == 'OK'
                 %li.domainList__check.domainList__check--ok SPF
@@ -63,12 +63,12 @@
 
           %ul.domainList__properties
             - if domain.verified?
-              %li.domainList__verificationTime Verified on #{domain.verified_at.to_fs(:long)}
+              %li.domainList__verificationTime Đã xác minh vào #{domain.verified_at.to_fs(:long)}
             - else
-              %li= link_to "Verify this domain", [:verify, organization, @server, domain], :class => "domainList__verificationLink"
+              %li= link_to "Xác minh tên miền này", [:verify, organization, @server, domain], :class => "domainList__verificationLink"
             %li.domainList__links
               - if domain.verified?
-                = link_to "DNS setup", [:setup, organization, @server, domain]
-              = link_to "Delete", [organization, @server, domain], :remote => :delete, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this domain?", :disable_with => "Deleting..."}, :class => 'domainList__delete'
+                = link_to "Cấu hình DNS", [:setup, organization, @server, domain]
+              = link_to "Xóa", [organization, @server, domain], :remote => :delete, :method => :delete, :data => {:confirm => "Bạn có chắc muốn xóa tên miền này?", :disable_with => "Đang xóa..."}, :class => 'domainList__delete'
 
-    %p.u-center= link_to "Add new domain", [:new, organization, @server, :domain], :class => "button button--positive"
+    %p.u-center= link_to "Thêm tên miền mới", [:new, organization, @server, :domain], :class => "button button--positive"

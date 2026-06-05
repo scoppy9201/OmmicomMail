@@ -1,11 +1,11 @@
 - page_title << @organization.name
-- page_title << "Organization Settings"
+- page_title << "Cài đặt tổ chức"
 .pageHeader
   %h1.pageHeader__title
     %span.pageHeader__titlePrevious
       = @organization.name
       &rarr;
-    Settings
+    Cài đặt
 
 = render 'nav', :active_nav => :settings
 
@@ -21,8 +21,8 @@
         .fieldSet__input
           = f.time_zone_select :time_zone, [], {}, :class => 'input input--select'
           %p.fieldSet__text
-            Choose the time zone that your organization exists within. This is used when displaying times in places
-            where there isn't a logged in user to provide their own time zone.
+            Chọn múi giờ của tổ chức. Múi giờ này được dùng khi hiển thị thời gian ở những nơi
+            không có người dùng đăng nhập để cung cấp múi giờ riêng.
 
     %p.fieldSetSubmit.buttonSet
-      = f.submit "Save Settings", :class => 'button button--positive js-form-submit'
+      = f.submit "Lưu cài đặt", :class => 'button button--positive js-form-submit'

@@ -1,30 +1,30 @@
-- page_title << "Login"
+- page_title << "Đăng nhập"
 = display_flash
 
 .subPageBox__content
   .loginForm__brand
     = image_tag 'login.png', :class => 'loginForm__wordmark', :alt => 'OmmicomMail'
-    %h1.loginForm__heading Sign In
+    %h1.loginForm__heading Đăng nhập
 
   = form_tag login_path, :class => 'loginForm' do
     = hidden_field_tag 'return_to', params[:return_to]
 
     - if OmmicomMail::Config.oidc.enabled?
       .loginForm__oidcButton
-        = link_to "Login with #{OmmicomMail::Config.oidc.name}", "/auth/oidc", method: :post, class: 'button button--full'
+        = link_to "Đăng nhập bằng #{OmmicomMail::Config.oidc.name}", "/auth/oidc", method: :post, class: 'button button--full'
 
     - if OmmicomMail::Config.oidc.enabled? && OmmicomMail::Config.oidc.local_authentication_enabled?
       .loginForm__divider
-      %p.loginForm__localTitle or login with a local user
+      %p.loginForm__localTitle hoặc đăng nhập bằng tài khoản nội bộ
 
     - if OmmicomMail::Config.oidc.local_authentication_enabled?
       .loginForm__field
-        = label_tag 'email_address', 'Username', :class => 'loginForm__label'
+        = label_tag 'email_address', 'Tài khoản', :class => 'loginForm__label'
         = text_field_tag 'email_address', '', :type => 'email', :spellcheck => 'false', :class => 'input input--text input--onWhite', :autofocus => !OmmicomMail::Config.oidc.enabled?, :tabindex => 1
       .loginForm__field
-        = label_tag 'password', 'Password', :class => 'loginForm__label'
+        = label_tag 'password', 'Mật khẩu', :class => 'loginForm__label'
         = password_field_tag 'password', '', :class => 'input input--text input--onWhite', :tabindex => 2
       .loginForm__submit
-        %p= submit_tag "Sign In", :class => 'button button--positive', :tabindex => 3
+        %p= submit_tag "Đăng nhập", :class => 'button button--positive', :tabindex => 3
         %ul.loginForm__links
-          %li= link_to "Forgot password?", login_reset_path(:return_to => params[:return_to])
+          %li= link_to "Quên mật khẩu?", login_reset_path(:return_to => params[:return_to])

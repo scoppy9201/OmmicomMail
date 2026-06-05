@@ -1,7 +1,7 @@
-- page_title << "Users"
+- page_title << "Người dùng"
 .pageHeader
   %h1.pageHeader__title
-    Users
+    Người dùng
 
 .pageContent.pageContent--compact
   %ul.userList.u-margin
@@ -16,11 +16,11 @@
               - if user.oidc?
                 %span.userList__tag.label.label--green OIDC
               - elsif !OmmicomMail::Config.oidc.local_authentication_enabled?
-                %span.userList__tag.label.label--orange Pending
+                %span.userList__tag.label.label--orange Chờ xử lý
               
           %p.userList__email= user.email_address
         %ul.userList__actions
-          %li= link_to "Edit user", [:edit, user]
-          %li= link_to "Delete user", user, :method => :delete, :data => {:confirm => "Are you sure you wish to revoke #{user.name}'s access?", :disable_with => "Deleting..."}, :remote => true, :class => 'userList__revoke'
+          %li= link_to "Sửa người dùng", [:edit, user]
+          %li= link_to "Xóa người dùng", user, :method => :delete, :data => {:confirm => "Bạn có chắc muốn thu hồi quyền truy cập của #{user.name}?", :disable_with => "Đang xóa..."}, :remote => true, :class => 'userList__revoke'
 
-  %p.u-center= link_to "Add a new user", :new_user, :class => 'button button--positive'
+  %p.u-center= link_to "Thêm người dùng mới", :new_user, :class => 'button button--positive'

@@ -1,11 +1,11 @@
 .navBar.navBar--secondary
   %ul
-    %li.navBar__item= link_to "Server Settings", [:edit, organization, @server], :class => ['navBar__link', active_nav == :settings ? 'is-active' : '']
+    %li.navBar__item= link_to "Cài đặt máy chủ", [:edit, organization, @server], :class => ['navBar__link', active_nav == :settings ? 'is-active' : '']
     %li.navBar__item= link_to "Spam", [:spam, organization, @server], :class => ['navBar__link', active_nav == :spam ? 'is-active' : '']
-    %li.navBar__item= link_to "Retention", [:retention, organization, @server], :class => ['navBar__link', active_nav == :retention ? 'is-active' : '']
-    %li.navBar__item= link_to "Send Limit", [:limits, organization, @server], :class => ['navBar__link', active_nav == :limits ? 'is-active' : '']
+    %li.navBar__item= link_to "Lưu trữ", [:retention, organization, @server], :class => ['navBar__link', active_nav == :retention ? 'is-active' : '']
+    %li.navBar__item= link_to "Giới hạn gửi", [:limits, organization, @server], :class => ['navBar__link', active_nav == :limits ? 'is-active' : '']
     - if OmmicomMail.ip_pools?
-      %li.navBar__item= link_to "IP Rules", [organization, @server, :ip_pool_rules], :class => ['navBar__link', active_nav == :ip_pool_rules ? 'is-active' : '']
+      %li.navBar__item= link_to "Quy tắc IP", [organization, @server, :ip_pool_rules], :class => ['navBar__link', active_nav == :ip_pool_rules ? 'is-active' : '']
     - if current_user.admin?
-      %li.navBar__item= link_to "Advanced Settings", [:advanced, organization, @server], :class => ['navBar__link', active_nav == :admin ? 'is-active' : '']
-    %li.navBar__item= link_to "Delete", [:delete, organization, @server], :class => ['navBar__link', active_nav == :delete ? 'is-active' : '']
+      %li.navBar__item= link_to "Cài đặt nâng cao", [:advanced, organization, @server], :class => ['navBar__link', active_nav == :admin ? 'is-active' : '']
+    %li.navBar__item= link_to "Xóa", [:delete, organization, @server], :class => ['navBar__link', active_nav == :delete ? 'is-active' : '']
