@@ -65,5 +65,8 @@ FROM base AS ci
 # full target - default if no --target option is given
 FROM base AS full
 
-RUN RAILS_GROUPS=assets bundle exec rake assets:precompile
+RUN RAILS_GROUPS=assets \
+  SILENCE_OMMICOMMAIL_CONFIG_MESSAGES=true \
+  OMMICOMMAIL_RAILS_SECRET_KEY=assets-precompile-secret \
+  bundle exec rake assets:precompile
 RUN touch /opt/postal/app/public/assets/.prebuilt
