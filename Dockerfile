@@ -52,7 +52,7 @@ RUN if [ "$VERSION" != "" ]; then echo $VERSION > VERSION; fi \
   && if [ "$BRANCH" != "" ]; then echo $BRANCH > BRANCH; fi
 
 # Set paths for when running in a container
-ENV OMMICOMMAIL_CONFIG_FILE_PATH=/config/postal.yml
+ENV OMMICOMMAIL_CONFIG_FILE_PATH=/config/ommicommail.yml
 ENV POSTAL_CONFIG_FILE_PATH=/config/postal.yml
 
 # Set the CMD

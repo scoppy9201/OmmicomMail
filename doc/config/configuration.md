@@ -8,7 +8,7 @@ To use a configuration file, the `OMMICOMMAIL_CONFIG_FILE_PATH` environment vari
 
 ## Development 
 
-When developing with OmmicomMail, you can configure the application by placing a configuration file in `config/postal/postal.yml`. Alternatively, you can use environment variables by placing configuration in `.env` in the root of the application.
+When developing with OmmicomMail, you can configure the application by placing a configuration file in `config/ommicommail/ommicommail.yml`. Existing `config/postal/postal.yml` files remain supported for compatibility. Alternatively, you can use environment variables by placing configuration in `.env` in the root of the application.
 
 ### Running tests
 
@@ -16,7 +16,7 @@ By default, tests will use the `config/postal/postal.test.yml` configuration fil
 
 ## Containers
 
-Within a container, OmmicomMail will look for a config file in `/config/postal.yml` unless overridden by the `OMMICOMMAIL_CONFIG_FILE_PATH` environment variable.
+Within a container, OmmicomMail will look for a config file in `/config/ommicommail.yml` unless overridden by the `OMMICOMMAIL_CONFIG_FILE_PATH` environment variable. Existing `/config/postal.yml` mounts remain supported as a fallback.
 
 ## Ports & Bind Addresses
 

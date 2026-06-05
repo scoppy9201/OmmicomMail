@@ -27,9 +27,17 @@ module Postal
     #
     # @return [String]
     def config_file_path
-      ENV.fetch("OMMICOMMAIL_CONFIG_FILE_PATH") do
-        ENV.fetch("POSTAL_CONFIG_FILE_PATH", "config/postal/postal.yml")
+      configured_path = ENV.fetch("OMMICOMMAIL_CONFIG_FILE_PATH") do
+        ENV.fetch("POSTAL_CONFIG_FILE_PATH") { default_config_file_path }
       end
+
+      if configured_path == "/config/ommicommail.yml" &&
+         !File.file?(configured_path) &&
+         File.file?("/config/postal.yml")
+        return "/config/postal.yml"
+      end
+
+      configured_path
     end
 
     def initialize_config
@@ -174,6 +182,13 @@ module Postal
       return @version if instance_variable_defined?("@version")
 
       @version ||= read_version_file("VERSION") || "0.0.0"
+    end
+
+    def default_config_file_path
+      legacy_path = "config/postal/postal.yml"
+      return legacy_path if File.file?(legacy_path)
+
+      "config/ommicommail/ommicommail.yml"
     end
 
     private
