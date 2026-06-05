@@ -1,16 +1,16 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Held"
+- page_title << "Email"
+- page_title << "Đang giữ"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
 = render 'header', :active_nav => :held
 - if @messages.empty? && !@queried
   .pageContent--compact
     .noData.noData--clean
-      %h2.noData__title You haven't got any held messages.
+      %h2.noData__title Chưa có email nào đang được giữ.
       %p.noData__text
-        You haven't sent any messages through this mail server yet. Not to worry though
-        they'll start appearing here as soon as you start sending them.
+        Bạn chưa có email nào bị giữ trên máy chủ này. Khi có email được giữ,
+        chúng sẽ xuất hiện tại đây.
 - else
   = render 'index'
 

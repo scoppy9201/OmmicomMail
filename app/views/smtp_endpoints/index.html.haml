@@ -1,5 +1,5 @@
 - page_title << @server.name
-- page_title << "Routing"
+- page_title << "Định tuyến"
 - page_title << "SMTP Endpoints"
 
 = render 'servers/sidebar', :active_server => @server
@@ -9,13 +9,12 @@
 
   - if @smtp_endpoints.empty?
     .noData.noData--clean
-      %h2.noData__title There are no SMTP endpoints for this server.
+      %h2.noData__title Máy chủ này chưa có SMTP endpoint.
       %p.noData__text
-        SMTP endpoints are other mail servers that you'd like incoming e-mails
-        to be passed onto. Once you've added some endpoints, you can route messages
-        to them by creating #{link_to 'routes', [organization, @server, :routes], :class => 'u-link'}.
+        SMTP endpoint là các máy chủ mail khác mà bạn muốn chuyển tiếp email nhận vào.
+        Sau khi thêm endpoint, bạn có thể định tuyến email tới chúng bằng cách tạo #{link_to 'route', [organization, @server, :routes], :class => 'u-link'}.
       %p.noData__button
-        = link_to "Add your first SMTP endpoint", [:new, organization, @server, :smtp_endpoint], :class => 'button button--positive'
+        = link_to "Thêm SMTP endpoint đầu tiên", [:new, organization, @server, :smtp_endpoint], :class => 'button button--positive'
 
   - else
 
@@ -29,8 +28,8 @@
             %ul.endpointList__details
               %li.endpointList__detailItem
                 - if endpoint.last_used_at
-                  Last used #{distance_of_time_in_words_to_now endpoint.last_used_at} ago
+                  Đã dùng #{distance_of_time_in_words_to_now endpoint.last_used_at} trước
                 - else
-                  Not used yet
+                  Chưa được sử dụng
 
-    %p.u-center= link_to "Add another SMTP endpoint", [:new, organization, @server, :smtp_endpoint], :class => 'button button--positive'
+    %p.u-center= link_to "Thêm SMTP endpoint", [:new, organization, @server, :smtp_endpoint], :class => 'button button--positive'

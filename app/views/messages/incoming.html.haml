@@ -1,18 +1,18 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Incoming"
+- page_title << "Email"
+- page_title << "Nhận vào"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
 = render 'header', :active_nav => :incoming
 - if @messages[:records].empty? && !@queried
   .pageContent--compact
     .noData.noData--clean
-      %h2.noData__title No messages have been received yet.
+      %h2.noData__title Chưa nhận email nào.
       %p.noData__text
-        You haven't received any messages through this mail server yet. Not to worry though
-        they'll start appearing here as soon as you start receiving them.
+        Bạn chưa nhận email nào qua máy chủ mail này. Khi bắt đầu nhận,
+        email sẽ xuất hiện tại đây.
       %p.noData__button
-        = link_to "View spam messages", incoming_organization_server_messages_path(organization, @server, :query => "spam: yes"), :class => "button button--neutral"
+        = link_to "Xem email spam", incoming_organization_server_messages_path(organization, @server, :query => "spam: yes"), :class => "button button--neutral"
 
 - else
   = render 'index'

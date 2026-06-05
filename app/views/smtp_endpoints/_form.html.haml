@@ -11,20 +11,20 @@
     .fieldSet__field
       = f.label :port, :class => 'fieldSet__label'
       .fieldSet__input
-        = f.text_field :port, :class => 'input input--text', :placeholder => "25 (by default)"
+        = f.text_field :port, :class => 'input input--text', :placeholder => "25 (mặc định)"
     .fieldSet__field
       = f.label :ssl_mode, :class => 'fieldSet__label'
       .fieldSet__input
         = f.select :ssl_mode, SMTPEndpoint::SSL_MODES, {}, :class => 'input input--select'
         %p.fieldSet__text
-          Choose what, if any, SSL mode you'd like to use when delivering mail to this mail server.
-          Be aware that any mail sent with no SSL is insecure and not protected in anyway.
+          Chọn chế độ SSL muốn dùng khi chuyển email tới máy chủ mail này.
+          Email gửi không dùng SSL sẽ không an toàn và không được bảo vệ khi truyền tải.
 
   .fieldSetSubmit.buttonSet
-    = f.submit @smtp_endpoint.new_record? ? "Create SMTP endpoint" : "Save SMTP endpoint", :class => 'button button--positive js-form-submit'
+    = f.submit @smtp_endpoint.new_record? ? "Tạo SMTP endpoint" : "Lưu SMTP endpoint", :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
       - if f.object.persisted?
-        = link_to "Delete SMTP endpoint", [organization, @server, @smtp_endpoint], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Are you sure you wish to delete this SMTP endpoint?\n\r#{pluralize @smtp_endpoint.routes.size, 'route'} that uses this endpoint will also be deleted."}
+        = link_to "Xóa SMTP endpoint", [organization, @server, @smtp_endpoint], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Bạn chắc chắn muốn xóa SMTP endpoint này?\n\r#{pluralize @smtp_endpoint.routes.size, 'route'} đang dùng endpoint này cũng sẽ bị xóa."}
 
   = hidden_field_tag 'return_to', params[:return_to]
   = hidden_field_tag 'return_notice', params[:return_notice]

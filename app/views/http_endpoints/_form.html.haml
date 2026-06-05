@@ -9,51 +9,50 @@
       .fieldSet__input
         = f.text_field :url, :class => 'input input--text'
         %p.fieldSet__text
-          Enter the full URL that we should POST your messages to. We recommend using https URLs here to
-          ensure your data remains secure in transit.
+          Nhập URL đầy đủ để hệ thống POST email tới. Nên dùng URL HTTPS để
+          đảm bảo dữ liệu an toàn trong quá trình truyền tải.
     .fieldSet__field
       = f.label :encoding, :class => 'fieldSet__label'
       .fieldSet__input
         = f.select :encoding, HTTPEndpoint::ENCODINGS.map { |e| [t("http_endpoint_encodings.#{e.underscore}"), e] }, {}, :class => 'input input--select'
         %p.fieldSet__text
-          You can choose how the data will be delivered to your server. We recommend receiving data as JSON which will be
-          posted to your endpoint with an application/json content type. If you choose to use form data, you'll be able
-          to read parameters as normal without parsing any JSON.
+          Bạn có thể chọn cách dữ liệu được gửi tới máy chủ của mình. Khuyến nghị nhận dữ liệu dạng JSON
+          với content type application/json. Nếu chọn form data, bạn có thể đọc tham số như bình thường
+          mà không cần parse JSON.
 
     .fieldSet__field
       = f.label :format, :class => 'fieldSet__label'
       .fieldSet__input
         = f.select :format, HTTPEndpoint::FORMATS.map { |e| [t("http_endpoint_formats.#{e.underscore}"), e] }, {}, :class => 'input input--select'
         %p.fieldSet__text
-          You can choose whether to receive the full raw message or whether you'd prefer to receive a individual properties
-          for a message individually.
+          Bạn có thể chọn nhận toàn bộ email gốc hoặc nhận từng thuộc tính riêng của email.
     .fieldSet__field
       = f.label :strip_replies, :class => 'fieldSet__label'
       .fieldSet__input
-        = f.select :strip_replies, [["Send the full message as received", false], ["Try to separate replies/signatures from plain body", true]], {}, :class => 'input input--select'
+        = f.select :strip_replies, [["Gửi toàn bộ email như đã nhận", false], ["Tách phần trả lời/chữ ký khỏi nội dung thuần", true]], {}, :class => 'input input--select'
         %p.fieldSet__text
-          If enabled, we'll try to remove the replies/signatures from the plain body and send them separately to the rest of the body.
-          This is useful if you just want to see the latest message in a thread.
+          Nếu bật, hệ thống sẽ cố tách phần trả lời/chữ ký khỏi nội dung thuần và gửi riêng với phần còn lại.
+          Tùy chọn này hữu ích khi bạn chỉ muốn xem email mới nhất trong một chuỗi trao đổi.
     .fieldSet__field
-      = f.label :include_attachments, "Attachments", :class => 'fieldSet__label'
+      = f.label :include_attachments, "Tệp đính kèm", :class => 'fieldSet__label'
       .fieldSet__input
-        = f.select :include_attachments, [["Include attachment data", true], ["Don't include attachment data", false]], {}, :class => 'input input--select'
+        = f.select :include_attachments, [["Gửi dữ liệu tệp đính kèm", true], ["Không gửi dữ liệu tệp đính kèm", false]], {}, :class => 'input input--select'
         %p.fieldSet__text
-          You can choose whether or not attachment data will be delivered to your app. This only applies when the message is delivered
-          as a hash (rather than the raw message - these will always have attachment data within).
+          Bạn có thể chọn có gửi dữ liệu tệp đính kèm tới ứng dụng hay không. Tùy chọn này chỉ áp dụng khi email được gửi
+          dạng hash; email gốc luôn bao gồm dữ liệu đính kèm bên trong.
     .fieldSet__field
       = f.label :timeout, :class => 'fieldSet__label'
       .fieldSet__input
-        = f.text_field :timeout, :class => 'input input--text', :placeholder => "Default: 5"
+        = f.text_field :timeout, :class => 'input input--text', :placeholder => "Mặc định: 5"
         %p.fieldSet__text
-          This is how long (in seconds) we should wait for your server to respond before giving up and trying again later. By default this is 5
-          seconds. The maximum value is 60 seconds.
+          Đây là thời gian chờ phản hồi từ máy chủ của bạn trước khi hệ thống bỏ qua và thử lại sau.
+          Mặc định là 5 giây, tối đa 60 giây.
 
   .fieldSetSubmit.buttonSet
-    = f.submit @http_endpoint.new_record? ? "Create HTTP endpoint" : "Save HTTP endpoint", :class => 'button button--positive js-form-submit'
+    = f.submit @http_endpoint.new_record? ? "Tạo HTTP endpoint" : "Lưu HTTP endpoint", :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
       - if f.object.persisted?
-        = link_to "Delete HTTP endpoint", [organization, @server, @http_endpoint], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Are you sure you wish to delete this HTTP endpoint?\n\r#{pluralize @http_endpoint.routes.size, 'route'} that uses this endpoint will also be deleted."}
+        = link_to "Xóa HTTP endpoint", [organization, @server, @http_endpoint], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Bạn chắc chắn muốn xóa HTTP endpoint này?\n\r#{pluralize @http_endpoint.routes.size, 'route'} đang dùng endpoint này cũng sẽ bị xóa."}
 
   = hidden_field_tag 'return_to', params[:return_to]
   = hidden_field_tag 'return_notice', params[:return_notice]

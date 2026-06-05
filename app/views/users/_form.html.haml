@@ -2,7 +2,7 @@
   = f.error_messages
   .fieldSet
     .fieldSet__title
-      Enter user details
+      Nhập thông tin người dùng
     .fieldSet__field
       = f.label :first_name, :class => 'fieldSet__label'
       .fieldSet__input= f.text_field :first_name, :class => 'input input--text', :autofocus => true
@@ -15,7 +15,7 @@
         = f.text_field :email_address, :class => 'input input--text', autocomplete: 'one-time-code'
         - if OmmicomMail::Config.oidc.enabled?
           %p.fieldSet__text
-            This e-mail address should match the address provided by your OpenID Connect identity provider.
+            Địa chỉ email này nên trùng với địa chỉ do nhà cung cấp OpenID Connect cung cấp.
 
     
     - if OmmicomMail::Config.oidc.local_authentication_enabled? && !@user.persisted?
@@ -25,26 +25,25 @@
           = f.password_field :password, :class => 'input input--text', :placeholder => '•••••••••••', autocomplete: 'one-time-code'
           - if OmmicomMail::Config.oidc.enabled?
             %p.fieldSet__text
-              You have enabled OIDC which means a password is not required. If you do not provide
-              a password this user will be matched to an OIDC identity based on the e-mail address
-              provided above. You may, however, enter a password and this user will be permitted to
-              use that password until they have successfully logged in with OIDC.
+              OIDC đang được bật nên mật khẩu không bắt buộc. Nếu không nhập mật khẩu,
+              người dùng sẽ được khớp với danh tính OIDC dựa trên địa chỉ email phía trên.
+              Bạn vẫn có thể đặt mật khẩu để người dùng đăng nhập tạm thời cho tới khi đăng nhập thành công bằng OIDC.
         
       .fieldSet__field
-        = f.label :password_confirmation, "Confirm".html_safe, :class => 'fieldSet__label'
+        = f.label :password_confirmation, "Xác nhận".html_safe, :class => 'fieldSet__label'
         .fieldSet__input= f.password_field :password_confirmation, :class => 'input input--text', :placeholder => '•••••••••••', autocomplete: 'one-time-code'
 
   %fieldset.fieldSet
     .fieldSet__title
-      What level of access do you wish to grant?
+      Bạn muốn cấp quyền truy cập mức nào?
     .fieldSet__titleSubText
-      Admin users have full access to all organizations and settings. Non-admin users will only
-      have access to the organizations that you select here.
+      Người dùng admin có toàn quyền truy cập tất cả tổ chức và cài đặt. Người dùng không phải admin
+      chỉ có quyền truy cập các tổ chức bạn chọn tại đây.
     .fieldSet__field
       .fieldSet__label Admin?
       .fieldSet__input
         = hidden_field_tag 'user[organization_ids][]'
-        = f.select :admin, [["Yes - grant admin access", true], ["No - do not grant admin access", false]], {},:class => 'input input--select fieldSet__checkboxListAfter js-checkbox-list-toggle'
+        = f.select :admin, [["Có - cấp quyền admin", true], ["Không - không cấp quyền admin", false]], {},:class => 'input input--select fieldSet__checkboxListAfter js-checkbox-list-toggle'
         %ul.checkboxList{:class => [@user.admin? ? 'is-hidden' : '']}
           - for org in Organization.order(:name).to_a
             %li.checkboxList__item
@@ -53,6 +52,6 @@
                 = label_tag "org_#{org.id}", org.name, :class => 'checkboxList__actualLabel'
 
   .fieldSetSubmit.buttonSet
-    = submit_tag @user.new_record? ? "Add User" : "Save User", :class => 'button button--positive js-form-submit'
+    = submit_tag @user.new_record? ? "Thêm người dùng" : "Lưu người dùng", :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
-      = link_to "Back to user list", :users, :class => 'button button--neutral'
+      = link_to "Quay lại danh sách người dùng", :users, :class => 'button button--neutral'

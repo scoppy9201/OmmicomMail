@@ -1,5 +1,5 @@
 - page_title << @server.name
-- page_title << "Routing"
+- page_title << "Định tuyến"
 - page_title << "HTTP Endpoints"
 
 = render 'servers/sidebar', :active_server => @server
@@ -9,13 +9,12 @@
 
   - if @http_endpoints.empty?
     .noData.noData--clean
-      %h2.noData__title There aren't any HTTP endpoints yet.
+      %h2.noData__title Chưa có HTTP endpoint nào.
       %p.noData__text
-        HTTP endpoints are essentially URLs that you'd like incoming e-mails
-        to be delivered to. Once you've added some endpoints, you can route messages
-        to them by creating #{link_to 'routes', [organization, @server, :routes], :class => 'u-link'}.
+        HTTP endpoint là các URL mà bạn muốn email nhận vào được gửi tới.
+        Sau khi thêm endpoint, bạn có thể định tuyến email tới chúng bằng cách tạo #{link_to 'route', [organization, @server, :routes], :class => 'u-link'}.
       %p.noData__button
-        = link_to "Add your first HTTP endpoint", [:new, organization, @server, :http_endpoint], :class => 'button button--positive'
+        = link_to "Thêm HTTP endpoint đầu tiên", [:new, organization, @server, :http_endpoint], :class => 'button button--positive'
 
   - else
 
@@ -31,8 +30,8 @@
               %li.endpointList__detailItem= t("http_endpoint_formats.#{endpoint.format.underscore}")
               %li.endpointList__detailItem
                 - if endpoint.last_used_at
-                  Last used #{distance_of_time_in_words_to_now endpoint.last_used_at} ago
+                  Đã dùng #{distance_of_time_in_words_to_now endpoint.last_used_at} trước
                 - else
-                  Not used yet
+                  Chưa được sử dụng
 
-    %p.u-center= link_to "Add another HTTP endpoint", [:new, organization, @server, :http_endpoint], :class => 'button button--positive'
+    %p.u-center= link_to "Thêm HTTP endpoint", [:new, organization, @server, :http_endpoint], :class => 'button button--positive'

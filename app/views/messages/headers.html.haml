@@ -1,6 +1,6 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Message ##{@message.id}"
+- page_title << "Email"
+- page_title << "Email ##{@message.id}"
 - page_title << "Headers"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
@@ -10,9 +10,9 @@
 - if @message.headers.empty?
   .pageContent.pageContent--compact
     .noData.noData--clean
-      %h2.noData__title There are no headers for this message.
+      %h2.noData__title Email này không còn header.
       %p.noData__text
-        This means that we no longer store the raw data for this e-mail.
+        Điều này nghĩa là hệ thống không còn lưu dữ liệu gốc của email này.
 
 - else
   .pageContent

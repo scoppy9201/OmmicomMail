@@ -1,16 +1,15 @@
-- page_title << "Users"
-- page_title << "Add"
+- page_title << "Người dùng"
+- page_title << "Thêm"
 .pageHeader
   %h1.pageHeader__title
     %span.pageHeader__titlePrevious
-      = link_to 'Users', :users
+      = link_to 'Người dùng', :users
       &rarr;
-    Add user
+    Thêm người dùng
 
 .pageContent.pageContent--compact
   %p.pageContent__intro.u-margin
-    To add someone to this OmmicomMail installation, you can add them below. You'll need to
-    choose whether to make them an admin (full access to all organizations and settings)
-    or whether you wish to limit them to specific organizations.
+    Để thêm người dùng vào hệ thống OmmicomMail, hãy nhập thông tin bên dưới.
+    Bạn cần chọn cấp quyền admin toàn hệ thống hoặc giới hạn quyền theo từng tổ chức.
   = render 'form'
 

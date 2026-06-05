@@ -6,10 +6,10 @@
       .fieldSet__input= f.text_field :address, :autofocus => true, :class => 'input input--text'
 
   .fieldSetSubmit.buttonSet
-    = f.submit @address_endpoint.new_record? ? "Create address endpoint" : "Save address endpoint", :class => 'button button--positive js-form-submit'
+    = f.submit @address_endpoint.new_record? ? "Tạo endpoint địa chỉ" : "Lưu endpoint địa chỉ", :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
       - if f.object.persisted?
-        = link_to "Delete address endpoint", [organization, @server, @address_endpoint], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Are you sure you wish to delete this HTTP endpoint?\n\r#{pluralize @address_endpoint.routes.size, 'route'} that uses this endpoint will also be deleted."}
+        = link_to "Xóa endpoint địa chỉ", [organization, @server, @address_endpoint], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Bạn chắc chắn muốn xóa endpoint địa chỉ này?\n\r#{pluralize @address_endpoint.routes.size, 'route'} đang dùng endpoint này cũng sẽ bị xóa."}
 
   = hidden_field_tag 'return_to', params[:return_to]
   = hidden_field_tag 'return_notice', params[:return_notice]

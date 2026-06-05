@@ -1,6 +1,6 @@
 - if @server
   - page_title << @server.name
-- page_title << "Add Domain"
+- page_title << "Thêm tên miền"
 
 - if @server
   = render 'servers/sidebar', :active_server => @server
@@ -11,8 +11,8 @@
     %h1.pageHeader__title
       %span.pageHeader__titlePrevious
         = @organization.name
-        &rarr; Domains &rarr;
-      Add new domain
+        &rarr; Tên miền &rarr;
+      Thêm tên miền mới
   = render 'organizations/nav', :active_nav => :domains
 
 .pageContent.pageContent--compact
@@ -28,9 +28,9 @@
           .fieldSet__input
             = f.select :verification_method, Domain::VERIFICATION_METHODS, {}, :class => 'input input--select'
             .fieldSet__text
-              Choose how you'd like to verify your ownership of this domain. If you choose <b>E-Mail</b> we can send you
-              an email with a code whcih you'll need to enter - you can choose from a set of pre-defined addresses for
-              the domain. Using <b>DNS</b> you'll need to add a TXT record on this domain using your DNS provider.
+              Chọn cách xác minh quyền sở hữu tên miền. Nếu chọn <b>E-Mail</b>, hệ thống sẽ gửi mã xác minh
+              tới một địa chỉ email có sẵn của tên miền để bạn nhập lại. Nếu chọn <b>DNS</b>, bạn cần thêm
+              bản ghi TXT cho tên miền trong trang quản lý DNS.
 
     .fieldSetSubmit
-      = f.submit :class => "button button--positive js-form-submit"
+      = f.submit "Thêm tên miền", :class => "button button--positive js-form-submit"

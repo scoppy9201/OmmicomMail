@@ -1,6 +1,6 @@
 - page_title << @server.name
 - page_title << "Webhooks"
-- page_title << "History"
+- page_title << "Lịch sử"
 
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :webhooks
@@ -10,25 +10,25 @@
   %dl.pageContent__definitions.u-margin
     %dt URL
     %dd= @req.url
-    %dt Event
+    %dt Sự kiện
     %dd= @req.event
     %dt UUID
     %dd= @req.uuid
 
-    %dt Timestamp
-    %dd= @req.timestamp.strftime("%d/%m/%Y at %H:%M:%S")
-    %dt HTTP Status Code
+    %dt Thời gian
+    %dd= @req.timestamp.strftime("%d/%m/%Y lúc %H:%M:%S")
+    %dt Mã trạng thái HTTP
     %dd
       %span.label.label--large{:class => "label--http-status-#{@req.status_code.to_s[0,1]}"}= @req.status_code
 
-    %dt Attempt
+    %dt Lần thử
     %dd
       = @req.attempt
       - if @req.will_retry?
-        (will be retried)
+        (sẽ được thử lại)
 
   %p.pageContent__title Payload
   %pre.codeBlock.u-margin.codeBlock--whitespace~ preserve @req.pretty_payload
-  %p.pageContent__title Response Body
+  %p.pageContent__title Nội dung phản hồi
   %pre.codeBlock.u-margin= @req.body
-  %p.u-margin= link_to "Back to history", [:history, organization, @server, :webhooks], :class => "button button--neutral"
+  %p.u-margin= link_to "Quay lại lịch sử", [:history, organization, @server, :webhooks], :class => "button button--neutral"

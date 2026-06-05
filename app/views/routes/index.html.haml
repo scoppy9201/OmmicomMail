@@ -8,29 +8,29 @@
 .pageContent.pageContent--compact
   - if @routes.empty?
     .noData.noData--clean
-      %h2.noData__title No routes have been configured for this server.
+      %h2.noData__title Máy chủ này chưa được cấu hình route.
       %p.noData__text
-        To receive incoming mail, you need to add routes to where we should send
-        messages we receive for your domain. You can send incoming e-mail to
-        HTTP endpoints, other SMTP servers or e-mail addresses.
+        Để nhận email đến, bạn cần thêm route để hệ thống biết nên chuyển email nhận được
+        cho tên miền của bạn tới đâu. Email đến có thể được gửi tới HTTP endpoint,
+        máy chủ SMTP khác hoặc địa chỉ email.
 
         - if @server.smtp_endpoints.empty? && @server.http_endpoints.empty? && @server.address_endpoints.empty?
           %p.noData__button.buttonSet.buttonSet--center
-            = link_to "Add a HTTP endpoint", new_organization_server_http_endpoint_path(organization, @server, :return_to => new_organization_server_route_path(organization, @server), :return_notice => "You can now go ahead and add your first route for this HTTP endpoint"), :class => 'button button--positive'
-            = link_to "Add a SMTP endpoint", new_organization_server_smtp_endpoint_path(organization, @server, :return_to => new_organization_server_route_path(organization, @server), :return_notice => "You can now go ahead and add your first route for this SMTP endpoint"), :class => 'button button--positive'
-            = link_to "Add an address endpoint", new_organization_server_address_endpoint_path(organization, @server, :return_to => new_organization_server_route_path(organization, @server), :return_notice => "You can now go ahead and add your first route for this address endpoint"), :class => 'button button--positive'
+            = link_to "Thêm HTTP endpoint", new_organization_server_http_endpoint_path(organization, @server, :return_to => new_organization_server_route_path(organization, @server), :return_notice => "Bạn có thể tiếp tục thêm route đầu tiên cho HTTP endpoint này"), :class => 'button button--positive'
+            = link_to "Thêm SMTP endpoint", new_organization_server_smtp_endpoint_path(organization, @server, :return_to => new_organization_server_route_path(organization, @server), :return_notice => "Bạn có thể tiếp tục thêm route đầu tiên cho SMTP endpoint này"), :class => 'button button--positive'
+            = link_to "Thêm endpoint địa chỉ", new_organization_server_address_endpoint_path(organization, @server, :return_to => new_organization_server_route_path(organization, @server), :return_notice => "Bạn có thể tiếp tục thêm route đầu tiên cho endpoint địa chỉ này"), :class => 'button button--positive'
           %p.noData__postButtonText
-            Once you've added these, you'll be able to come back here to route a
-            specific e-mail address to your newly created endpoint. You can
-            #{link_to "add a route without an endpoint", new_organization_server_route_path(organization, @server), :class => "u-link"} if you really want.
+            Sau khi thêm endpoint, bạn có thể quay lại đây để định tuyến một địa chỉ email cụ thể
+            tới endpoint vừa tạo. Bạn cũng có thể
+            #{link_to "thêm route không cần endpoint", new_organization_server_route_path(organization, @server), :class => "u-link"} nếu thật sự cần.
         - else
           %p.noData__button
-            = link_to "Add your first route", [:new, organization, @server, :route], :class => 'button button--positive'
+            = link_to "Thêm route đầu tiên", [:new, organization, @server, :route], :class => 'button button--positive'
   - else
     %p.pageContent__intro.u-margin
-      Routes control where incoming mail for your domain is sent. Messages can be sent to
-      HTTP endpoints, other SMTP servers or e-mail addresses.
-    %p.u-margin.pageContent__helpLink= link_to "Read more about receiving e-mails", [organization, @server, :help_incoming]
+      Route quyết định email đến cho tên miền của bạn sẽ được gửi tới đâu. Email có thể được gửi tới
+      HTTP endpoint, máy chủ SMTP khác hoặc địa chỉ email.
+    %p.u-margin.pageContent__helpLink= link_to "Xem thêm về nhận email", [organization, @server, :help_incoming]
 
     %ul.routeList.u-margin
       - for route in @routes
@@ -45,4 +45,4 @@
                   = t("route_modes.#{route.mode.underscore}")
               %p.routeList__spamMode= t("route_spam_modes.#{route.spam_mode.underscore}")
 
-    %p.u-center= link_to "Add another route", [:new, organization, @server, :route], :class => 'button button--positive'
+    %p.u-center= link_to "Thêm route", [:new, organization, @server, :route], :class => 'button button--positive'

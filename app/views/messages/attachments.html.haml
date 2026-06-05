@@ -1,7 +1,7 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Message ##{@message.id}"
-- page_title << "Attachments"
+- page_title << "Email"
+- page_title << "Email ##{@message.id}"
+- page_title << "Tệp đính kèm"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
 = render 'header', :active_nav => @message.scope.to_sym
@@ -9,10 +9,10 @@
 .pageContent.pageContent--compact
   - if @message.attachments.empty?
     .noData.noData--clean
-      %h2.noData__title There are no attachments for this message.
+      %h2.noData__title Email này không có tệp đính kèm.
       %p.noData__text
-        This means that we no longer store the raw data for this e-mail
-        or the e-mail just didn't have any attached files.
+        Có thể hệ thống không còn lưu dữ liệu gốc của email này,
+        hoặc email không có tệp đính kèm.
   - else
     %ul.largeList
       - @message.attachments.each_with_index do |attachment, i|

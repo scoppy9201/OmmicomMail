@@ -1,5 +1,5 @@
 .navBar.navBar--secondary
   %ul
-    %li.navBar__item= link_to "Manage Webhooks", [organization, @server, :webhooks], :class => ['navBar__link', active_nav == :webhooks ? 'is-active' : '']
-    %li.navBar__item= link_to "View History", [:history, organization, @server, :webhooks], :class => ['navBar__link', active_nav == :history ? 'is-active' : '']
+    %li.navBar__item= link_to "Quản lý webhook", [organization, @server, :webhooks], :class => ['navBar__link', active_nav == :webhooks ? 'is-active' : '']
+    %li.navBar__item= link_to "Lịch sử", [:history, organization, @server, :webhooks], :class => ['navBar__link', active_nav == :history ? 'is-active' : '']
 

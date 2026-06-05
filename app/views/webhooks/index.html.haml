@@ -7,11 +7,11 @@
 .pageContent.pageContent--compact
   - if @webhooks.empty?
     .noData.noData--clean
-      %h2.noData__title No webhooks have been configured for this server.
+      %h2.noData__title Máy chủ này chưa được cấu hình webhook.
       %p.noData__text
-        You haven't added any webhooks for this server yet. A webhook enables your web
-        application to be notified when certain events occur in the lifecycle of the mail server.
-      %p.noData__button= link_to "Add your first webhook", [:new, organization, @server, :webhook], :class => "button button--positive"
+        Bạn chưa thêm webhook nào cho máy chủ này. Webhook giúp ứng dụng web của bạn
+        nhận thông báo khi có sự kiện xảy ra trong vòng đời xử lý email.
+      %p.noData__button= link_to "Thêm webhook đầu tiên", [:new, organization, @server, :webhook], :class => "button button--positive"
   - else
     %ul.webhookList.u-margin
       - for webhook in @webhooks
@@ -20,16 +20,16 @@
             %p.webhookList__name= link_to webhook.name, [:edit, organization, @server, webhook]
             %p.webhookList__labels
               - if webhook.enabled?
-                %span.label.label--green Enabled
+                %span.label.label--green Đang bật
               - else
-                %span.label.label--red Disabled
+                %span.label.label--red Đang tắt
           .webhookList__bottom
             %p.webhookList__usageTime
               - if webhook.last_used_at
-                Last sent request #{distance_of_time_in_words_to_now webhook.last_used_at}.
+                Lần gửi request gần nhất #{distance_of_time_in_words_to_now webhook.last_used_at} trước.
               - else
-                Not used yet.
+                Chưa được sử dụng.
             %ul.webhookList__links
-              %li.webhookList__link= link_to "Edit Webhook", [:edit, organization, @server, webhook]
+              %li.webhookList__link= link_to "Chỉnh sửa webhook", [:edit, organization, @server, webhook]
 
-    %p.u-center= link_to "Add another webhook", [:new, organization, @server, :webhook], :class => 'button button--positive'
+    %p.u-center= link_to "Thêm webhook", [:new, organization, @server, :webhook], :class => 'button button--positive'

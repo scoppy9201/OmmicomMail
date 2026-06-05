@@ -1,6 +1,6 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Queue"
+- page_title << "Email"
+- page_title << "Hàng đợi"
 = render 'sidebar', :active_server => @server
 = render 'header', :active_nav => :messages
 = render 'messages/header', :active_nav => :queue
@@ -8,16 +8,15 @@
 - if @messages.empty?
   .pageContent--compact
     .noData.noData--clean
-      %h2.noData__title Your queue is currently empty.
+      %h2.noData__title Hàng đợi hiện đang trống.
       %p.noData__text
-        Messages which haven't yet been delivered successfully will appear in your queue until
-        we've delivered them or we've given up trying.
+        Email chưa gửi thành công sẽ nằm trong hàng đợi cho tới khi hệ thống gửi được
+        hoặc ngừng thử gửi.
 - else
   .pageContent
     %p.pageContent__intro.u-margin
-      All messages that pass through your mail server first enter this queue. Any messages
-      that cannot be delivered immediately remain in the queue until they can be successfully
-      delivered or we give up on them.
+      Tất cả email đi qua máy chủ mail sẽ vào hàng đợi trước. Email chưa thể gửi ngay
+      sẽ nằm tại đây cho tới khi gửi thành công hoặc hệ thống ngừng thử.
     = render 'messages/list', :messages => @messages_with_message
 
     = paginate @messages

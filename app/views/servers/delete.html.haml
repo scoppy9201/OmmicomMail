@@ -1,20 +1,19 @@
 - page_title << @server.name
-- page_title << "Delete Server"
+- page_title << "Xóa máy chủ"
 = render 'sidebar', :active_server => @server
 = render 'header', :active_nav => :settings
 = render 'settings_header', :active_nav => :delete
 .pageContent.pageContent--compact
   %h2.pageContent__intro.u-margin
-    If you no longer need this server you can remove it. When you remove a server all
-    retained messages will be deleted and all mail which is received will be rejected
-    immediately.
+    Nếu không còn cần máy chủ này, bạn có thể xóa nó. Khi xóa máy chủ,
+    toàn bộ email đang lưu sẽ bị xóa và mọi email nhận vào sẽ bị từ chối ngay.
   .dangerZone
     %p.pageContent__text.u-margin
-      To continue to remove this server, please enter the server name in the field below and press
-      continue. <b class='u-red'>There will be no other confirmations.</b>
+      Để tiếp tục xóa máy chủ, hãy nhập tên máy chủ vào ô bên dưới rồi xác nhận.
+      <b class='u-red'>Sẽ không có bước xác nhận nào khác.</b>
     = form_tag [organization, @server], :remote => true, :method => :delete do
       = hidden_field_tag 'return_to', params[:return_to]
       %p.u-margin
         = text_field_tag "confirm_text", '', :class => 'input input--text input--danger'
       .buttonSet.u-center
-        = submit_tag "Delete this mail server and all messages", :class => 'button button--danger'
+        = submit_tag "Xóa máy chủ mail và toàn bộ email", :class => 'button button--danger'

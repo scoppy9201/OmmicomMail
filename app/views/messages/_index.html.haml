@@ -4,9 +4,9 @@
 
   - if @messages[:records].empty?
     .noData.noData--clean
-      %h2.noData__title No messages found matching your filter.
+      %h2.noData__title Không tìm thấy email phù hợp với bộ lọc.
       %p.noData__text
-        There were no messages which matched the query that you entered. Sorry about that.
+        Không có email nào khớp với truy vấn bạn đã nhập.
   - else
     = render 'list', :messages => @messages[:records]
     = render 'shared/message_db_pagination', :data => @messages, :name => "message"

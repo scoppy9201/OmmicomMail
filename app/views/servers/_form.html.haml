@@ -7,19 +7,19 @@
     .fieldSet__field
       = f.label :permalink, :class => 'fieldSet__label'
       .fieldSet__input
-        = f.text_field :permalink, :class => 'input input--text', :placeholder => "Automatically generated", :disabled => @server.persisted?
+        = f.text_field :permalink, :class => 'input input--text', :placeholder => "Tự động tạo", :disabled => @server.persisted?
         %p.fieldSet__text
-          This is a short name which is used in usernames and the API to identify your organization.
-          It should only contain letters, numbers & hyphens.
+          Đây là tên ngắn dùng trong username và API để nhận diện tổ chức.
+          Chỉ nên gồm chữ cái, số và dấu gạch ngang.
     .fieldSet__field
       = f.label :mode, :class => 'fieldSet__label'
       .fieldSet__input
         = f.select :mode, Server::MODES, {}, :autofocus => true, :class => 'input input--select'
         %p.fieldSet__text
-          The mode you choose will determine how messages are handled. When in <b>Live</b> mode, all
-          e-mail will be routed normally to the intended recipients. When in <b>Development</b> mode,
-          outgoing & incoming mail will be held and only visible in the web interface and will not be
-          sent to any recipients or HTTP endpoints.
+          Chế độ bạn chọn sẽ quyết định cách xử lý email. Ở chế độ <b>Live</b>, email
+          được định tuyến bình thường tới người nhận. Ở chế độ <b>Development</b>,
+          email gửi đi và nhận vào sẽ được giữ lại, chỉ hiển thị trên giao diện web
+          và không gửi tới người nhận hoặc HTTP endpoint.
 
     - if OmmicomMail.ip_pools?
       .fieldSet__field
@@ -27,28 +27,28 @@
         .fieldSet__input
           = f.collection_select :ip_pool_id, organization.ip_pools.includes(:ip_addresses).order("`default` desc, name asc"), :id, :name, {}, :class => 'input input--select'
           %p.fieldSet__text
-            This is the set of IP addresses which outbound e-mails will be delivered from.
+            Đây là nhóm địa chỉ IP dùng để gửi email đi.
 
     - if @server.persisted?
       .fieldSet__field
-        = f.label :allow_sender, "Send as any", :class => 'fieldSet__label'
+        = f.label :allow_sender, "Gửi bằng địa chỉ bất kỳ", :class => 'fieldSet__label'
         .fieldSet__input
-          .input.is-disabled= @server.allow_sender? ? "Enabled" : "Disabled"
+          .input.is-disabled= @server.allow_sender? ? "Đang bật" : "Đang tắt"
           %p.fieldSet__text
-            When enabled, you will be able to use any e-mail address in the <code>From</code> header on outgoing e-mails.
-            You will need to add a <code>Sender</code> header which must be an address at one of your verified domains.
+            Khi bật, email gửi đi có thể dùng bất kỳ địa chỉ nào trong header <code>From</code>.
+            Bạn cần thêm header <code>Sender</code> là một địa chỉ thuộc tên miền đã xác minh.
 
       .fieldSet__field
         = f.label :postmaster_address, "Postmaster", :class => 'fieldSet__label'
         .fieldSet__input
-          = f.text_field :postmaster_address, :class => 'input input--text', :placeholder => "Set based on the domain"
+          = f.text_field :postmaster_address, :class => 'input input--text', :placeholder => "Đặt theo tên miền"
           %p.fieldSet__text
-            This is the e-mail address that is included in any bounce messages that are sent when incoming
-            messages cannot be delivered. By default, the address is <code>postmaster@[yourdomain.com]</code>.
+            Đây là địa chỉ email được đưa vào email bounce khi email nhận vào không thể chuyển phát.
+            Mặc định là <code>postmaster@[yourdomain.com]</code>.
 
   .fieldSetSubmit.buttonSet
-    = f.submit f.object.new_record? ? "Build server" : "Save server", :class => 'button button--positive js-form-submit'
+    = f.submit f.object.new_record? ? "Tạo máy chủ" : "Lưu máy chủ", :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
       - unless f.object.persisted?
-        = link_to "Back to server list", organization_root_path(organization), :class => 'button button--neutral'
+        = link_to "Quay lại danh sách máy chủ", organization_root_path(organization), :class => 'button button--neutral'
 

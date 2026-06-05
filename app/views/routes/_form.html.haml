@@ -9,18 +9,18 @@
           %span.routeNameInput__at @
           = f.select :domain_id, domain_options_for_select(@server, @route.domain), {}, :class => 'input input--select routeNameInput__domain'
         %p.fieldSet__text
-          Enter the address you wish to route. In addition to the name you enter, you'll also received "tagged" mail for this
-          address. See our documentation for details about tagged mail.
+          Nhập địa chỉ bạn muốn định tuyến. Ngoài tên đã nhập, địa chỉ này cũng có thể nhận email dạng "tagged".
+          Xem tài liệu để biết thêm chi tiết về tagged mail.
     .fieldSet__field
       = f.label :_endpoint, :class => 'fieldSet__label'
       .fieldSet__input
         = f.select :_endpoint, endpoint_options_for_select(@server, @route._endpoint), {}, :class => 'input input--select'
         %p.fieldSet__text
-          This is the endpoint where mail to this address will be delivered to. If you need to add different endpoints,
-          you can do this using the links above this form.
+          Đây là endpoint sẽ nhận email gửi tới địa chỉ này. Nếu cần thêm endpoint khác,
+          bạn có thể dùng các liên kết phía trên form.
 
     .fieldSet__field
-      = f.label :_endpoint, "Additional Endpoints", :class => 'fieldSet__label'
+      = f.label :_endpoint, "Endpoint bổ sung", :class => 'fieldSet__label'
       .fieldSet__input
         .fieldSet__selectList
           - for endpoint in @route.additional_route_endpoints_array
@@ -28,29 +28,28 @@
           = select_tag "route[additional_route_endpoints_array][]", endpoint_options_for_select(@server, nil, :other => false), :class => 'input input--select'
 
         %p.fieldSet__text
-          If you wish to deliver a message to multiple endpoints, you can do so by choosing them from the list above.
+          Nếu muốn gửi một email tới nhiều endpoint, hãy chọn các endpoint trong danh sách phía trên.
 
     .fieldSet__field
       = f.label :spam_mode, :class => 'fieldSet__label'
       .fieldSet__input
         = f.select :spam_mode, Route::SPAM_MODES, {}, :class => 'input input--select'
         %p.fieldSet__text
-          You can choose what should happen to mail which we identify as spam. If you choose <b>Mark</b> we'll tell you
-          we think its spam when we deliver it to your endpoint. If you choose <b>Quarantine</b>, we won't send the message
-          to you at all and you'll have manually accept it through our web interface or the API if you want it delivered.
-          If you choose <b>Fail</b>, the message will simply be failed without any attempt to deliver your message.
+          Bạn có thể chọn cách xử lý email bị nhận diện là spam. Nếu chọn <b>Mark</b>, hệ thống sẽ đánh dấu spam khi gửi tới endpoint.
+          Nếu chọn <b>Quarantine</b>, email sẽ không được gửi tới bạn cho tới khi được duyệt thủ công qua giao diện web hoặc API.
+          Nếu chọn <b>Fail</b>, email sẽ bị từ chối mà không thử gửi tiếp.
     - if @route.persisted?
       .fieldSet__field
-        = f.label :forward_address, "Address", :class => 'fieldSet__label'
+        = f.label :forward_address, "Địa chỉ", :class => 'fieldSet__label'
         .fieldSet__input
           = f.text_field :forward_address, :class => 'input input--text', :readonly => true
           %p.fieldSet__text
-            If you don't wish to point your MX records to our server, you can redirect your mail to this address and
-            will be routed to your endpoint as if it was sent to the address you entered above.
+            Nếu không muốn trỏ bản ghi MX tới máy chủ của hệ thống, bạn có thể chuyển tiếp email tới địa chỉ này.
+            Email vẫn sẽ được định tuyến tới endpoint như khi gửi trực tiếp tới địa chỉ đã nhập phía trên.
 
   .fieldSetSubmit.buttonSet
-    = f.submit @route.new_record? ? "Create route" : "Save route", :class => 'button button--positive js-form-submit'
+    = f.submit @route.new_record? ? "Tạo route" : "Lưu route", :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
       - if f.object.persisted?
-        = link_to "Delete route", [organization, @server, @route], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Are you sure you wish to delete this route?"}
+        = link_to "Xóa route", [organization, @server, @route], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Bạn chắc chắn muốn xóa route này?"}
 

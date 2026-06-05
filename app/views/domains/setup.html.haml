@@ -1,7 +1,7 @@
 - if @server
   - page_title << @server.name
 - page_title << @domain.name
-- page_title << "DNS Setup"
+- page_title << "Cấu hình DNS"
 
 
 - if @server
@@ -13,90 +13,89 @@
     %h1.pageHeader__title
       %span.pageHeader__titlePrevious
         = @organization.name
-        &rarr; Domains &rarr;
+        &rarr; Tên miền &rarr;
       = @domain.name
   = render 'organizations/nav', :active_nav => :domains
 
 .pageContent.pageContent--compact
-  %h2.pageContent__title DNS Setup for #{@domain.name}
+  %h2.pageContent__title Cấu hình DNS cho #{@domain.name}
   %p.pageContent__intro.u-margin
-    Follow the instructions below to configure SPF & DKIM records for this domain.
-    We highly recommend that you do this to ensure your messages are delivered
-    correctly and quickly.
+    Làm theo hướng dẫn bên dưới để cấu hình bản ghi SPF và DKIM cho tên miền này.
+    Khuyến nghị cấu hình đầy đủ để email được gửi chính xác và ổn định hơn.
 
   .u-margin.buttonSet
-    = link_to "Check my records are correct", [:check, organization, @server, @domain], :remote => true, :method => :post, :class => 'button'
-    = link_to "Back to domain list", [organization, @server, :domains], :class => 'button button--neutral'
+    = link_to "Kiểm tra bản ghi DNS", [:check, organization, @server, @domain], :remote => true, :method => :post, :class => 'button'
+    = link_to "Quay lại danh sách tên miền", [organization, @server, :domains], :class => 'button button--neutral'
   - if @domain.dns_checked_at
-    %p.u-margin We last checked the validity of your DNS records #{distance_of_time_in_words_to_now @domain.dns_checked_at} ago.
+    %p.u-margin Hệ thống kiểm tra bản ghi DNS lần gần nhất #{distance_of_time_in_words_to_now @domain.dns_checked_at} trước.
 
   %h3.pageContent__subTitle SPF Record
   - if @domain.spf_status == 'OK'
     %p.pageContent__text.u-green.u-bold
-      %span.label.label--green Good
-      Your SPF record looks good!
+      %span.label.label--green Tốt
+      Bản ghi SPF của bạn đã đúng.
   - elsif !@domain.spf_status.nil?
     %p.pageContent__text.u-orange.u-bold
-      %span.label.label--orange Warning
+      %span.label.label--orange Cảnh báo
       = @domain.spf_error
 
   %p.pageContent__text
-    You need to add a TXT record at the apex/root of your domain (@) with the following
-    content. If you already send mail from another service, you may just need to add
-    <b>include:#{OmmicomMail::Config.dns.spf_include}</b> to your existing record.
+    Bạn cần thêm bản ghi TXT tại apex/root của tên miền (@) với nội dung bên dưới.
+    Nếu đã gửi email từ dịch vụ khác, có thể bạn chỉ cần thêm
+    <b>include:#{OmmicomMail::Config.dns.spf_include}</b> vào bản ghi hiện có.
   %pre.codeBlock.u-margin= @domain.spf_record
 
   %h3.pageContent__subTitle DKIM Record
   - if @domain.dkim_status == 'OK'
     %p.pageContent__text.u-green.u-bold
-      %span.label.label--green Good
-      Your DKIM record looks good!
+      %span.label.label--green Tốt
+      Bản ghi DKIM của bạn đã đúng.
   - elsif !@domain.dkim_status.nil?
     %p.pageContent__text.u-orange.u-bold
-      %span.label.label--orange Warning
+      %span.label.label--orange Cảnh báo
       = @domain.dkim_error
 
   %p.pageContent__text
-    You need to add a new TXT record with the name <b>#{@domain.dkim_record_name}</b>
-    with the following content.
+    Bạn cần thêm bản ghi TXT mới với tên <b>#{@domain.dkim_record_name}</b>
+    và nội dung bên dưới.
   %pre.codeBlock.u-margin= @domain.dkim_record
 
   %h3.pageContent__subTitle Return Path
   - if @domain.return_path_status == 'OK'
     %p.pageContent__text.u-green.u-bold
-      %span.label.label--green Good
-      Your return path looks good. We'll use this when sending e-mail from this domain.
+      %span.label.label--green Tốt
+      Return path đã đúng. Hệ thống sẽ dùng giá trị này khi gửi email từ tên miền này.
   - elsif @domain.return_path_status == 'Missing'
     %p.pageContent__text.u-grey.u-bold
       %span.label.label--grey OK
-      There's no return path for this domain. This is OK but we recommend adding the record to improve deliverability and achieve DMARC alignment.
+      Tên miền này chưa có return path. Vẫn có thể dùng, nhưng nên thêm bản ghi để cải thiện khả năng vào inbox và đồng bộ DMARC.
   - elsif !@domain.return_path_status.nil?
     %p.pageContent__text.u-orange.u-bold
-      %span.label.label--orange Warning
+      %span.label.label--orange Cảnh báo
       = @domain.return_path_error
 
   %p.pageContent__text
-    This is optional but we recommend adding this to improve deliverability. You should add
-    a <b>CNAME</b> record at <b>#{@domain.return_path_domain}</b> to point to the hostname below.
+    Mục này không bắt buộc, nhưng nên cấu hình để cải thiện khả năng gửi thành công.
+    Hãy thêm bản ghi <b>CNAME</b> tại <b>#{@domain.return_path_domain}</b> trỏ tới hostname bên dưới.
   %pre.codeBlock.u-margin= OmmicomMail::Config.dns.return_path_domain
 
 
   %h3.pageContent__subTitle MX Records
   - if @domain.mx_status == 'OK'
     %p.pageContent__text.u-green.u-bold
-      %span.label.label--green Good
-      Your MX records look like they're good to go!
+      %span.label.label--green Tốt
+      Bản ghi MX của bạn đã sẵn sàng.
   - elsif @domain.mx_status == 'Missing'
     %p.pageContent__text.u-grey.u-bold
       %span.label.label--grey OK
-      None of the MX records for this domain point to us. Incoming mail won't be sent to us.
+      Không có bản ghi MX nào của tên miền này trỏ về hệ thống. Email đến sẽ không được gửi tới hệ thống.
   - elsif !@domain.mx_status.nil?
     %p.pageContent__text.u-orange.u-bold
-      %span.label.label--orange Warning
+      %span.label.label--orange Cảnh báo
       = @domain.mx_error
 
   %p.pageContent__text
-    If you wish to receive incoming e-mail for this domain, you need to add the following MX records
-    to the domain. You don't have to do this and we'll only tell you if they're set up or not. Both
-    records should be priority <b>10</b>.
+    Nếu muốn nhận email đến cho tên miền này, bạn cần thêm các bản ghi MX bên dưới.
+    Mục này không bắt buộc; hệ thống chỉ kiểm tra và thông báo đã cấu hình hay chưa.
+    Cả hai bản ghi nên có priority <b>10</b>.
   %pre.codeBlock.u-margin= OmmicomMail::Config.dns.mx_records.join("\n")

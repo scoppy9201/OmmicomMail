@@ -1,27 +1,27 @@
-- page_title << "My Settings"
+- page_title << "Cài đặt của tôi"
 .pageHeader
   %h1.pageHeader__title
-    My Settings
+    Cài đặt của tôi
 .pageContent.pageContent--compact
   = form_for @user, :url => settings_path, :remote => true do |f|
     = f.error_messages
     %fieldset.fieldSet
       - if @user.password? && OmmicomMail::Config.oidc.local_authentication_enabled?
         .fieldSet__field
-          = label_tag :password, 'Your Password', :class => 'fieldSet__label'
+          = label_tag :password, 'Mật khẩu của bạn', :class => 'fieldSet__label'
           .fieldSet__input
-            = password_field_tag :password, params[:password], :autofocus => @password_correct.nil?, :disabled => @password_correct, :class => 'input input--text', :placeholder => "Enter your current password to change your details"
+            = password_field_tag :password, params[:password], :autofocus => @password_correct.nil?, :disabled => @password_correct, :class => 'input input--text', :placeholder => "Nhập mật khẩu hiện tại để thay đổi thông tin"
             - if @password_correct
               = hidden_field_tag :password, params[:password]
             %p.fieldSet__text
-              In order to protect your account, you need to enter your current password in the field above
-              to authenticate the change of your details.
+              Để bảo vệ tài khoản, bạn cần nhập mật khẩu hiện tại phía trên
+              để xác thực việc thay đổi thông tin.
 
       .fieldSet__title
-        Your details
+        Thông tin của bạn
 
       .fieldSet__field
-        = f.label :first_name, "Name", :class => 'fieldSet__label'
+        = f.label :first_name, "Tên", :class => 'fieldSet__label'
         .fieldSet__input
           .inputPair
             = f.text_field :first_name, :class => 'input input--text', :autofocus => @password_correct
@@ -31,27 +31,27 @@
         .fieldSet__input
           = f.text_field :email_address, :class => 'input input--text'
           %p.fieldSet__text
-            If you change your e-mail address, you'll need to verify that you own the new one before
-            you can continue using your account.
+            Nếu thay đổi địa chỉ email, bạn cần xác minh quyền sở hữu địa chỉ mới
+            trước khi tiếp tục dùng tài khoản.
 
       .fieldSet__field
         = f.label :time_zone, :class => 'fieldSet__label'
         .fieldSet__input
           = f.time_zone_select :time_zone, [], {}, :class => 'input input--select'
           %p.fieldSet__text
-            Choose the time zone that you'd like times to be displayed to you when you use our
-            web interface. By default, times are displayed in UTC.
+            Chọn múi giờ muốn hiển thị trên giao diện web.
+            Mặc định hệ thống hiển thị thời gian theo UTC.
 
       - if @user.password? && OmmicomMail::Config.oidc.local_authentication_enabled?
         .fieldSet__title
-          Change your password?
+          Đổi mật khẩu?
         .fieldSet__field
-          = f.label :password, "New Password", :class => 'fieldSet__label'
+          = f.label :password, "Mật khẩu mới", :class => 'fieldSet__label'
           .fieldSet__input
             .inputPair
               = f.password_field :password, :class => 'input input--text', :placeholder => "•••••••••••", :value => @user.password
-              = f.password_field :password_confirmation, :class => 'input input--text', :placeholder => "and confirm it", :value => @user.password_confirmation
+              = f.password_field :password_confirmation, :class => 'input input--text', :placeholder => "xác nhận mật khẩu", :value => @user.password_confirmation
 
 
     %p.fieldSetSubmit.buttonSet
-      = f.submit "Save Settings", :class => 'button button--positive js-form-submit'
+      = f.submit "Lưu cài đặt", :class => 'button button--positive js-form-submit'

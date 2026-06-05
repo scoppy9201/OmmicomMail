@@ -1,16 +1,16 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Outgoing"
+- page_title << "Email"
+- page_title << "Gửi đi"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
 = render 'header', :active_nav => :outgoing
 - if @messages[:records].empty? && !@queried
   .pageContent--compact
     .noData.noData--clean
-      %h2.noData__title No messages have been sent yet.
+      %h2.noData__title Chưa có email nào được gửi.
       %p.noData__text
-        You haven't sent any messages through this mail server yet. Not to worry though
-        they'll start appearing here as soon as you start sending them.
+        Bạn chưa gửi email nào qua máy chủ mail này. Khi bắt đầu gửi,
+        email sẽ xuất hiện tại đây.
 - else
   = render 'index'
 

@@ -1,6 +1,6 @@
 - page_title << @server.name
-- page_title << "Settings"
-- page_title << "Advanced"
+- page_title << "Cài đặt"
+- page_title << "Nâng cao"
 = render 'sidebar', :active_server => @server
 = render 'header', :active_nav => :settings
 = render 'settings_header', :active_nav => :admin
@@ -12,70 +12,70 @@
         .fieldSet__field
           = f.label :send_limit, :class => 'fieldSet__label'
           .fieldSet__input
-            = f.text_field :send_limit, :class => 'input input--text', :placeholder => "No limit"
-            %p.fieldSet__text This is the maximum number of e-mails that can be sent through this mail server in a 60 minute period.
+            = f.text_field :send_limit, :class => 'input input--text', :placeholder => "Không giới hạn"
+            %p.fieldSet__text Đây là số email tối đa có thể gửi qua máy chủ mail này trong 60 phút.
         .fieldSet__field
-          = f.label :allow_sender, "Allow sender header", :class => 'fieldSet__label'
+          = f.label :allow_sender, "Cho phép header Sender", :class => 'fieldSet__label'
           .fieldSet__input
-            = f.select :allow_sender, [["No", false], ["Yes - can use Sender header", true]], {}, :class => 'input input--select'
-            %p.fieldSet__text If enabled, outgoing messages can use any address in the From header as long as a Sender header is included with an authorized address.
+            = f.select :allow_sender, [["Không", false], ["Có - có thể dùng header Sender", true]], {}, :class => 'input input--select'
+            %p.fieldSet__text Nếu bật, email gửi đi có thể dùng bất kỳ địa chỉ nào trong header From miễn là có header Sender với địa chỉ được cấp quyền.
         .fieldSet__field
-          = f.label :privacy_mode, "Privacy mode", :class => 'fieldSet__label'
+          = f.label :privacy_mode, "Chế độ riêng tư", :class => 'fieldSet__label'
           .fieldSet__input
-            = f.select :privacy_mode, [["Disabled", false], ["Enabled", true]], {}, :class => 'input input--select'
-            %p.fieldSet__text If enabled, when OmmicomMail adds Received headers to e-mails it will not include IP or hostname information of the client submitting the message.
+            = f.select :privacy_mode, [["Tắt", false], ["Bật", true]], {}, :class => 'input input--select'
+            %p.fieldSet__text Nếu bật, khi OmmicomMail thêm header Received vào email, hệ thống sẽ không ghi IP hoặc hostname của client gửi email.
         .fieldSet__field
-          = f.label :log_smtp_data, "Log SMTP data?", :class => 'fieldSet__label'
+          = f.label :log_smtp_data, "Ghi log dữ liệu SMTP?", :class => 'fieldSet__label'
           .fieldSet__input
-            = f.select :log_smtp_data, [["No", false], ["Yes - log all SMTP DATA (debug only)", true]], {}, :class => 'input input--select'
+            = f.select :log_smtp_data, [["Không", false], ["Có - ghi toàn bộ SMTP DATA (chỉ debug)", true]], {}, :class => 'input input--select'
             %p.fieldSet__text
-              By default, no information after the DATA command in an SMTP command is logged. If enabled, all this data will be logged too. This should only
-              be used for debugging.
+              Mặc định hệ thống không ghi thông tin sau lệnh DATA trong SMTP. Nếu bật, toàn bộ dữ liệu này cũng sẽ được ghi log.
+              Chỉ nên dùng để debug.
         .fieldSet__field
           = f.label :outbound_spam_threshold, :class => 'fieldSet__label'
           .fieldSet__input
-            = f.text_field :outbound_spam_threshold, :class => 'input input--text', :placeholder => "No outbound spam checking"
+            = f.text_field :outbound_spam_threshold, :class => 'input input--text', :placeholder => "Không kiểm tra spam gửi đi"
             %p.fieldSet__text
-              By default, outgoing messages aren't scanned for spam. You can specify a threshold here and outgoing messages that exceed this will
-              not be permitted to be sent through the mail server.
+              Mặc định email gửi đi không được quét spam. Bạn có thể đặt ngưỡng tại đây;
+              email vượt ngưỡng sẽ không được phép gửi qua máy chủ mail.
         .fieldSet__field
           = f.label :message_retention_days, :class => 'fieldSet__label'
           .fieldSet__input
             = f.text_field :message_retention_days, :class => 'input input--text'
             %p.fieldSet__text
-              The number of days that message meta data is stored in the database after it has been added.
+              Số ngày lưu metadata của email trong cơ sở dữ liệu sau khi được thêm vào.
         .fieldSet__field
           = f.label :raw_message_retention_days, :class => 'fieldSet__label'
           .fieldSet__input
             = f.text_field :raw_message_retention_days, :class => 'input input--text'
             %p.fieldSet__text
-              The number of days that raw message data (bodies & attachments) are stored in the database after it has been added.
+              Số ngày lưu dữ liệu email gốc (nội dung và tệp đính kèm) trong cơ sở dữ liệu.
         .fieldSet__field
           = f.label :raw_message_retention_size, :class => 'fieldSet__label'
           .fieldSet__input
             = f.text_field :raw_message_retention_size, :class => 'input input--text'
             %p.fieldSet__text
-              The total amount of disk space (in megabytes) to allow raw message data to use on the disk. Older messages will be deleted to keep
-              the total usage below this amount.
+              Tổng dung lượng ổ đĩa (MB) cho phép dữ liệu email gốc sử dụng. Email cũ sẽ bị xóa để giữ
+              tổng dung lượng dưới mức này.
 
       .fieldSetSubmit.fieldSetSubmit--wide.buttonSet
-        = f.submit "Save server", :class => 'button button--positive js-form-submit'
+        = f.submit "Lưu máy chủ", :class => 'button button--positive js-form-submit'
 
   - if @server.suspended_at
     = form_tag [:unsuspend, organization, @server], :remote => true do
       .fieldSetSubmit.fieldSetSubmit--wide.buttonSet
-        = submit_tag "Unsuspend server", :class => 'button button--danger js-form-submit'
+        = submit_tag "Mở tạm ngưng máy chủ", :class => 'button button--danger js-form-submit'
 
   - else
     = form_tag [:suspend, organization, @server], :remote => true do
       %fieldset.fieldSet.fieldSet--wide
         .fieldSet__field
-          = label_tag :reason, 'Suspension Reason', :class => 'fieldSet__label'
+          = label_tag :reason, 'Lý do tạm ngưng', :class => 'fieldSet__label'
           .fieldSet__input
             = text_field_tag :reason, '', :class => 'input input--text', :required => true
             %p.fieldSet__text
-              If you wish to disable this server and stop it sending messages, enter a reason above. Any users assigned to the
-              server will be notified of the suspension by e-mail.
+              Nếu muốn vô hiệu hóa máy chủ này và dừng gửi email, hãy nhập lý do phía trên.
+              Người dùng được gán với máy chủ sẽ nhận thông báo tạm ngưng qua email.
 
       .fieldSetSubmit.fieldSetSubmit--wide.buttonSet
-        = submit_tag "Suspend server", :class => 'button button--positive js-form-submit'
+        = submit_tag "Tạm ngưng máy chủ", :class => 'button button--positive js-form-submit'

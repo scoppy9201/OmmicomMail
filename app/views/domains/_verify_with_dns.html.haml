@@ -1,13 +1,12 @@
 %p.pageContent__intro.u-margin
-  To verify your ownership of <b>#{@domain.name}</b>, you need to add a TXT record to this domain.
-  The TXT record should point to the domain and include the value shown below.
+  Để xác minh quyền sở hữu <b>#{@domain.name}</b>, bạn cần thêm bản ghi TXT cho tên miền này.
+  Bản ghi TXT cần trỏ tới tên miền và chứa giá trị bên dưới.
 
 %pre.codeBlock.u-margin= @domain.dns_verification_string
 
 %p.pageContent__intro.u-margin
-  Once you've added this, click the button below to verify the presence of this record and
-  verify your domain.
+  Sau khi thêm bản ghi, nhấp nút bên dưới để kiểm tra và xác minh tên miền.
 
 .buttonSet
-  = link_to "Verify TXT record", [:verify, organization, @server, @domain], :remote => true, :method => :post, :class => "button"
-  = link_to "Back to domain list", [organization, @server, :domains], :class => "button button--neutral"
+  = link_to "Xác minh bản ghi TXT", [:verify, organization, @server, @domain], :remote => true, :method => :post, :class => "button"
+  = link_to "Quay lại danh sách tên miền", [organization, @server, :domains], :class => "button button--neutral"
