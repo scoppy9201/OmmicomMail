@@ -13,11 +13,10 @@
 }
 
 .loginForm__wordmark {
-  color:#2387be;
-  font-size:38px;
-  font-weight:700;
-  line-height:1;
-  letter-spacing:-0.03em;
+  display:block;
+  width:230px;
+  max-width:100%;
+  height:auto;
 }
 
 .loginForm__field {
@@ -48,9 +47,9 @@
   }
 
   .input:focus {
-    border-color:#2387be;
+    border-color:#35a047;
     background:#fff;
-    box-shadow:0 0 0 2px rgba(35, 135, 190, 0.14);
+    box-shadow:0 0 0 2px rgba(53, 160, 71, 0.14);
   }
 }
 
@@ -66,7 +65,7 @@
     min-height:32px;
     border:0;
     border-radius:4px;
-    background:#2387be;
+    background:#35a047;
     box-shadow:none;
     font-weight:600;
     padding:6px 16px;
@@ -74,8 +73,8 @@
 
   .button:focus,
   .button:active {
-    background:darken(#2387be, 8%);
-    box-shadow:0 0 0 2px rgba(35, 135, 190, 0.18);
+    background:darken(#35a047, 8%);
+    box-shadow:0 0 0 2px rgba(53, 160, 71, 0.18);
   }
 }
 
@@ -92,8 +91,8 @@
   }
 
   a:hover {
-    color:#2387be;
-    border-bottom-color:#2387be;
+    color:#35a047;
+    border-bottom-color:#35a047;
   }
 }
 

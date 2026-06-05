@@ -27,7 +27,7 @@ html.subPage {
   font-family: 'Source Sans Pro', sans-serif;
   font-size:14px;
   min-height:100%;
-  background:#3c9f91;
+  background:#35a047;
   overflow:hidden;
   body {
     min-height:100vh;
@@ -52,15 +52,15 @@ html.subPage {
 
   body:before {
     height:34vh;
-    background:#2b796f;
-    opacity:0.42;
+    background:#2f8f40;
+    opacity:0.28;
     clip-path:polygon(0 62%, 9% 55%, 18% 68%, 27% 46%, 39% 63%, 50% 44%, 62% 56%, 73% 38%, 85% 60%, 100% 42%, 100% 100%, 0 100%);
   }
 
   body:after {
     height:25vh;
-    background:#245f58;
-    opacity:0.32;
+    background:#267a35;
+    opacity:0.22;
     clip-path:polygon(0 46%, 12% 70%, 23% 50%, 36% 78%, 49% 54%, 61% 72%, 75% 46%, 89% 66%, 100% 52%, 100% 100%, 0 100%);
   }
 

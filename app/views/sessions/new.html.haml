@@ -3,7 +3,7 @@
 
 .subPageBox__content
   .loginForm__brand
-    %p.loginForm__wordmark OmmicomMail
+    = image_tag 'login.png', :class => 'loginForm__wordmark', :alt => 'OmmicomMail'
     %h1.loginForm__heading Sign In
 
   = form_tag login_path, :class => 'loginForm' do
