@@ -42,7 +42,8 @@ COPY --chown=postal Gemfile Gemfile.lock ./
 RUN bundle install
 
 # Copy the application (and set permissions)
-COPY ./docker/wait-for.sh /docker-entrypoint.sh
+COPY --chown=postal ./docker/wait-for.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 COPY --chown=postal . .
 
 # Export the version
