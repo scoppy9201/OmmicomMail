@@ -1,40 +1,38 @@
 - page_title << @server.name
-- page_title << "Spam Handling"
+- page_title << "Xử lý spam"
 = render 'sidebar', :active_server => @server
 = render 'header', :active_nav => :settings
 = render 'settings_header', :active_nav => :spam
 .pageContent.pageContent--compact
   %p.pageContent__intro.u-margin
-    OmmicomMail inspects all incoming messages for spam and other threats. Incoming messages
-    are assigned a score which represents how likely an e-mail is to be spam. From here
-    you can choose at which level you'd like to identify messages as spam.
+    OmmicomMail kiểm tra tất cả email nhận vào để phát hiện spam và các mối đe dọa khác.
+    Email nhận vào sẽ được chấm điểm theo khả năng là spam. Tại đây bạn có thể chọn
+    ngưỡng để hệ thống nhận diện email là spam.
 
   = form_for [organization, @server], :remote => true do |f|
     .u-margin
-      %p.pageContent__subTitle Incoming Spam Threshold
+      %p.pageContent__subTitle Ngưỡng spam email nhận vào
       %p.pageContent__text.u-margin
-        The main spam threshold is what determines whether a message is spam or not. How incoming
-        messages that are detected as spam are processed is determined by the route which the incoming
-        message was sent to. You can choose between marking the message as spam and sending it on to
-        your endpoint, putting it into quarantine (holding it until manually released) or just failing it.
+        Ngưỡng spam chính quyết định email có bị xem là spam hay không. Cách xử lý email nhận vào
+        bị phát hiện là spam phụ thuộc vào route mà email được gửi tới. Bạn có thể chọn đánh dấu spam
+        rồi vẫn gửi tới endpoint, đưa vào cách ly (giữ lại cho tới khi mở thủ công), hoặc từ chối email.
       %p= f.text_field :spam_threshold, :type => :range, :class => 'spamRange', :min => -10, :max => 25, :step => 0.5, :data => {:update => "js-spam-threshold-text"}
-      %p.spamRangeLabel Threshold is currently <b class='js-spam-threshold-text'>#{@server.spam_threshold}</b>
+      %p.spamRangeLabel Ngưỡng hiện tại là <b class='js-spam-threshold-text'>#{@server.spam_threshold}</b>
 
     .u-margin
-      %p.pageContent__subTitle Incoming Spam Failure Threshold
+      %p.pageContent__subTitle Ngưỡng từ chối spam nhận vào
       %p.pageContent__text.u-margin
-        Any messages which are over your spam failure threshold will fail immediately. This is used
-        to catch messages that we are very sure are spam to avoid needlessly sending them around the place.
+        Email vượt ngưỡng từ chối spam sẽ bị từ chối ngay. Ngưỡng này dùng để chặn các email
+        mà hệ thống gần như chắc chắn là spam, tránh chuyển tiếp không cần thiết.
       %p= f.text_field :spam_failure_threshold, :type => :range, :class => 'spamRange spamRange--hot', :min => 10, :max => 50, :step => 0.5, :data => {:update => "js-spam-failure-threshold-text"}
-      %p.spamRangeLabel Threshold is currently <b class='js-spam-failure-threshold-text'>#{@server.spam_failure_threshold}</b>
+      %p.spamRangeLabel Ngưỡng hiện tại là <b class='js-spam-failure-threshold-text'>#{@server.spam_failure_threshold}</b>
 
     - if @server.outbound_spam_threshold
       .u-margin
-        %p.pageContent__subTitle Outgoing Spam Threshold
+        %p.pageContent__subTitle Ngưỡng spam email gửi đi
         %p.pageContent__text.u-margin
-          To prevent abuse of our services, we check outgoing messages to see whether they're likely to be
-          caught as spam by other providers. Messages that score higher than the threshold set by us will
-          not be passed through. If this limit needs adjusting, contact us for assistance.
-          %b The threshold for this server is currently #{@server.outbound_spam_threshold}.
+          Để hạn chế lạm dụng dịch vụ, hệ thống kiểm tra email gửi đi để đánh giá khả năng bị nhà cung cấp khác xem là spam.
+          Email có điểm cao hơn ngưỡng sẽ không được gửi qua. Nếu cần điều chỉnh giới hạn này, hãy liên hệ hỗ trợ.
+          %b Ngưỡng hiện tại của máy chủ này là #{@server.outbound_spam_threshold}.
 
-    %p= f.submit "Save Spam Thresholds", :class => "button button--positive js-form-submit"
+    %p= f.submit "Lưu ngưỡng spam", :class => "button button--positive js-form-submit"

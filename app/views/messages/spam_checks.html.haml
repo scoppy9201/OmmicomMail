@@ -1,7 +1,7 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Message ##{@message.id}"
-- page_title << "Spam checks"
+- page_title << "Email"
+- page_title << "Email ##{@message.id}"
+- page_title << "Kiểm tra spam"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
 = render 'header', :active_nav => @message.scope.to_sym
@@ -10,18 +10,17 @@
 
   - if @spam_checks.empty?
     .noData.noData--clean
-      %h2.noData__title This message doesn't have any spam checks.
+      %h2.noData__title Email này chưa có kết quả kiểm tra spam.
       %p.noData__text
-        This likely means we haven't scanned this message to determine its likelyhood
-        of being spam. It may take a few seconds to appear after a new message is
-        received.
+        Có thể hệ thống chưa quét email này để đánh giá khả năng là spam.
+        Kết quả có thể mất vài giây để xuất hiện sau khi nhận email mới.
 
   - else
     %ul.spamCheckList
       %li.spamCheckList__item.spamCheckList__item--total
         %p.spamCheckList__score{:class => @message.spam_score <= 0 ? (@message.spam_score == 0 ? 'spamCheckList__score--neutral' : 'spamCheckList__score--positive') : 'spamCheckList__score--negative'}= @message.spam_score
         .spamCheckList__details.spamCheckList__details--total
-          Total spam score for e-mail
+          Tổng điểm spam của email
       - for spam_check in @spam_checks
         %li.spamCheckList__item
           %p.spamCheckList__score{:class => spam_check['score'] <= 0 ? (spam_check['score'] == 0 ? 'spamCheckList__score--neutral' : 'spamCheckList__score--positive') : 'spamCheckList__score--negative'}= spam_check['score']

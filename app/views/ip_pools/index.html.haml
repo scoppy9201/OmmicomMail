@@ -1,4 +1,4 @@
-- page_title << "Welcome"
+- page_title << "IP pools"
 
 .pageHeader
   %h1.pageHeader__title IP Pools
@@ -7,16 +7,16 @@
 
   - if @ip_pools.empty?
     .noData.noData--clean
-      %p.noData__title There are no IP pools configured.
+      %p.noData__title Chưa cấu hình IP pool nào.
       %p.noData__text
-        All messages sent from your mail server can be sent from certain pools of
-        IP addresses. Each server can be assigned to a pool and rules can be configured
-        to route certain email through certain pools.
-      %p.noData__button= link_to "Create the first IP pool", :new_ip_pool, :class => 'button button--positive'
+        Email gửi từ máy chủ mail có thể được gửi qua các nhóm địa chỉ IP cụ thể.
+        Mỗi máy chủ có thể được gán một IP pool và có thể cấu hình rule
+        để định tuyến email qua từng pool.
+      %p.noData__button= link_to "Tạo IP pool đầu tiên", :new_ip_pool, :class => 'button button--positive'
   - else
     %p.pageContent__intro.u-margin
-      IP pools are the addresses that your outgoing messages are sent from. You can
-      create as many pools as you wish.
+      IP pool là nhóm địa chỉ dùng để gửi email đi.
+      Bạn có thể tạo nhiều pool tùy nhu cầu.
 
     %ul.largeList.u-margin
       - for ip_pool in @ip_pools
@@ -24,4 +24,4 @@
           = link_to edit_ip_pool_path(ip_pool), :class => 'largeList__link' do
             = ip_pool.name
 
-    %p.u-center= link_to "Add another IP pool", :new_ip_pool, :class => 'button button--positive'
+    %p.u-center= link_to "Thêm IP pool", :new_ip_pool, :class => 'button button--positive'

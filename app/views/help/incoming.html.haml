@@ -1,38 +1,34 @@
 - page_title << @server.name
-- page_title << "Help"
-- page_title << "Receiving E-Mail"
+- page_title << "Trợ giúp"
+- page_title << "Nhận email"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :help
 = render 'header', :active_nav => :incoming
 
 .pageContent.pageContent--compact
-  %h1.pageContent__title Receiving e-mail
+  %h1.pageContent__title Nhận email
   %h2.pageContent__intro.u-margin
-    This system can handle your incoming e-mail by accepting it from other mail servers and
-    sending it on to your own applications using HTTP or to forward it to other SMTP servers.
-  %p.u-margin.pageContent__helpLink= link_to "Read more about sending e-mails", [organization, @server, :help_outgoing]
+    Hệ thống có thể xử lý email nhận vào bằng cách nhận email từ máy chủ mail khác,
+    sau đó gửi tới ứng dụng của bạn qua HTTP hoặc chuyển tiếp tới máy chủ SMTP khác.
+  %p.u-margin.pageContent__helpLink= link_to "Xem thêm về gửi email", [organization, @server, :help_outgoing]
   .u-margin
-    %h2.pageContent__subTitle Forwarding e-mails
+    %h2.pageContent__subTitle Chuyển tiếp email
     %p.pageContent__text
-      If you already have a incoming mail server for your domain, you may find the quickest
-      way to get up and running is to simply forward e-mail from that server.
-      You don't need to make any changes to your DNS to do this.
+      Nếu đã có máy chủ nhận email cho tên miền, cách nhanh nhất để bắt đầu là chuyển tiếp email
+      từ máy chủ đó sang hệ thống. Bạn không cần thay đổi DNS để làm việc này.
     %p.pageContent__text
-      Just #{link_to "create an incoming route", [organization, @server, :routes], :class => "u-link"}
-      for the address you want to receive messages for and then you'll be provided with
-      an e-mail address that messages can be forward to. Any message that is received to
-      this address will be treated as if it had been sent directly to the address on the route.
+      Chỉ cần #{link_to "tạo route nhận email", [organization, @server, :routes], :class => "u-link"}
+      cho địa chỉ bạn muốn nhận. Hệ thống sẽ cung cấp một địa chỉ email để bạn chuyển tiếp tới.
+      Email nhận vào địa chỉ này sẽ được xử lý như gửi trực tiếp tới địa chỉ trên route.
     %p.pageContent__text
-      The address to forward mail to can be found by clicking on the route and copying the
-      field marked Address from the form.
+      Bạn có thể tìm địa chỉ chuyển tiếp bằng cách mở route và sao chép trường Địa chỉ trong form.
 
   .u-margin
-    %h2.pageContent__subTitle Setting your MX records
+    %h2.pageContent__subTitle Cấu hình bản ghi MX
     %p.pageContent__text
-      If you don't already have a mail server on your domain, you can simply set your
-      MX records to point to this system. The MX records are shown
-      below and you should add these both as priority 10 in your DNS configuration. Once
-      these have been added successfully they will show with a green tick on your domain list.
+      Nếu tên miền chưa có máy chủ mail, bạn có thể trỏ bản ghi MX về hệ thống này.
+      Các bản ghi MX được hiển thị bên dưới và nên được thêm với priority 10 trong cấu hình DNS.
+      Sau khi thêm thành công, tên miền sẽ hiển thị dấu tích xanh trong danh sách.
     %dl.pageContent__definitions
       %dt MX Records
       %dd

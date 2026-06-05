@@ -1,39 +1,39 @@
 - page_title << @server.name
-- page_title << "Help"
-- page_title << "Sending E-Mail"
+- page_title << "Trợ giúp"
+- page_title << "Gửi email"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :help
 = render 'header', :active_nav => :outgoing
 .pageContent.pageContent--compact
-  %h1.pageContent__title Sending e-mail
+  %h1.pageContent__title Gửi email
   %h2.pageContent__intro.u-margin
-    There are a couple of different ways you send outgoing mail through a
-    mail server. These methods are shown below:
-  %p.u-margin.pageContent__helpLink= link_to "Read more about receiving e-mails", [organization, @server, :help_incoming]
+    Có một vài cách để gửi email đi qua máy chủ mail.
+    Các phương thức được hiển thị bên dưới:
+  %p.u-margin.pageContent__helpLink= link_to "Xem thêm về nhận email", [organization, @server, :help_incoming]
   .u-margin
-    %h2.pageContent__subTitle Important notes
+    %h2.pageContent__subTitle Lưu ý quan trọng
     %ul.pageContent__list
       %li
-        E-mails can only be sent from addresses with domains that you have added to mail server or the server's organization.
-        Mail servers can be enabled to send mail from any domain by the administrator.
+        Email chỉ có thể được gửi từ các địa chỉ thuộc tên miền đã thêm vào máy chủ mail hoặc tổ chức của máy chủ.
+        Admin có thể bật quyền gửi email từ bất kỳ tên miền nào.
       %li
-        If a message cannot be delivered, the system will not send you a bounce message but dispatch a webhook (if you set one up).
-        If a message delivery fails but can be retried, the system will try #{OmmicomMail::Config.postal.default_maximum_delivery_attempts} times to deliver it before giving up.
+        Nếu email không thể chuyển phát, hệ thống sẽ không gửi bounce message cho bạn mà sẽ gửi webhook nếu đã cấu hình.
+        Nếu lỗi chuyển phát có thể thử lại, hệ thống sẽ thử #{OmmicomMail::Config.postal.default_maximum_delivery_attempts} lần trước khi dừng.
   .u-margin
-    %h2.pageContent__subTitle Sending using SMTP
+    %h2.pageContent__subTitle Gửi bằng SMTP
     %p.pageContent__text
-      These instructions explain how to send messages using the SMTP server.
+      Hướng dẫn này mô tả cách gửi email bằng máy chủ SMTP.
 
     %dl.pageContent__definitions
-      %dt SMTP Server Address
+      %dt Địa chỉ máy chủ SMTP
       %dd
         %p.pageContent__definitionCode= OmmicomMail::Config.postal.smtp_hostname
       %dt Port
       %dd
         %p.pageContent__definitionCode= OmmicomMail::Config.smtp_server.default_port
         %p.pageContent__definitionText
-          The SMTP service supports STARTTLS if you wish to send messages securely. Be aware that security
-          cannot guaranteed all the way to their final destination.
+          Dịch vụ SMTP hỗ trợ STARTTLS nếu bạn muốn gửi email an toàn hơn.
+          Lưu ý bảo mật không thể được đảm bảo trên toàn bộ đường đi tới đích cuối.
 
       %dt Username
       %dd
@@ -43,18 +43,18 @@
         - if @credentials['SMTP'].present?
           %p.pageContent__definitionCode
             = @credentials['SMTP'].first.key
-          %p.pageContent__definitionText= link_to "Create more credentials", [organization, @server, :credentials], :class => "u-link"
+          %p.pageContent__definitionText= link_to "Tạo thêm thông tin xác thực", [organization, @server, :credentials], :class => "u-link"
         - else
           %p.warningBox
-            %b No SMTP credentials created for this server yet.
-            A password can be generated from the #{link_to 'credentials', [:new, organization, @server, :credential], :class => "u-link"}
-            page. Just create a credential with the <b>SMTP</b> type and add a name which suits the place you'll be using the credentials.
+            %b Máy chủ này chưa có thông tin xác thực SMTP.
+            Mật khẩu có thể được tạo từ trang #{link_to 'thông tin xác thực', [:new, organization, @server, :credential], :class => "u-link"}.
+            Hãy tạo thông tin xác thực loại <b>SMTP</b> và đặt tên phù hợp với nơi bạn sẽ sử dụng.
 
-      %dt Authentication Methods
+      %dt Phương thức xác thực
       %dd
         %p.pageContent__definitionCode PLAIN, LOGIN or CRAM-MD5
 
   .u-margin
-    %h2.pageContent__subTitle Sending over HTTP using our API
+    %h2.pageContent__subTitle Gửi qua HTTP bằng API
     %p.pageContent__text
-      Use the HTTP API with the credentials shown in this server's credentials page.
+      Dùng HTTP API với thông tin xác thực hiển thị trong trang thông tin xác thực của máy chủ này.

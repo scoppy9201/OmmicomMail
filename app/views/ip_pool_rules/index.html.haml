@@ -15,7 +15,7 @@
       %span.pageHeader__titlePrevious
         = @organization.name
         &rarr;
-      IP Pool Rules
+      IP pool rules
   = render 'organizations/nav', :active_nav => :ips
   = render 'organization_ip_pools/nav', :active_nav => :rules
 
@@ -23,19 +23,17 @@
   - if @ip_pool_rules.empty?
     .noData.noData--clean
       - if @server.nil?
-        %h2.noData__title No global rules have been configured yet.
+        %h2.noData__title Chưa cấu hình rule toàn cục.
         %p.noData__text
-          You can use IP pool rules to configure which IP addresses to use based on the
-          message that are passing through OmmicomMail. You can add rules globally or on a
-          per-server basis.
-        %p.noData__button= link_to "Add a global rule", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"
+          Bạn có thể dùng IP pool rule để chọn địa chỉ IP gửi đi dựa trên email
+          đi qua OmmicomMail. Rule có thể áp dụng toàn cục hoặc theo từng máy chủ.
+        %p.noData__button= link_to "Thêm rule toàn cục", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"
       - else
-        %h2.noData__title No IP rules have been configured for this server yet.
+        %h2.noData__title Máy chủ này chưa có IP rule.
         %p.noData__text
-          You can use IP pool rules to configure which IP addresses to use based on the
-          message that are passing through OmmicomMail. You can add rules globally or on a
-          per-server basis.
-        %p.noData__button= link_to "Add a server rule", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"
+          Bạn có thể dùng IP pool rule để chọn địa chỉ IP gửi đi dựa trên email
+          đi qua OmmicomMail. Rule có thể áp dụng toàn cục hoặc theo từng máy chủ.
+        %p.noData__button= link_to "Thêm rule cho máy chủ", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"
         -
   - else
     .ipPoolRuleList.u-margin
@@ -44,22 +42,22 @@
           = link_to [:edit, organization, @server, ip_pool_rule], :class => 'ipPoolRuleList__link' do
             - if ip_pool_rule.to.present?
               %dl.ipPoolRuleList__condition
-                %dt Any messages sent to:
+                %dt Email gửi tới:
                 %dd
                   %ul
                     - for a in ip_pool_rule.to
                       %li= a
             - if ip_pool_rule.from.present?
               %dl.ipPoolRuleList__condition
-                %dt Any message sent from:
+                %dt Email gửi từ:
                 %dd
                   %ul
                     - for a in ip_pool_rule.from
                       %li= a
 
             %dl.ipPoolRuleList__condition
-              %dt Will be sent using:
+              %dt Sẽ gửi bằng:
               %dd= ip_pool_rule.ip_pool.name
     - if @server && @server.ip_pool
-      %p.ipPoolRuleListDefault.u-margin All mail that doesn't match a rule above will be sent using #{@server.ip_pool.name}.
-    %p.u-center= link_to "Add another rule", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"
+      %p.ipPoolRuleListDefault.u-margin Tất cả email không khớp rule phía trên sẽ được gửi bằng #{@server.ip_pool.name}.
+    %p.u-center= link_to "Thêm rule", [:new, organization, @server, :ip_pool_rule], :class => "button button--positive"

@@ -15,17 +15,14 @@
       .fieldSet__input
         = f.text_field :priority, :class => 'input input--text', placeholder: '100'
         %p.fieldSet__text
-          This priority will determine the likelihood of this IP address being selected
-          for use when sending a message. The higher the number the more likely the IP
-          is to be chosen. By default, the priority is set to the maximum value of 100.
-          This can be used to warm up new IP addresses by adding them with a low priority.
-          To give an indication of how this works, if you have three IPs with 1, 50 and 100
-          as their priorities, and you send 100,000 emails, the priority 1 address will receive
-          a tiny percentage, the priority 50 will receive roughly one third of e-mails and the
-          priority 100 will receive roughly two thirds.
+          Mức ưu tiên quyết định khả năng địa chỉ IP này được chọn khi gửi email.
+          Số càng cao thì IP càng dễ được chọn. Mặc định mức ưu tiên tối đa là 100.
+          Có thể dùng mức ưu tiên thấp để warm up IP mới. Ví dụ nếu có ba IP với ưu tiên
+          1, 50 và 100, khi gửi 100.000 email thì IP ưu tiên 1 nhận tỷ lệ rất nhỏ,
+          IP ưu tiên 50 nhận khoảng một phần ba và IP ưu tiên 100 nhận khoảng hai phần ba.
 
   .fieldSetSubmit.buttonSet
     = f.submit :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
       - if @ip_address.persisted?
-        = link_to "Delete IP address", [@ip_pool, @ip_address], :class => 'button button--danger', :method => :delete, :remote => true, :data => {:confirm => "Are you sure you wish to remove this IP from the pool?"}
+        = link_to "Xóa địa chỉ IP", [@ip_pool, @ip_address], :class => 'button button--danger', :method => :delete, :remote => true, :data => {:confirm => "Bạn chắc chắn muốn xóa IP này khỏi pool?"}

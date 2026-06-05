@@ -2,48 +2,48 @@
   = f.error_messages
   %fieldset.fieldSet
     .fieldSet__field
-      = f.label :name, "Domain", :class => 'fieldSet__label'
+      = f.label :name, "Tên miền", :class => 'fieldSet__label'
       .fieldSet__input
         .routeNameInput
           = f.text_field :name, :autofocus => true, :class => 'input input--text routeNameInput__name', :disabled => @track_domain.persisted?
           %span.routeNameInput__at .
           = f.select :domain_id, domain_options_for_select(@server, @track_domain.domain), {}, :class => 'input input--select routeNameInput__domain', :disabled => @track_domain.persisted?
         %p.fieldSet__text
-          This is the domain that requests for tracked links will be directed through when you use click tracking. We recommend using something like
-          <b>click.yourdomain.com</b>. Once chosen, add a CNAME record which points to <b>#{OmmicomMail::Config.dns.track_domain}</b>.
+          Đây là tên miền dùng để chuyển hướng các liên kết được theo dõi khi bật click tracking. Khuyến nghị dùng dạng
+          <b>click.yourdomain.com</b>. Sau khi chọn, hãy thêm bản ghi CNAME trỏ tới <b>#{OmmicomMail::Config.dns.track_domain}</b>.
 
     .fieldSet__field
       = f.label :ssl_enabled, :class => 'fieldSet__label'
       .fieldSet__input
-        = f.select :ssl_enabled, [["Yes - use SSL for tracking whenever possible", true], ["No - never use SSL for tracking", false]], {}, :class => 'input input--select'
+        = f.select :ssl_enabled, [["Có - dùng SSL cho tracking khi có thể", true], ["Không - không dùng SSL cho tracking", false]], {}, :class => 'input input--select'
         %p.fieldSet__text
-          If enabled, we'll use https for the tracking domain when replacing links and images. Please note that a SSL certificate 
-          should be installed on the tracking domain if enabled. 
+          Nếu bật, hệ thống sẽ dùng HTTPS cho tracking domain khi thay thế liên kết và hình ảnh.
+          Tracking domain cần có chứng chỉ SSL nếu bật tùy chọn này.
 
     .fieldSet__field
       = f.label :track_loads, :class => 'fieldSet__label'
       .fieldSet__input
-        = f.select :track_loads, [["Yes - track when HTML e-mails are opened", true], ["No - don't track when HTML e-mails are opened", false]], {}, :class => 'input input--select'
+        = f.select :track_loads, [["Có - theo dõi khi email HTML được mở", true], ["Không - không theo dõi lượt mở email HTML", false]], {}, :class => 'input input--select'
         %p.fieldSet__text
-          If enabled, we'll insert a 1px image into the footer of any HTML e-mails. When this image is loaded, we'll log
-          this as a view and notify you with a webhook.
+          Nếu bật, hệ thống sẽ chèn ảnh 1px vào cuối email HTML. Khi ảnh được tải,
+          hệ thống sẽ ghi nhận một lượt xem và thông báo qua webhook.
 
     .fieldSet__field
       = f.label :track_clicks, :class => 'fieldSet__label'
       .fieldSet__input
-        = f.select :track_clicks, [["Yes - track when links are clicked", true], ["No - don't track when links are clicked", false]], {}, :class => 'input input--select'
+        = f.select :track_clicks, [["Có - theo dõi khi liên kết được nhấp", true], ["Không - không theo dõi lượt nhấp liên kết", false]], {}, :class => 'input input--select'
         %p.fieldSet__text
-          If enabled, we'll rewrite URLs in your outbound messages to go via this domain. You'll receive a webhook when
-          someone clicks one of your links and it will be displayed in the web interface.
+          Nếu bật, hệ thống sẽ viết lại URL trong email gửi đi để đi qua tên miền này.
+          Bạn sẽ nhận webhook khi có người nhấp liên kết và sự kiện sẽ hiển thị trên giao diện web.
 
     .fieldSet__field
-      = f.label :excluded_click_domains, "Domains excluded from tracking", :class => 'fieldSet__label'
+      = f.label :excluded_click_domains, "Tên miền loại trừ khỏi tracking", :class => 'fieldSet__label'
       .fieldSet__input
         ~ f.text_area :excluded_click_domains, :class => 'input input--smallArea'
         %p.fieldSet__text
-          This is a list of domains of links that you don't wish to be tracked. When click tracking is enabled,
-          you can provide a list (one domain per line) for links that you don't wish to be tracked.
+          Đây là danh sách tên miền của các liên kết bạn không muốn theo dõi. Khi bật click tracking,
+          bạn có thể nhập mỗi tên miền trên một dòng để loại trừ khỏi tracking.
 
 
   .fieldSetSubmit.buttonSet
-    = f.submit @track_domain.new_record? ? "Create Track Domain" : "Save Track Domain", :class => 'button button--positive js-form-submit'
+    = f.submit @track_domain.new_record? ? "Tạo tracking domain" : "Lưu tracking domain", :class => 'button button--positive js-form-submit'

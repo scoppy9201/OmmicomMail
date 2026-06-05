@@ -1,6 +1,6 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Message ##{@message.id}"
+- page_title << "Email"
+- page_title << "Email ##{@message.id}"
 - page_title << "HTML"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
@@ -9,9 +9,9 @@
 - if @message.html_body.blank?
   .pageContent.pageContent--compact
     .noData.noData--clean
-      %h2.noData__title There's no HTML body for this message.
+      %h2.noData__title Email này không có nội dung HTML.
       %p.noData__text
-        This means that we no longer store the raw data for this e-mail
-        or the e-mail didn't include a HTML part.
+        Có thể hệ thống không còn lưu dữ liệu gốc của email này
+        hoặc email không có phần HTML.
 - else
   %iframe{:width => "100%", :height => "100%", :sandbox => "allow-popups allow-popups-to-escape-sandbox", :referrerpolicy => "no-referrer", :src => html_raw_organization_server_message_path(organization, @server, @message.id)}

@@ -1,5 +1,5 @@
 - page_title << @server.name
-- page_title << "Tracking Domains"
+- page_title << "Tracking domains"
 
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :domains
@@ -9,11 +9,11 @@
 
   - if @track_domains.empty?
     .noData.noData--clean
-      %h2.noData__title There are no tracking domains for this server.
+      %h2.noData__title Máy chủ này chưa có tracking domain.
       %p.noData__text
-        To use OmmicomMail's open & click tracking, you need to configure a domain that links will be re-written to use. Enable
-        message tracking by adding a suitable tracking domain for your outbound e-mails.
-      %p.noData__button= link_to "Add a custom tracking domain", [:new, organization, @server, :track_domain], :class => "button button--positive"
+        Để dùng tính năng theo dõi mở email và nhấp liên kết của OmmicomMail, bạn cần cấu hình tên miền để viết lại liên kết.
+        Hãy thêm tracking domain phù hợp cho email gửi đi.
+      %p.noData__button= link_to "Thêm tracking domain tùy chỉnh", [:new, organization, @server, :track_domain], :class => "button button--positive"
 
   - else
     %ul.domainList.u-margin
@@ -24,21 +24,21 @@
               = link_to track_domain.full_name, [:edit, organization, @server, track_domain]
             %ul.domainList__checks
               - if track_domain.dns_status == 'OK'
-                %li.domainList__check.domainList__check--ok CNAME configured correctly
+                %li.domainList__check.domainList__check--ok CNAME đã cấu hình đúng
               - elsif track_domain.dns_status.nil?
-                %li.domainList__check.domainList__check--neutral-cross CNAME/DNS not checked yet
+                %li.domainList__check.domainList__check--neutral-cross Chưa kiểm tra CNAME/DNS
               - else
-                %li.domainList__check.domainList__check--warning{:title => track_domain.dns_error} CNAME not configured correctly
+                %li.domainList__check.domainList__check--warning{:title => track_domain.dns_error} CNAME chưa cấu hình đúng
 
               - if track_domain.ssl_enabled?
-                %li.domainList__check.domainList__check--neutral= link_to "SSL enabled", [:toggle_ssl, organization, @server, track_domain], :remote => true, :method => :post
+                %li.domainList__check.domainList__check--neutral= link_to "SSL đang bật", [:toggle_ssl, organization, @server, track_domain], :remote => true, :method => :post
               - else
-                %li.domainList__check.domainList__check--neutral-cross= link_to "SSL disabled", [:toggle_ssl, organization, @server, track_domain], :remote => true, :method => :post
+                %li.domainList__check.domainList__check--neutral-cross= link_to "SSL đang tắt", [:toggle_ssl, organization, @server, track_domain], :remote => true, :method => :post
 
           %ul.domainList__properties
             %li.domainList__links
-              = link_to "Settings", [:edit, organization, @server, track_domain]
-              = link_to "Check DNS", [:check, organization, @server, track_domain], :remote => true, :method => :post, :data => {:disable_with => "Checking..."}
-              = link_to "Delete", [organization, @server, track_domain], :remote => true, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this domain?", :disable_with => "Deleting..."}, :class => 'domainList__delete'
+              = link_to "Cài đặt", [:edit, organization, @server, track_domain]
+              = link_to "Kiểm tra DNS", [:check, organization, @server, track_domain], :remote => true, :method => :post, :data => {:disable_with => "Đang kiểm tra..."}
+              = link_to "Xóa", [organization, @server, track_domain], :remote => true, :method => :delete, :data => {:confirm => "Bạn chắc chắn muốn xóa tên miền này?", :disable_with => "Đang xóa..."}, :class => 'domainList__delete'
 
-    %p.u-center= link_to "Add new track domain", [:new, organization, @server, :track_domain], :class => "button button--positive"
+    %p.u-center= link_to "Thêm tracking domain", [:new, organization, @server, :track_domain], :class => "button button--positive"

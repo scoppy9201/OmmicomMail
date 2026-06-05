@@ -12,12 +12,12 @@
           %td IPv4
           %td IPv6
           %td Hostname
-          %td Priority
+          %td Ưu tiên
       %tbody
         - ips = @ip_pool.ip_addresses.order_by_priority
         - if ips.empty?
           %tr
-            %td.dataTable__empty{:colspan => 3} There are no IP addresses assigned to this pool yet.
+            %td.dataTable__empty{:colspan => 3} Chưa có địa chỉ IP nào được gán vào pool này.
         - else
           - for ip in ips
             %tr
@@ -25,13 +25,13 @@
               %td{:width => "35%"}= ip.ipv6
               %td{:width => "35%"}= ip.hostname
               %td{:width => "10%"}= ip.priority
-    %p= link_to "Add an IP address to pool", [:new, @ip_pool, :ip_address], :class => "u-link"
+    %p= link_to "Thêm địa chỉ IP vào pool", [:new, @ip_pool, :ip_address], :class => "u-link"
 
 
   .fieldSetSubmit.buttonSet
     = f.submit :class => 'button button--positive js-form-submit'
     .fieldSetSubmit__delete
       - if @ip_pool.persisted?
-        = link_to "Delete IP pool", [@ip_pool], :class => 'button button--danger', :method => :delete, :remote => true, :data => {:confirm => "Are you sure you wish to remove this IP pool?"}
+        = link_to "Xóa IP pool", [@ip_pool], :class => 'button button--danger', :method => :delete, :remote => true, :data => {:confirm => "Bạn chắc chắn muốn xóa IP pool này?"}
 
 

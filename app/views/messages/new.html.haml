@@ -1,34 +1,34 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Send"
+- page_title << "Email"
+- page_title << "Gửi"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
 = render 'header', :active_nav => :new
 .pageContent.pageContent--compact
   %p.pageContent__intro.u-margin
-    You can use this form to send a message through this mail server. This is useful
-    for testing and debugging purposes.
+    Bạn có thể dùng form này để gửi email qua máy chủ mail.
+    Tính năng này hữu ích khi kiểm thử hoặc debug.
   - if @message.is_a?(OutgoingMessagePrototype)
     %p.pageContent__text.u-margin.newMessageType.newMessageType--outgoing
-      <b>You are sending an outgoing message.</b> This e-mail will be routed as if it was an e-mail sent from your mail server.
-      = link_to "Simulate an incoming e-mail instead?", {:direction => 'incoming'}, :class => 'u-link'
+      <b>Bạn đang gửi email đi.</b> Email này sẽ được định tuyến như email được gửi từ máy chủ mail của bạn.
+      = link_to "Mô phỏng email nhận vào?", {:direction => 'incoming'}, :class => 'u-link'
   - else
     %p.pageContent__text.u-margin.newMessageType.newMessageType--incoming
-      <b>You are sending an incoming message.</b> This e-mail will can only be sent to your routes and will behave as if it was received by your mail server.
-      = link_to "Simulate an outgoing e-mail instead?", {:direction => 'outgoing'}, :class => 'u-link'
+      <b>Bạn đang gửi email nhận vào.</b> Email này chỉ có thể gửi tới các route và sẽ hoạt động như email được máy chủ của bạn nhận.
+      = link_to "Mô phỏng email gửi đi?", {:direction => 'outgoing'}, :class => 'u-link'
   = form_tag [organization, @server, :messages], :remote => true do
     = hidden_field_tag 'direction', params[:direction]
     .fieldSet
       - if @message.is_a?(OutgoingMessagePrototype)
         .fieldSet__field
-          = label_tag :message_from, "From ", :class => 'fieldSet__label'
+          = label_tag :message_from, "Từ", :class => 'fieldSet__label'
           .fieldSet__input
             = text_field_tag "message[from]", @message.from, :autofocus => true, :class => 'input input--text'
             %p.fieldSet__text
-              Enter the address that you wish to wish to send the message from. This must be
-              an address which exists at one of your verified domains.
+              Nhập địa chỉ bạn muốn dùng để gửi email. Địa chỉ này phải thuộc
+              một trong các tên miền đã xác minh.
         .fieldSet__field
-          = label_tag :message_to, "To", :class => 'fieldSet__label'
+          = label_tag :message_to, "Tới", :class => 'fieldSet__label'
           .fieldSet__input= text_field_tag "message[to]", @message.to, :class => 'input input--text'
       - else
         .fieldSet__field
@@ -36,14 +36,14 @@
           .fieldSet__input= text_field_tag "message[to]", @message.to, :class => 'input input--text'
 
         .fieldSet__field
-          = label_tag :message_from, "From", :class => 'fieldSet__label'
+          = label_tag :message_from, "Từ", :class => 'fieldSet__label'
           .fieldSet__input= text_field_tag "message[from]", @message.from, :class => 'input input--text'
       .fieldSet__field
-        = label_tag :message_subject, "Subject", :class => 'fieldSet__label'
+        = label_tag :message_subject, "Tiêu đề", :class => 'fieldSet__label'
         .fieldSet__input= text_field_tag "message[subject]", @message.subject, :class => 'input input--text'
       .fieldSet__field
-        = label_tag :message_plain_body, "Body", :class => 'fieldSet__label'
+        = label_tag :message_plain_body, "Nội dung", :class => 'fieldSet__label'
         .fieldSet__input= text_area_tag "message[plain_body]", @message.plain_body, :class => 'input input--area'
     .fieldSetSubmit.buttonSet
-      = submit_tag "Send Message", :class => 'button button--positive js-form-submit'
+      = submit_tag "Gửi email", :class => 'button button--positive js-form-submit'
 

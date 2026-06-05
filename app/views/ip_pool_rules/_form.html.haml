@@ -2,34 +2,33 @@
   = form_for [organization, @server, @ip_pool_rule], :remote => true do |f|
     = f.error_messages
     %fieldset.fieldSet
-      %h2.fieldSet__title.fieldSet__title--noMargin Rule match conditions
+      %h2.fieldSet__title.fieldSet__title--noMargin Điều kiện khớp rule
       .fieldSet__field
-        = f.label :to_text, "To Addresses", :class => 'fieldSet__label'
+        = f.label :to_text, "Địa chỉ nhận", :class => 'fieldSet__label'
         .fieldSet__input
           ~ f.text_area :to_text, :autofocus => true, :class => 'input input--text input--smallArea'
           %p.fieldSet__text
-            This is a list of addresses or domains which should be matched. This
-            applies to e-mail address of the recipient of a message.
+            Đây là danh sách địa chỉ hoặc tên miền cần khớp.
+            Áp dụng cho địa chỉ email người nhận.
 
       .fieldSet__field
-        = f.label :from_text, "From Addresses", :class => 'fieldSet__label'
+        = f.label :from_text, "Địa chỉ gửi", :class => 'fieldSet__label'
         .fieldSet__input
           ~ f.text_area :from_text, :class => 'input input--text input--smallArea'
           %p.fieldSet__text
-            This is a list of addresses or domains which should be matched. This
-            applies to value <code>From</code> in the From header of the message
-            that is being delivered.
+            Đây là danh sách địa chỉ hoặc tên miền cần khớp.
+            Áp dụng cho giá trị <code>From</code> trong header From của email đang được gửi.
     %fieldset.fieldSet
-      %h2.fieldSet__title Selected IP Pool
+      %h2.fieldSet__title IP pool được chọn
       .fieldSet__field
         = f.label :ip_pool_id, "IP Pool", :class => 'fieldSet__label'
         .fieldSet__input
           = f.collection_select :ip_pool_id, organization.ip_pools.includes(:ip_addresses).order("`default` desc, name asc"), :id, :name, {}, :class => 'input input--select'
           %p.fieldSet__text
-            This is the IP pool that this message should be delivered from.
+            Đây là IP pool sẽ được dùng để gửi email phù hợp với rule này.
 
     .fieldSetSubmit
-      = f.submit "Save Rule", :class => "button button--positive js-form-submit"
+      = f.submit "Lưu rule", :class => "button button--positive js-form-submit"
       .fieldSetSubmit__delete
         - if f.object.persisted?
-          = link_to "Delete Rule", [organization, @server, @ip_pool_rule], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Are you sure you wish to delete this rule?"}
+          = link_to "Xóa rule", [organization, @server, @ip_pool_rule], :remote => true, :class => 'button button--danger', :method => :delete, :data => {:confirm => "Bạn chắc chắn muốn xóa rule này?"}

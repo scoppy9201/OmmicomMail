@@ -1,41 +1,40 @@
 = form_tag request.fullpath, :method => :get, :remote => true, :class => 'messageSearch', :enforce_utf8 => false do
   %p
-    = link_to "Need help with filtering?", '#', :class => 'messageSearch__help js-toggle-helpbox'
-    = text_field_tag 'query', @query, :class => 'messageSearch__input js-focus-on-f js-form-submit', :placeholder => "Filter messages...", :data => {:disable_with => 'Searching...'}
+    = link_to "Cần trợ giúp lọc email?", '#', :class => 'messageSearch__help js-toggle-helpbox'
+    = text_field_tag 'query', @query, :class => 'messageSearch__input js-focus-on-f js-form-submit', :placeholder => "Lọc email...", :data => {:disable_with => 'Đang tìm...'}
 
   .messageSearch__helpBox.is-hidden.js-helpbox
     .messageSearch__left
       %h3.messageSearch__helpBoxTitle
-        Filtering your messages
+        Lọc email
       %p.messageSearch__helpBoxText
-        You can filter your messages on a number of attributes. At present, it is not possible to
-        search the content of your messages. To filter though, you can insert any of the strings
-        as shown opposite into the box above and press enter.
+        Bạn có thể lọc email theo nhiều thuộc tính. Hiện tại chưa thể tìm kiếm trong nội dung email.
+        Để lọc, hãy nhập một trong các cú pháp bên cạnh vào ô phía trên rồi nhấn Enter.
     .messageSearch__right
       %dl.messageSearch__definition
         %dt to: rachel@example.com
-        %dd Returns all mail addressed to the address provided.
+        %dd Trả về tất cả email gửi tới địa chỉ đã nhập.
       %dl.messageSearch__definition
         %dt from: tom@example.com
-        %dd Returns all mail sent from to the address provided.
+        %dd Trả về tất cả email được gửi từ địa chỉ đã nhập.
       %dl.messageSearch__definition
         %dt status: pending
-        %dd Returns all messages with the status provided. The suitable statuses are: <code>pending</code>, <code>sent</code>, <code>held</code>, <code>softfail</code>, <code>hardfail</code> and <code>bounced</code>.
+        %dd Trả về tất cả email có trạng thái đã nhập. Trạng thái hợp lệ gồm: <code>pending</code>, <code>sent</code>, <code>held</code>, <code>softfail</code>, <code>hardfail</code> và <code>bounced</code>.
       %dl.messageSearch__definition
         %dt before: yyyy-mm-dd hh:mm
-        %dd Returns any message received before the given timestamp.
+        %dd Trả về email được nhận trước thời điểm đã nhập.
       %dl.messageSearch__definition
         %dt after: yyyy-mm-dd hh:mm
-        %dd Returns any message received after the given timestamp.
+        %dd Trả về email được nhận sau thời điểm đã nhập.
       %dl.messageSearch__definition
         %dt msgid:  57f3a85b35545@server01.mail
-        %dd Returns any message with the given Message-ID header.
+        %dd Trả về email có header Message-ID tương ứng.
       %dl.messageSearch__definition
         %dt tag: password-reset
-        %dd Returns any message tagged with the tag provided.
+        %dd Trả về email có tag đã nhập.
       %dl.messageSearch__definition
         %dt spam: yes
-        %dd By default, spam is not shown in results. To show spam instead of non-spam, just add this to the query.
+        %dd Mặc định email spam không hiển thị trong kết quả. Thêm cú pháp này để xem email spam.
       %dl.messageSearch__definition
         %dt order: oldest-first
-        %dd By default, newest messages are shown first. To show oldest messages first, you can add this.
+        %dd Mặc định email mới nhất hiển thị trước. Thêm cú pháp này để xem email cũ nhất trước.

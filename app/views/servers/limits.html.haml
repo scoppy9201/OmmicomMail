@@ -1,18 +1,17 @@
 - page_title << @server.name
-- page_title << "Limits"
+- page_title << "Giới hạn"
 = render 'sidebar', :active_server => @server
 = render 'header', :active_nav => :settings
 = render 'settings_header', :active_nav => :limits
 .pageContent.pageContent--compact
 
   %p.pageContent__intro.u-margin
-    In order to protect our reputation and ensure the resiliency of our service,
-    we implement limits on the amount of e-mail that can pass through your mail
-    server.
+    Để bảo vệ uy tín gửi mail và đảm bảo dịch vụ ổn định,
+    hệ thống áp dụng giới hạn cho lượng email có thể đi qua máy chủ mail của bạn.
   %p.pageContent__text.u-margin
-    The main limit to be aware of is the amount of e-mail that you can send
-    from your mail server to external recipients in a rolling 60 minute window.
-    The current limit is shown below.
+    Giới hạn chính cần lưu ý là số email bạn có thể gửi từ máy chủ mail
+    tới người nhận bên ngoài trong khung thời gian trượt 60 phút.
+    Giới hạn hiện tại được hiển thị bên dưới.
 
   %ul.limits.u-margin
     %li.limits__limit
@@ -20,20 +19,19 @@
         - if @server.send_limit
           = number_with_delimiter @server.send_limit
         - else
-          unlimited
-      %p.limits__frequency e-mails every 60 minutes*
+          không giới hạn
+      %p.limits__frequency email mỗi 60 phút*
 
 
   %p.pageContent__text
-    You can view your current usage & limit on the top of right of every mail server
-    page in the web interface. The bars will show you how close you are to reaching the
-    limits. Although we show your incoming mail throughput, it is not limited at present.
+    Bạn có thể xem mức sử dụng hiện tại và giới hạn ở góc trên bên phải của mỗi trang máy chủ mail.
+    Thanh hiển thị cho biết bạn đang gần chạm giới hạn tới đâu. Email nhận vào vẫn được hiển thị throughput,
+    nhưng hiện chưa bị giới hạn.
 
-  %p.pageContent__subTitle What happens if I reach the limit?
+  %p.pageContent__subTitle Điều gì xảy ra khi chạm giới hạn?
   %p.pageContent__text
-    If you reach your outgoing limit, any new e-mails that you try to send will be held and
-    will need to be released manually when your usage has dropped.
+    Nếu chạm giới hạn gửi đi, email mới bạn cố gửi sẽ bị giữ lại và cần được mở thủ công
+    khi mức sử dụng đã giảm.
 
   %p.pageContent__text
-    You will be notified by e-mail (and with a webhook if enabled) when you are approaching
-    and/or exceeding your limits.
+    Bạn sẽ nhận thông báo qua email và webhook nếu đã bật khi sắp chạm hoặc vượt giới hạn.

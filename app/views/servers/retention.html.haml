@@ -1,48 +1,47 @@
 - page_title << @server.name
-- page_title << "Message Retention"
+- page_title << "Lưu trữ email"
 = render 'sidebar', :active_server => @server
 = render 'header', :active_nav => :settings
 = render 'settings_header', :active_nav => :retention
 .pageContent.pageContent--compact
 
   %p.pageContent__intro.u-margin
-    The length of time that messages are stored by us are shown below. If you need
-    to store messages for longer, please contact us and we can work out a custom
-    plan.
+    Thời gian hệ thống lưu email được hiển thị bên dưới. Nếu cần lưu email lâu hơn,
+    hãy liên hệ hỗ trợ để cấu hình phương án phù hợp.
 
   .retentionLimits
     %dl.retentionLimits__limit
-      .retentionLimits__label Number of days that raw message data will be stored
+      .retentionLimits__label Số ngày lưu dữ liệu email gốc
       .retentionLimits__info
         .retentionLimits__value
           - if @server.raw_message_retention_days
             = pluralize @server.raw_message_retention_days, 'day'
           - else
-            Indefinitely
+            Không giới hạn thời gian
         .retentionLimits__text
-          This is the number of whole days that raw message content will be stored by us.
-          Raw message is the actual content of the message including headers & attachments.
+          Đây là số ngày hệ thống lưu nội dung email gốc.
+          Email gốc bao gồm nội dung thực tế, headers và tệp đính kèm.
     %dl.retentionLimits__limit
-      .retentionLimits__label Volume of raw message data that will be stored
+      .retentionLimits__label Dung lượng dữ liệu email gốc được lưu
       .retentionLimits__info
         .retentionLimits__value
           - if @server.raw_message_retention_size
             = number_to_human_size @server.raw_message_retention_size * 1024 * 1024
           - else
-            No limit
+            Không giới hạn
         .retentionLimits__text
-          This is the amount of e-mail that can be stored. When you exceed this amount, messages will be removed in
-          whole day increments starting with the oldest stored day.
+          Đây là dung lượng email có thể được lưu. Khi vượt mức này, email sẽ bị xóa theo từng ngày,
+          bắt đầu từ ngày cũ nhất đang được lưu.
 
     %dl.retentionLimits__limit
-      .retentionLimits__label Number of days of message meta data will be available
+      .retentionLimits__label Số ngày metadata email còn khả dụng
       .retentionLimits__info
         .retentionLimits__value
           - if @server.message_retention_days
             = pluralize @server.message_retention_days, 'day'
           - else
-            Indefinitely
+            Không giới hạn thời gian
         .retentionLimits__text
-          This is the number of days of messages that will be available through the web interface.
-          You will be able to view basic meta information & delivery details but raw data might not
-          be available unless it is within the retention periods above.
+          Đây là số ngày email còn hiển thị trên giao diện web.
+          Bạn có thể xem metadata cơ bản và chi tiết chuyển phát, nhưng dữ liệu gốc có thể không còn
+          nếu đã vượt thời gian lưu trữ phía trên.

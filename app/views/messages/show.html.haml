@@ -1,6 +1,6 @@
 - page_title << @server.name
-- page_title << "Messages"
-- page_title << "Message ##{@message.id}"
+- page_title << "Email"
+- page_title << "Email ##{@message.id}"
 = render 'servers/sidebar', :active_server => @server
 = render 'servers/header', :active_nav => :messages
 = render 'header', :active_nav => @message.scope.to_sym
@@ -10,20 +10,20 @@
     .messagePropertiesPage__left
       .messagePropertiesPage__propertyPair
         %dl.messagePropertiesPage__property
-          %dt Spam Status
+          %dt Trạng thái spam
           %dd
             = link_to spam_checks_organization_server_message_path(organization, @server, @message.id) do
               %span.label.label--large{:class => "label--spamStatus-#{@message.spam_status.underscore}"}= @message.spam_status.underscore.humanize
         %dl.messagePropertiesPage__property
           %dt Tag
-          %dd= @message.tag ? link_to(@message.tag, send("#{@message.scope}_organization_server_messages_path", organization, @server, :query => "tag: #{@message.tag}"), :class => "u-link") : "Not tagged"
+          %dd= @message.tag ? link_to(@message.tag, send("#{@message.scope}_organization_server_messages_path", organization, @server, :query => "tag: #{@message.tag}"), :class => "u-link") : "Chưa gắn tag"
       .messagePropertiesPage__propertyPair
         %dl.messagePropertiesPage__property
-          %dt Raw Message
-          %dd= @message.raw_message? ? "Available" : "Removed"
+          %dt Email gốc
+          %dd= @message.raw_message? ? "Còn lưu" : "Đã xóa"
         %dl.messagePropertiesPage__property
-          %dt Message Size
-          %dd= @message.size ? number_to_human_size(@message.size) : "n/a"
+          %dt Dung lượng email
+          %dd= @message.size ? number_to_human_size(@message.size) : "không có"
 
       .messagePropertiesPage__propertyPair
         - if @message.scope == 'incoming'
@@ -33,43 +33,43 @@
               - if @message.route
                 = link_to @message.route.name, [:edit, organization, @server, @message.route], :class => "u-link"
               - else
-                Unknown Route
+                Không xác định route
           %dl.messagePropertiesPage__property
-            %dt Domain
+            %dt Tên miền
             %dd
               - if @message.domain
                 = link_to @message.domain.name, [organization, @server, :domains], :class => "u-link"
               - else
-                Unknown Domain
+                Không xác định tên miền
         - else
           %dl.messagePropertiesPage__property
-            %dt Credential
+            %dt Thông tin xác thực
             %dd
               - if @message.credential
                 = link_to @message.credential.name, [:edit, organization, @server, @message.credential], :class => "u-link"
               - else
-                Unknown Credential
+                Không xác định thông tin xác thực
           %dl.messagePropertiesPage__property
-            %dt Domain
+            %dt Tên miền
             %dd
               - if @message.domain
                 = link_to @message.domain.name, [organization, @server, :domains], :class => "u-link"
               - else
-                Unknown Domain
+                Không xác định tên miền
       - if @message.threat
         %dl.messagePropertiesPage__property
-          %dt Threat
+          %dt Mối đe dọa
           %dd= @message.threat_details
       %dl.messagePropertiesPage__property
         %dt Message ID
-        %dd= @message.message_id || "No message ID"
+        %dd= @message.message_id || "Không có Message ID"
       - unless @message.received_with_ssl.nil?
         %dl.messagePropertiesPage__property
-          %dt Transport Security
+          %dt Bảo mật truyền tải
           - if @message.received_with_ssl
-            %dd.messagePropertiesPage__property--locked Received over an SSL connection
+            %dd.messagePropertiesPage__property--locked Được nhận qua kết nối SSL
           - else
-            %dd Not received with SSL
+            %dd Không nhận qua SSL
 
     .messagePropertiesPage__right
       = render 'deliveries', :message => @message

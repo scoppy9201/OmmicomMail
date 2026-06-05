@@ -1,6 +1,6 @@
 - if @server
   - page_title << @server.name
-- page_title << "Edit IP Pool Rule"
+- page_title << "Sửa IP pool rule"
 
 - if @server
   = render 'servers/sidebar', :active_server => @server
@@ -12,9 +12,9 @@
       %span.pageHeader__titlePrevious
         = @organization.name
         &rarr;
-        IP Pool Rules
+        IP pool rules
         &rarr;
-      Edit rule
+      Sửa rule
   = render 'organizations/nav', :active_nav => :ips
   = render 'organization_ip_pools/nav', :active_nav => :rules
 = render 'form'
